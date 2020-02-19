@@ -1,3 +1,16 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
 \contentsline {chapter}{\numberline {1}Introduzione}{2}{chapter.1}% 
+\contentsline {section}{\numberline {1.1}Storia dei sistemi operativi}{3}{section.1.1}% 
+\contentsline {subsection}{\numberline {1.1.1}Prima generazione (1946-1955)}{3}{subsection.1.1.1}% 
+\contentsline {subsubsection}{Evoluzione}{3}{section*.3}% 
+\contentsline {subsection}{\numberline {1.1.2}Seconda generazione (1955-1965)}{3}{subsection.1.1.2}% 
+\contentsline {subsubsection}{Evoluzione}{3}{section*.4}% 
+\contentsline {subsubsection}{Limitazioni}{3}{section*.5}% 
+\contentsline {subsubsection}{Sovrapposizione tra CPU e I/O}{4}{section*.6}% 
+\contentsline {paragraph}{Polling}{4}{section*.7}% 
+\contentsline {paragraph}{Interrupt e I/O}{4}{section*.8}% 
+\contentsline {paragraph}{DMA e I/O}{4}{section*.9}% 
+\contentsline {paragraph}{Buffering}{4}{section*.10}% 
+\contentsline {paragraph}{Spooling}{4}{section*.11}% 
+\contentsline {subsection}{\numberline {1.1.3}Terza generazione (1965-1980)}{4}{subsection.1.1.3}% 
