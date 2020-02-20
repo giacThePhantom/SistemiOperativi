@@ -14,3 +14,6 @@
 \contentsline {paragraph}{Buffering}{4}{section*.10}% 
 \contentsline {paragraph}{Spooling}{4}{section*.11}% 
 \contentsline {subsection}{\numberline {1.1.3}Terza generazione (1965-1980)}{4}{subsection.1.1.3}% 
+\contentsline {subsubsection}{Protezione}{5}{section*.12}% 
+\contentsline {subsection}{\numberline {1.1.4}Quarta generazione (1980-1990)}{5}{subsection.1.1.4}% 
+\contentsline {subsubsection}{Quinta generazione (1990- oggi}{5}{section*.13}% 

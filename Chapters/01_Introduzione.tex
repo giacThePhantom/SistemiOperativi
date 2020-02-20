@@ -49,3 +49,31 @@ il paradigma moderno di programma su disco che viene caricato in memoria, la poo
 \subsection{Terza generazione (1965-1980)}
 In questa generazione viene introdotta la multiprogrammazione e i circuiti integrati. La prima nasce dal fatto che un singolo job \`e incapace di tener sufficientemente occupata la CPU e pertanto si rende 
 necessaria una loro competizione. Sono presenti pi\`u job in memoria e le fasi di attesa vengono sfruttate per l'esecuzione di un nuovo job. 
+Con la presenza di pi\`u job nel sistema diventa possibile modificare la natura dei sistemi operativi: si passa ad una tendenza a sodisfare molti utenti che
+operano interattivamente e diventa importante il tempo di risposta di un job (quanto ci vuole perch\`e inizi la sua esecuzione). Nasce pertanto il 
+multitasking o time sharing, estensione logica della multiprogrammazione in cui l'utente ha l'impressione di avere la macchina solo per s\`e e si migliora
+l'interattivit\`a con la gestione di errori e l'analisi di risultati. Nascono i sistemi moderni con tastiera che permette decisioni dell'evoluzione del 
+sistema in base ai comandi dell'utente e un monitor che permette un output immediato durante l'esecuzione. Il file system inoltre \`e un'astrazione del
+sistema operativo per accedere a dati e programmi.
+\subsubsection{Protezione}
+Con la condivisione si rende necessario introdurre delle capacit\`a di protezione per il sistema:
+\begin{itemize}
+\item I/O: programmi diversi non devono usare il dispositivo contemporaneamente, viene realizzata tramite il modo duale di esecuzione: modo user in cui i 
+job non possono accedere direttamente alle risorse di I/O e modo supervisor o kernel in cui il sistema operativo pu\`o accedere a tali risorse. Tutte le
+operazioni di I/O sono privilegiate: le istruzioni di accesso invocano una system call, un interrupt software che cambia la modalit\`a da user a supervisor
+e al termine della system call viene ripristinata la modalit\`a supervisor.
+\item Memoria: un programma non pu\`o leggere o scrivere ad una zona di memoria che non gli appartiene: realizzata associando dei registri limite ad ogni
+processo, che possono essere modificati unicamente dal sistema operativo con istruzioni privilegiate.
+\item CPU: prima o poi il controllo della CPU deve tornare al sistema operativo, realizzata attraverso un timer legato ad un job, al termine del quale il 
+controllo passa al monitor. 
+\end{itemize}
+\subsection{Quarta generazione (1980-1990)}
+\begin{itemize}
+\item Diffusione di sistemi operativi per PC e workstation, utilizzo personale degli elaboratori e nascita delle interfacce grafiche (GUI).
+\item Sistemi operativi di rete in cui esiste una separazione logica delle risorse remote in cui l'accesso alle risorse remote \`e diverso rispetto a quello 
+delle risorse locali.
+\item Sistemi operativi distribuiti: le risorse remote non sono separate logicamente e l'accesso alle risorse remote e locali \`e uguale. 
+\end{itemize}
+\subsubsection{Quinta generazione (1990- oggi}
+Sistemi real-time vincolati sui tempi di risposta del sistema, sistemi operativi embedded per applicazioni specifiche, per piattaforme mobili e per 
+l'internet of things. 
