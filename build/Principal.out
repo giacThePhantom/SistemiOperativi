@@ -4,3 +4,8 @@
 \BOOKMARK [2][-]{subsection.1.1.2}{Seconda generazione \(1955-1965\)}{section.1.1}% 4
 \BOOKMARK [2][-]{subsection.1.1.3}{Terza generazione \(1965-1980\)}{section.1.1}% 5
 \BOOKMARK [2][-]{subsection.1.1.4}{Quarta generazione \(1980-1990\)}{section.1.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Componenti di un sistema operativo}{}% 7
+\BOOKMARK [1][-]{section.2.1}{Interprete}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.1.1}{Interfaccia utente}{section.2.1}% 9
+\BOOKMARK [1][-]{section.2.2}{System call}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.1}{Implementazione}{section.2.2}% 11
