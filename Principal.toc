@@ -1,0 +1,38 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {chapter}{\numberline {1}Introduzione}{2}{chapter.1}% 
+\contentsline {subsubsection}{Componenti}{2}{section*.3}% 
+\contentsline {subsection}{\numberline {1.0.1}Punti chiave nel progetto di calcolatori}{2}{subsection.1.0.1}% 
+\contentsline {subsubsection}{Punto di vista dell'utente}{2}{section*.4}% 
+\contentsline {subsubsection}{Punto di vista del sistema}{3}{section*.5}% 
+\contentsline {section}{\numberline {1.1}Storia dei sistemi operativi}{3}{section.1.1}% 
+\contentsline {subsection}{\numberline {1.1.1}Prima generazione (1946-1955)}{3}{subsection.1.1.1}% 
+\contentsline {subsubsection}{Evoluzione}{4}{section*.6}% 
+\contentsline {subsection}{\numberline {1.1.2}Seconda generazione (1955-1965)}{4}{subsection.1.1.2}% 
+\contentsline {subsubsection}{Evoluzione}{4}{section*.7}% 
+\contentsline {subsubsection}{Limitazioni}{4}{section*.8}% 
+\contentsline {subsubsection}{Sovrapposizione tra CPU e I/O}{4}{section*.9}% 
+\contentsline {paragraph}{Polling}{4}{section*.10}% 
+\contentsline {paragraph}{Interrupt e I/O}{4}{section*.11}% 
+\contentsline {paragraph}{DMA e I/O}{5}{section*.12}% 
+\contentsline {paragraph}{Buffering}{5}{section*.13}% 
+\contentsline {paragraph}{Spooling}{5}{section*.14}% 
+\contentsline {subsection}{\numberline {1.1.3}Terza generazione (1965-1980)}{5}{subsection.1.1.3}% 
+\contentsline {subsubsection}{Protezione}{5}{section*.15}% 
+\contentsline {subsection}{\numberline {1.1.4}Quarta generazione (1980-1990)}{6}{subsection.1.1.4}% 
+\contentsline {subsubsection}{Quinta generazione (1990- oggi)}{6}{section*.16}% 
+\contentsline {chapter}{\numberline {2}Componenti di un sistema operativo}{7}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Servizi di gestione}{7}{section.2.1}% 
+\contentsline {subsubsection}{Gestione dei processi}{7}{section*.17}% 
+\contentsline {subsubsection}{Gestione della memoria primaria}{7}{section*.18}% 
+\contentsline {subsubsection}{Gestione della memoria secondaria}{7}{section*.19}% 
+\contentsline {subsubsection}{Gestionde dell'I/O}{8}{section*.20}% 
+\contentsline {subsubsection}{Gestione dei file}{8}{section*.21}% 
+\contentsline {subsubsection}{Protezione}{8}{section*.22}% 
+\contentsline {subsubsection}{Rete (sistemi distribuiti)}{8}{section*.23}% 
+\contentsline {section}{\numberline {2.2}Interprete dei comandi (shell)}{8}{section.2.2}% 
+\contentsline {subsubsection}{Interfaccia grafica}{8}{section*.24}% 
+\contentsline {subsection}{\numberline {2.2.1}System calls}{9}{subsection.2.2.1}% 
+\contentsline {chapter}{\numberline {3}Architettura di un sistema operativo}{10}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}macchinee virtuali}{10}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Processi e thread}{11}{section.3.2}% 

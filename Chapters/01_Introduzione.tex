@@ -1,12 +1,29 @@
 \chapter{Introduzione}
 Un sistema operativo \`e un insieme di programmi che agiscono come intermediario tra l'hardware e l'uomo per facilitare l'uso del computer, rendere efficiente l'uso dell'hardware e evitare conflitti 
 nell'allocazione di risorse tra hardware e software. Offre pertanto un ambiente per controllare e coordinare l'utilizzo dell'hardware da parte dei programmi applicativi. I suoi compiti principali sono di gestore di
-risorse e di controllare l'esecuzione dei programmi e il corretto utilizzo del sistema.
+risorse e di controllore dell'esecuzione dei programmi e il corretto utilizzo del sistema. La struttura dei sistemi operativi \`e soggetta a notevole variabilit\`a ad \`e adattabile a criteri di organizzazione estremamente differenti.
+\`E pertanto un programma sempre in esecuzione sul calcolatore che generalmente viene chiamato kernel al quale si aggiungono programmi di sistema e programmi applicativi.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{Pictures/StackSistemaOperativo.png}
 \caption{Stack del sistema operativo}
 \end{figure}
 Nel progettare un sistema operativo si deve tipicamente fare un trade-off tra l'astrazione che semplifica l'utilizzo del sistema e l'efficienza.
+\subsubsection{Componenti}
+Un sistema di calcolo si pu\`o dividere in $4$ componenti:
+\begin{itemize}
+	\item Dispositivi fisici: sono composti dall'unit\`a centrale di elaborazione (CPU), dalla memoria e dall'I/O.
+	\item Programmi applicativi: definiscono il modo in cui utilizzare le risorse per risolvere i problemi computazionali da parte degli utenti.
+	\item Sistema operativo: Controlla e coordina l'udo dei dispositivi da parte degli utenti.
+	\item Utenti.
+\end{itemize}
+\subsection{Punti chiave nel progetto di calcolatori}
+\subsubsection{Punto di vista dell'utente}
+La percezione di un calcolatore dipende dall'interfaccia impiegata. Il pi\`u comune metodo di utilizzo \`e il PC composto da schermo, tastiera e mouse. Il sistema operativo in questo caso si progetta considerando la facilit\`a di 
+utilizzo con qualche attenzione alle prestazioni ma non all'utilizzo delle risorse. Nel caso di un utente che utilizza terminali connessi ad un mainframe condividendo risorse con altri utenti il sistema operativo andrebbe ottimizzato
+per massimizzare l'utilizzo delle risore.
+\subsubsection{Punto di vista del sistema}
+Il sistema operativo \`e il programma collegato pi\`u strettamente ai suoi elementi fisici ed \`e assimilabile ad un assegnatore di risorse o come programma di controllo che gestisce l'esecuzione dei programmi utente in modo da 
+impedire che si verifichino errori o che il calcolatore sia utilizzato in modo scorretto.
 \section{Storia dei sistemi operativi}
 Si possono identificare 5 generazioni di calcolatori che riflettono direttamente l'evoluzione dei sistemi operativi dovuta all'aumento dell'utilizzo del processore. 
 \subsection{Prima generazione (1946-1955)}
@@ -35,7 +52,7 @@ Il polling \`e il meccanismo tradizionale di interazione tra CPU e I/O: avviene 
 meccanismo asincrono o richiesta  I/O non bloccante come le interruzioni o interrupt e il DMA (direct memory access). 
 \paragraph{Interrupt e I/O}
 In questo caso la CPU programma il dispositivo e contemporaneamente il dispositivo controllore esegue. La CPU, se possibile prosegue l'elaborazione. Il dispositivo segnala la fine dell'elaborazione alla CPU. La
-CPU riceve un segnale di interrupt esplicito e interrompe l'istruzione corrente salvando lo stato, salta a una locazione predefinita serve l'interruzione trasferendo i dati e riprende l'istruzione interrotta. 
+CPU riceve un segnale di interrupt esplicito e interrompe l'istruzione corrente salvando lo stato, salta a una locazione predefinita, serve l'interruzione trasferendo i dati e riprende l'istruzione interrotta. 
 \paragraph{DMA e I/O}
 Nel caso di dispositivi veloci gli interrupt sono molto frequenti e porterebbero a inefficienza. Si rende pertanto necessario creare uno specifico controllore hardware detto DMA controller che si occupa del 
 trasferimento di blocchi di dati tra I/O e memoria senza interessare la CPU. Avviene pertanto un solo interrupt per blocco di dati. 
@@ -74,6 +91,6 @@ controllo passa al monitor.
 delle risorse locali.
 \item Sistemi operativi distribuiti: le risorse remote non sono separate logicamente e l'accesso alle risorse remote e locali \`e uguale. 
 \end{itemize}
-\subsubsection{Quinta generazione (1990- oggi}
+\subsubsection{Quinta generazione (1990- oggi)}
 Sistemi real-time vincolati sui tempi di risposta del sistema, sistemi operativi embedded per applicazioni specifiche, per piattaforme mobili e per 
 l'internet of things. 
