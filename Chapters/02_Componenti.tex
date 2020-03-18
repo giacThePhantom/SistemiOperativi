@@ -37,4 +37,12 @@ Le chiamate di sistema costituiscono l'interfaccia di comunicazione tra il proce
 dettagli di implementazione delle \emph{sys.call} in quanto solitamente utilizzano un'API (application program interface) che specifica un'insieme di funzioni a disposizione dei programmatori e dettaglia i parametri necessari 
 all'invocazione di queste funzioni e i valori restituiti. Le due API pi\`u comuni sono \emph{win32} e \emph{POSIX API}, rispettivamente per Windows e UNIX. I parametri delle system calls possono essere pasati per valore o riferimento, ma
 vanno fisicamente messi da qualche parte: vengono pertanto posizionati nei registri (molto veloci, ma pochi e di dimensione fissa) nello stack del programma o in una tabella di memoria il cui indirizzo \`e passato in un registro o nello
-stack.
+stack. Le system calls possono essere implementate in due modi: 
+\begin{itemize}
+	\item L'interprete legge il comando e cerca all'interno della shell per cercare il programma da avviare, non viene utilizzata in quanto rende necessario modifiche al kernel e non
+		\`e efficiente.
+	\item L'interprete legge il comando e possiede una tabella che collega tale comando al programma da avviare. 
+\end{itemize}
+Le system calls si differiscono in cotrollo dei processi, gesione dei file, dei dispositivi, delle comunicazioni e della protezione. Un processo inoltre 
+deve essere sia in grado di essere chiuso normalmente (\emph{end}) che in modo anomalo (\emph{abort}), con la conseguente generazione di un messaggio di 
+errore e copia dello stato del processo abortito.

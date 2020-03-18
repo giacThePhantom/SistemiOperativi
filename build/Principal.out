@@ -1,11 +1,14 @@
 \BOOKMARK [0][-]{chapter.1}{Introduzione}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Storia dei sistemi operativi}{chapter.1}% 2
-\BOOKMARK [2][-]{subsection.1.1.1}{Prima generazione \(1946-1955\)}{section.1.1}% 3
-\BOOKMARK [2][-]{subsection.1.1.2}{Seconda generazione \(1955-1965\)}{section.1.1}% 4
-\BOOKMARK [2][-]{subsection.1.1.3}{Terza generazione \(1965-1980\)}{section.1.1}% 5
-\BOOKMARK [2][-]{subsection.1.1.4}{Quarta generazione \(1980-1990\)}{section.1.1}% 6
-\BOOKMARK [0][-]{chapter.2}{Componenti di un sistema operativo}{}% 7
-\BOOKMARK [1][-]{section.2.1}{Interprete}{chapter.2}% 8
-\BOOKMARK [2][-]{subsection.2.1.1}{Interfaccia utente}{section.2.1}% 9
-\BOOKMARK [1][-]{section.2.2}{System call}{chapter.2}% 10
-\BOOKMARK [2][-]{subsection.2.2.1}{Implementazione}{section.2.2}% 11
+\BOOKMARK [1][-]{subsection.1.0.1}{Punti chiave nel progetto di calcolatori}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.1}{Storia dei sistemi operativi}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.1}{Prima generazione \(1946-1955\)}{section.1.1}% 4
+\BOOKMARK [2][-]{subsection.1.1.2}{Seconda generazione \(1955-1965\)}{section.1.1}% 5
+\BOOKMARK [2][-]{subsection.1.1.3}{Terza generazione \(1965-1980\)}{section.1.1}% 6
+\BOOKMARK [2][-]{subsection.1.1.4}{Quarta generazione \(1980-1990\)}{section.1.1}% 7
+\BOOKMARK [0][-]{chapter.2}{Componenti di un sistema operativo}{}% 8
+\BOOKMARK [1][-]{section.2.1}{Servizi di gestione}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.2}{Interprete dei comandi \(shell\)}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.1}{System calls}{section.2.2}% 11
+\BOOKMARK [0][-]{chapter.3}{Architettura di un sistema operativo}{}% 12
+\BOOKMARK [1][-]{section.3.1}{macchine virtuali}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.2}{Processi e thread}{chapter.3}% 14

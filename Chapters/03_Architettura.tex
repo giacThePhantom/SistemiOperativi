@@ -1,20 +1,31 @@
 \chapter{Architettura di un sistema operativo}
 Un principio importante \`e la separazione tra meccanismi e criteri o policy: i primi determinano come eseguire qualcosa, mentre i secondi cosa si deve fare. Questa distinzione \`e importante ai fini della
-flessibilit\`a in quanto i criteri sono soggetti a cambiamenti di luogo e tempo. Questi cambiamenti devono richiedere il cambio di meccanismi solo nel caso pessimo. Le principali tipologie di architettura di sistemi operativi sono:
+flessibilit\`a in quanto i criteri sono soggetti a cambiamenti di luogo e tempo.Principi importanti da tenere a mente durante lo sviluppo di sistemi operativi \`e il KISS (keep it small
+and simple), semplice dal punto di vista del codice, per mantenere affidabilit\`a e mantenibilit\`a e il POLA (principle of least privilege): un programm deve poter accedere unicamente ai
+dati strettamente necessari, fondamentale per il mantenimento di sicurezza e affidabilit\`a.Questi cambiamenti devono richiedere il cambio di meccanismi solo nel caso pessimo. Le 
+principali tipologie di architettura di sistemi operativi sono:
 \begin{itemize}
-	\item Sistemi monolitici.
-	\item Sistemi a struttura semplice: si ha un minimo di gerarchia e di struttura, non esiste  ancora la suddivisione modalità utente e modalità kernel.
-	\item Sistema operativo a livelli.
-	\item Sistemi basati su kernel: tutti i sistemi operativi adesso oscurano il kernel, ma tendono a mettere tutto in esso. Facendo così però se c’è un bug o un virus in uno di questi moduli, essi avranno gli stessi privilegi di
-		altri moduli nel kernel. Per questo si usano sistemi basati su micro-kernel dove si tengono solo le funzioni principali come comunicazioni tra processi, scheduler e gestione della memoria principale. Tutto il resto è 
-		gestito fuori come I/O o file system. I vantaggi sono maggiore portabilità e una più bassa probabilità di avere bug, ma uno dei difetti sono le scarse prestazioni. I microkernel pertanto si diffondono quando l’hardware 
-		diventa molto performante, quindi questo calo di prestazioni non si percepisce nemmeno.
+	\item Sistemi monolitici: sistemi senza gerarchia e con un unico strato software tra utente e hardware, tutti i componenti sono sullo stesso 
+		livello e possono chiamarsi vicendevolmente. In questa tipologia il codice dipende direttamente dall'architettura hardware e rende test
+		e debugging complesso.
+	\item Sistemi a struttura semplice: si ha un minimo di gerarchia e di struttura, non esiste  ancora la suddivisione modalità utente e modalità kernel. Questa struttura \`e mirata a ridurre i costi di sviluppo e manutenzione.
+	\item Sistema operativo a livelli. I servizi sono organizzati su livello gerarchici con al livello pi\`u alto l'interfaccia utente e al pi\`u 
+		basso l'hardware. Ogni livello pu\`o utilizzare funzioni di livelli inferiori. La modularit\`a rende pi\`u semplice la manutenzione, ma
+		diminuisce l'efficienza e richiede un'attenta definizione dei livelli. 
+	\item Sistemi basati su kernel: vengono utilizzati due livelli, i cui servizi sono distinti tra kernel e non-kernel. Presenta i vantaggi del sistema a livelli come modularit\`a
+		ma senza avere troppi livelli. Tra i servizi al di fuori del kernel non si trova nessuna organizzazione e si tende a pensare al kernel come a una struttura monolitica.
+	\item Sistemi a micro-kernel: i micro-kernel sono un insieme di piccoli kernel che svolgono poche funzioni fondamentali. Occupano meno memoria e sono pi\`u affidabili e 
+		mantenibili, ma presentano scarse prestazioni: ogni volta che si deve accedere ad un programma applicativo si deve fare un cambio tra modalit\`a kernel a modalit\`a
+		utente e viceversa una volta terminato il processo. Vengono utilizzati da quando le prestazioni di CPU e memoria sono sufficienti a non far percepire all'utente il cambio
+		di modalit\`a. La modularit\`a offre inoltre maggiore sicurezza e portabilit\`a.
 \end{itemize}
-\section{macchinee virtuali}
-Quando si parla di sistemi operativi è importante anche parlare di macchine virtuali, la prima viene diffusa da IBM. Ci sono diversi modi per implementare una virtual machine e i due principali sono TYPE1 e TYPE2. 
-Le virtual machine sono completamente isolate, quindi non interagiscono con le altre virtual machine, sono utili quando scaricando qualcosa dalla rete si rischia di incontrare un virus. Nel sistema client-server tutte le funzionalità del 
-sistema operativo sono implementate come fossero dei server, quindi i processi si interfacciano ad esse come fossero dei client. Una cospicua parte dei sistemi operativi è scritta in ASSEMBLER, mentre le parti relative al file system ad 
-esempio sono scritte in C o C++. 
+\section{macchine virtuali}
+Le macchine virtuali sono introdotte nel $1972$ da IBM come estremizzazione dell'approccio a livelli persata per offrire un sistema di timesharing multiplo ovvero che permette la
+multiprogrammazione e una macchina estesa che abbia un interfaccia pi\`u semplice del solo hardware. La base della macchina virtuale \`e la separazione di questi due aspetti. La sua parte
+centrale era il virtual machine monitor che permette la multiprogrammazione offrendo diverse macchine virtuali al livello superiore. Un tipo di macchina virtuale utilizza un type 1 
+hypervisor, usato comuniemente che si trova sull'hardware e permette di eseguire diversi sistemi operativi sulla stessa macchina. Il type 2 hypervisor viene utilizzato su un sistema 
+operativo host nel quale l'hypervisor installa il sistema operativo guest in un disco virtuale che il sistema host vede come un file di grandi dimensioni. La differenza tra i due tipi
+di hypervisor sta nel fatto che quello di tipo 1 si trova direttamente sull'hardware, mentre il tipo 2 viene creato in un sistema operativo host.
 \section{Processi e thread}
 Attributi (Process Control Block): contiene un puntatore alla cella di memoria che contiene l’immagine, contiene lo stato del processo in un determinato momento, contiene i registri, le informazioni relative allo stato dell’I/O. 
 Un processo può essere in diversi stati. 
