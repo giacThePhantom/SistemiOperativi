@@ -25,3 +25,7 @@
 \BOOKMARK [2][-]{subsection.4.1.6}{Implementazione dei processi}{section.4.1}% 25
 \BOOKMARK [2][-]{subsection.4.1.7}{Modellare la multiprogrammazione}{section.4.1}% 26
 \BOOKMARK [1][-]{section.4.2}{Threads}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.2.1}{Utilizzo dei thread}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.2}{Il modello dei thread classico}{section.4.2}% 29
+\BOOKMARK [2][-]{subsection.4.2.3}{Thread POSIX}{section.4.2}% 30
+\BOOKMARK [2][-]{subsection.4.2.4}{Implementazione dei thread nello spazio utente}{section.4.2}% 31

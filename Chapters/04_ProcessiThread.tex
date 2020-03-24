@@ -104,3 +104,60 @@ aspettando per l'I/O \`e $p^n$, pertanto l'utilizzo della CPU \`e $1-p^n$. \`E f
 naturalmente fare delle assunzioni: tutti i processi sono indipendenti mentre con una singola CPU non si possono avere processi che vengono svolti in contemporanea. Pur non essendo 
 preciso, questo modello d\`a una buona approssimazione delle prestazioni della CPU. 
 \section{Threads}
+Nei sistemi operativi tradizionali ogni processo possiede uno spazio di indirizzamento e un singolo thread di controllo e nonostante questo \`e desiderabile avere multipli thread di 
+controllo nello stesso spazio di indirizzamento eseguiti quasi in parallelo, quasi come processi separati.
+\subsection{Utilizzo dei thread}
+La ragione principale alla base dell'utilizzo dei thread \`e che molte applicazioni possiedono multiple attivit\`a che avvengono insieme. Alcune di queste potrebbero bloccarsi. Una
+decomposizione in multipli thread sequenziali semplifica il modello di programmazione. Si nota l'analogia con la neccessit\`a di avere i processi, con l'unica differenza che i thread
+permettono a entit\`a parallele di condividere uno spazio di indirizzamento e tutti i dati tra di loro, un'abilit\`a fondamentale per certe applicazioni. Oltre a questo i thread sono
+pi\`u leggeri e veloci da creare e distruggere dei processi, propriet\`a utile per un sistema dinamico e rapido. Permettono anche una certa sovrapposizione di attivit\`a non legate alla
+CPU. Invine sono utili in sistemi con multiple CPU, dove il parallelismo \`e possibile. Esiste un modello di progetatzione in cui lo stato di computazione deve essere salvato e 
+ripristinato nella tabella ogni volta che si cambia tra le richieste, simulando i threads e i loro stack, chiamato macchine a stato-finito. I thread rendono pertanto possibile mantenere
+l'idea dei processi sequenziali che fanno chiamate bloccanti e ottenere parallelismo:\\
+\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Modello} & \textbf{Caratteristiche}\\
+		\hline
+		Threads & Parallelismo, system calls bloccanti\\
+		\hline
+		Processi a thread singolo & Assenza di parallelismo, system calls bloccanti\\
+		\hline
+		Macchine a stato finito & Parallelismo, system calls non bloccanti, interrupts\\
+		\hline
+\end{tabular}
+\subsection{Il modello dei thread classico}
+Il modello dei processi si basa sui concetti indipendenti di raggruppamento delle risorse ed esecuzione: i thread permettono la loro separazione. Si pu\`o considerare un processo come
+un modo per raggruppare risorse imparentate insieme: possiede uno spazio di indirizzamento che contiene il programma e i dati e altre risorse come file aperti, processi figli, allarmi
+in attesa, gestori di segnali, informazioni di gestione che uniti in esso sono gestiti pi\`u facilmente. Il processo inoltre possiede un thread di esecuzione che possiede un program
+counter che traccia quale istruzione eseguire successivamente, registri che contengono le variabili correnti, uno stack con la storia dell'esecuzione con un frame per ogni procedura 
+senza ritorno. Pertanto se i processi raggruppano risorse i thread sono le entit\`a in programma per esecuzione sulla CPU. I thread permettono un esecuzione multipla sullo stesso 
+ambiente di processo con grande livello di indipendenza. Il termine multithreading \`e utilizzato per descrivere una situazione in cui sono presenti mutlipli thread, detti processi 
+leggeri. Quando un processo a muiltithread viene eseguito su un sistema a singola CPU i threads fanno a turno come i processi. Thread diversi in un processo non sono indipendenti come
+processi diversi: possiedono lo stesso spazio di archiviazione e pertanto devono condividere le stesse variabili globali e possono accedere e modificare i rispettivi stack, non 
+necessaria in quanto i thread si generano da un processo generato da un utente e sono creati in modo da cooperare. Si nota come pertanto gli oggetti singoli di un processo sono lo
+spazio di archiviazione, le variabili globali, file aperti, processi figli, allarmi in attesa, segnali e loro gestori e informazioni di contabilit\`a, mentre un thread possiede il 
+program counter, i registri, lo stack e lo stato. Nello stesso modo dei processi possono essere eseguiti, bloccati, pronti o terminati. Ogni stack del thread contiene un frame per 
+ogni procedura che \`e stata chiamata ma non ha ancora prodotto un valore di ritorno, distinta per ogni thread. Quando si trova multithreading i processi cominciano solitamente con un
+unico thread presente che pu\`o crearne altri attraverso \emph{thread\_create} in cui un parametro specifica il nome della procedura per il nuovo thread. In alcuni casi possono essere
+gerarchici. La creazione di un thread ritorna un identificatore del thread che lo nomina. Quando un thread ha finito esce chiamando \emph{thread\_exit} che lo fa svanire. In alcuni 
+sistemi pu\`o aspettare per l'uscita di un thread specifico attraverso \emph{thread\_join} che blocca il thread chiamante fino a che il thread specificato non ha finito. Un'altra 
+chiamata comune \`e \emph{thread\_yeld} che permette ad un thread di abbandonare la CPU per lasciare l'esecuzione per un altro thread. I thread generano delle complicazioni: la 
+creazione di un processo figlio genera problemi in quanto dovrebbe ereditare tutti i thread del padre in quanto potrebbero essere essenziale, ma cosa succede a questi ultimi se erano 
+bloccati da un interrupt. Un'altra classe di problemi dipende dal fatto che i thread condividono molte strutture dati che rendono necessaria una progettazione accurata. 
+\subsection{Thread POSIX}
+Per rendere possibile la creazione di programmi con thread l'IEEE ha definito uno standard chiamato Pthreads supportato dalla maggior parte dei sistemi UNIX che definisce $60$ chiamate
+a funzioni come:
+\begin{itemize}
+	\item \emph{Phtread\_create} che crea un nuovo thread.
+	\item \emph{Phtread\_exit} che termina il thread chiamante.
+	\item \emph{Phtread\_join} che aspetta per l'uscita di un thread specifico.
+	\item \emph{Phtread\_yield} che rilascia la CPU per permettere l'esecuzione di un altro thread.
+	\item \emph{Phtread\_attr\_init} che crea e inizializza la struttura di attributi del thread.
+	\item \emph{Phtread\_attr\_destroy} che rimuove la struttura di attributi del thread.
+\end{itemize}
+Ogni Pthread possiede un identificatore, un insieme di registri e un insieme di attributi salvati in una struttura. Quando un nuovo thread \`e creato viene ritornato l'identificatore del
+thread, molto simile alla \emph{fork} se non si considerano i parametri. L'identificatore viene utilizzato per riferirsi ad altre chiamate. Quando un thread termina la chiamata alla
+funzione lo ferma e rilascia lo stack. Gli ultimi due gestiscono la memoria degli attributi inizializzandoli ai valori di default che potranno essere modificati. L'eliminazione degli
+attributi non causa la terminazione del thread. 
+\subsection{Implementazione dei thread nello spazio utente}
+I thread possono essere implementati nel kernel o nello spazio utente, con una soluzione ibrida possibile. 
