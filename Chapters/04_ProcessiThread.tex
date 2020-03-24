@@ -1,0 +1,106 @@
+\chapter{Processi e threads}
+Il concetto centrale per ogni sistema operativo \'e quello di processo, l'astrazione di un programma che sta venendo eseguito. Tali astrazioni permettono 
+di avere operazioni pseudo-concorrenti anche quando esiste una sola CPU, trasformandola in diverse CPU virtuali. 
+\section{Processi}
+Tutti i computer moderni svolgono diverse funzioni allo stesso tempo. In un sistema multiprogramma la CPU cambia da processo a processo rapidamente, 
+eseguendo ognuno per decine o centinaia di millisecondi. Si parla di pseudoparallelismo in contrasto con il parallelismo dei sistemi multiprocessore. .
+\subsection{Il modello dei processi}
+In questo modello tutti il software eseguibile sul computer \`e organizzato in un numero di processi sequenziali, istanze di un programma che sta venendo eseguito con i valori per 
+il contatore, i registri e le variabili. Ogni processo possiede la propria CPU virtuale, anche se \`e la CPU che cambia tra i processi, chiamato multiprogramming. Ogni programma in
+questo caso viene eseguito in maniera indipendente. Essendo che esiste un unico contatore di programma fisico, quando un processo viene eseguito il suo contatore logico \`e inserito 
+in quello reale. Quando si passa ad un altro processo il contatore fisico \`e salvato nel contatore logico del processo. Si assuma che ci sia una sola CPU. Con essa che cambia tra i 
+processi, il tasso di computazione di un processo non sar\`a uniforme n\`e riproducibile, pertanto i processi non possono essere programmati con assunzioni riguardo alla temporizzaizone.
+Quando un processo richiede dei criteri real-time eventi si devono prendere delle misure speciali. Il processo pu\`o essere considerato come un'istanza del programma, con un input, un
+output e uno stato. Si noti come se un programma viene eseguito due volte conta come due proessi. 
+\subsection{Creazione dei processi}
+I sistemi operativi necessitano di un modo per creare processi. In sistemi progettati per eseguire una singola applicazione potrebbe essere possibile avere tutti i processi che saranno
+necessari presenti allo startup. In sistemi general-purpose \`e neccessario avere qualche modo per creare e terminare processi quando sono necessari durante l'operazione. Ci sono 
+quattro princupali cause per la creazione di un processo:
+\begin{itemize}
+	\item Inizializzazione del sistema. Durante la fase di boot sono creati numerosi processi, alcuni che interagiscono con l'utente e altri di background che non sono associati con
+		utenti particolari ma hanno funzioni specifiche. I processi che stanno nel background per gestire delle attivit\`a sono detti daemons e sistemi grossi ne possiedono a 
+		dozzine. 
+	\item Esecuzione di una system call da un processo che sta venendo eseguito che crea un processo attraverso una system call. Creare un nuovo processo \`e utile quando il lavoro
+		che deve essere eseguito pu\`o essere formulato come un insieme di processi che interagiscono ma sono indipendenti. 
+	\item L'utente richiede di creare il processo in sistemi interattivi attraverso un comando o cliccando su un'icona. In sistemi basati su UNIX il nuovo processo rileva la finestra
+		da dove \`e eseguito. In windows il processo pu\`o creare una o pi\`u finestre. In entrambi i casi l'utente pu\`o avere pi\`u finestre aperte contempoaneamente.
+	\item Inizializzazione di un batch job su sistemi batch che si trovano su grandi mainframes. Gli utenti possono inviare batch jobs al sistema e quando il sistema decide che ha
+		le risorse necessarie per eseguirne un altro crea un nuovo processo e svolge il job successivo nella coda.
+\end{itemize}
+Tecnicamente in tutti questi casi un nuovo processo \`e creato avendo un processo esistente che esegue una system call che dice al sistema operativo di creare un nuovo processo e indica
+direttamente o indirettamente quale programma eseguire in esso. In UNIX esiste un'unica system call per creare un nuovo processo: \emph{fork} che crea un clone esatto del processo
+chiamante. Dopo la \emph{fork} i due processi hanno la stessa immagine di memoria, le stesse stringhe ambientali e gli stessi file aperti. Tipicamente il processo figlio esegue
+\emph{execve} o una system call simile per cambiare l'immagine di memoria e eveguire un nuovo programma. Quando l'utente inserisce un comando la shell forka il processo figlio che poi
+esegue il comando. QUesti due passaggi permettono al figlio di manipolare i propri file descriptors dopo la \emph{fork} ma prima dell'\emph{execve}. In Windows una singola chiamata alla
+funzione \emph{CreateProcess} gestisce entrambi i passaggi con $10$ parametri che includono la creazione e il caricamento del programma corretto da eseguire, i parametri di liena di 
+comando, attributi di sicurezza, bit di controllo e un puntatore alla struttura in cui le informazioni sul processo sono ritornate al chiamante. Dopo che un processo \`e creato 
+il genitore e il figlio possiedono i propri spazi di indirizzamento distinti. In UNIX quello del figlio \`e inizialmente una copia del genitore ma non \`e condivisa memoria scrivibile.
+\subsection{Terminazione di un processo}
+Dopo che un processo \`e stato creato e ha svolto il suo lavoro termina in:
+\begin{itemize}
+	\item Normal exit (volontaria), la maggior parte dei processi termina in questo modo eseguendo una system call in modo da dire al sistema operativo che ha finito. 
+		Questa call \`e \emph{exit} in UNIX e \emph{ExitProcess} in Windoes. Programmi screen-oriented supportano la terminazione volontaria. 
+	\item Error exit (volontaria), avviene quando il processo scopre un errore, lo annuncia ed esce, le applicazioni screen oriented tipicamente creano una dialog box.
+	\item Fatal error (involontaria) \`e causata da un bug nel programma, come l'esecuzione di un'istruzione illegale. 
+	\item Ucciso da un altro processo (involontario) attraverso una system call che dice al sistema operativo di terminarlo in UNIX \`e \emph{kill}, in Windows \`e 
+		\emph{TerminateProcess}. 
+\end{itemize}
+In alcuni sistemi quando un processo termina sono uccisi anche tutti i processi che ha creato. 
+\subsection{Gerarchie di processi}
+In alcuni sistemi quando un processo ne crea un altro rimangono associati in certi modi. in UNIX un progesso e tutti i suoi discendenti formano un gruppo di processi. Quando un segnale
+viene inviato dalla tastiera viene ricevuto da tutti i membri del gruppo di processi associati alla tastiera. Individualmente ogni processo pu\`o catturare il segnale, ignorarlo o 
+svolgere un'azione default, che \`e di essere ucciso dal sengale. Un altro esempio di gerarchia \`e dato dal inizializzazione di UNIX successivamente la fase di boot. Un processo 
+speciale detto \emph{init} \`e presente nella immagine di boot e quando viene eseguito legge un file che dice quanti terminali ci sono. Successivamente forka ad un nuovo processo per 
+terminale. Questi processi aspettano per un login che se hanno successo esegue una shell per eseguire comandi che potrebbero iniziarne altri e cos\`i via. Pertanto tutti i processi
+del sistema si basano su un singolo albero con \emph{init} alla radice. Windows non possiede un concetto di gerarchia dei processi: sono tutti uguali, ma quando un processo \`e generato
+il padre possiede un token detto handle che gli permette di controllare il figlio. Questo tolen pu\`o essere passato ad altri process, annullando la gerarchia. 
+\subsection{Stati dei processi}
+Nonostante ogni processo sia un'entit\`a indipendente, con il proprio program counter e stato interno, deve spesso interagire con altri processi, ad esempio accettando come input 
+l'output di altri. Quando un processo si blocca lo sa in quanto non pu\`o continuare logicamente, tipicamente quando sta aspettando per un input che non \`e disponibile. \`E inoltre 
+possibile che sia bloccato in quanto il sistema operativo ha deciso di allocare la CPU per un altro processo. Queste due condizioni sono diverse in quanto la prima \`e inerente il 
+problema, mentre nel secondo caso \`e una tecnicalit\`a del sistema. Ci sono pertanto tre stati che il processo pu\`o avere:
+\begin{itemize}
+	\item Running: il processo sta utilizzando la CPU.
+	\item Ready: eseguibile, stoppato per far eseguire un altro processo. Stato logicamente simile al primo in quanto il processo in entrambi i casi \`e capace di essere eseguito.
+	\item Blocked: incapace di essere eseguito fino a che un evento esterno accade. Questo stato \`e differente in quanto il processo non pu\`o essere eseguito anche con la CPU
+		libera.
+\end{itemize}
+L'unica transizione non possibile \`e duella da ready a blocked. La transizione da running a blocked avviene quando il sistema scopre che un processo non pu\`o contineare al momento. 
+In alcuni sistemi si pu\`o eseguire una system call come \emph{pause} per entrare in uno stato bloccato, in altri sistemi come UNIX, quando un processo legge da una pipe o da un file
+speciale e non si trova input disponibile il processo \`e automaticamente bloccato. La transizione da running a ready e viceversa sono causate dallo scheduler dei processi in modo da
+permettere l'eventuale esecuzione di tutti i processi in stato ready. La transizione da blocked a running avviene quando un evento esterno elimina il blocco logico del processo. 
+Il modello dei processi permette di semplificare gli eventi interni al sistema: alcuni processi eseguono comandi dell'utente, altri sono parte del sistema e gestiscono richieste di 
+esso. Quando avviene un interrupt il sistema ferma il processo corrente ed esegue l'interrupt che si bloccano quando aspettano che accada qualcos altro. Il livello pi\`u basso del
+sistema operativo \`e lo scheduler, con un insieme di programmi al di sopra di esso. Tutti i dettagli della gestione dell'interrupt e di blocco e inizio dei processi sono nascosti e il
+resto del sistema operativo \`e stutturato in forma di processo. 
+\subsection{Implementazione dei processi}
+Per implementare il modello dei processi il sistema operativo mantiene una tabella (array di strutture) chiamata la tabella dei processi con un entry per processo contenente 
+informazioni riguardo lo stato del processo, come il program counter, lo stack pointer, la memoria allocata, lo stato dei file aperti e le informazioni di accounting e scheduling e
+ogni altra informazione che deve essere salvata quando il processo viene passato da running a ready o blocked in modo che possa essere fatto ripartire successivamente. In un tipico 
+sistema la tabella presenta tre colonne con la prima dedicata alla gestione del processo, la seconda alla gestione della memoria e la terza alla gestione dei file. Associato con ogni
+classe di I/O si trova una locazione (tipicamente fissa al fondo della memoria) detta interrupt vector che contiene l'indirizzo dell procedura del servizio di interrupt. Quando accade
+un interrupt tutti i processi che stanno venendo eseguiti salvano il program coutner, lo stato e dei registri nello stack grazie all'hardware di interrupt e il computer salta 
+all'indirizzo specificato nell'interrupt vector che fa partire la procedura. Tutti gli interrupt cominciano con il salvataggio dei registri nell'entri del processo corrente, dopo 
+l'informazione \`e pushata sullo stack dall'interrupt \`e rimossa e il puntatore allo stack \`e settato a puntare ad uno stack temporaneo utilizzato dal gestore dei processi. Il 
+salvataggio dei registri e il settaggio dello stack pointer devono essere svolti da una piccola routine in assembly, uguale per ogni interrupt. Quando la routine \`e finita chiama una
+procedura in $C$ che svolge il resto del lavoro specifico al tipo di interrupt. Quando \`e finito viene chiamato lo scheduler per vedere quale processo deve essere eseguito. Dopo
+quello il controllo \`e passato al codice in assembly per ricaricare in memoria i registri e le mappe per il proceso corrente e comincia ad essere eseguito. Dopo ogni interrupt il
+processo ritorna precisamente nello stesso stato in cui era prima che accadesse l'interrupt. Riassumendo il processo di interrupt:
+\begin{itemize}
+	\item L'hardware salva lo stato del processo sullo stack.
+	\item L'hardware carica il nuovo program counter dall'interrupt vector.
+	\item Una procedura in assembly salva i registri.
+	\item Una procedura crea un nuovo stack.
+	\item Una servizio di interrupt in C viene eseguito (tipicamente legge e buffera l'input).
+	\item Lo scheduler decide il prossimo processo da eseguire.
+	\item Una procedura in C ritorna il codice in assmbly.
+	\item Una procedura in assembly ricomincia il nuovo processo corrente.
+\end{itemize}
+\subsection{Modellare la multiprogrammazione}
+L'utilizzo della multiprogrammazione permette il miglioramento dell'utilizzo della CPU: se il processo medio computa il $20\%$ del tempo che risiede in memoria, $5$ processi alla volta
+dovrebbero rendere la CPU occupata tutti il tempo (irrealisticamente ottimistico). Un modello migliore consiste nel guardare l'utilizzo della CPU in modo probabilistico: suppondendo che
+un processo utilizzi una frazione $p$ del suo tempo aspettando per il completamento dell'I/O. Con $n$ processi in memoria alla volta, la probabilit\`a che tutti gli $n$ processi stiano
+aspettando per l'I/O \`e $p^n$, pertanto l'utilizzo della CPU \`e $1-p^n$. \`E facile notare come siano richiesti molti processi per rendere efficiente l'utilizzo della CPU. Si devono
+naturalmente fare delle assunzioni: tutti i processi sono indipendenti mentre con una singola CPU non si possono avere processi che vengono svolti in contemporanea. Pur non essendo 
+preciso, questo modello d\`a una buona approssimazione delle prestazioni della CPU. 
+\section{Threads}

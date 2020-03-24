@@ -10,5 +10,18 @@
 \BOOKMARK [1][-]{section.2.2}{Interprete dei comandi \(shell\)}{chapter.2}% 10
 \BOOKMARK [2][-]{subsection.2.2.1}{System calls}{section.2.2}% 11
 \BOOKMARK [0][-]{chapter.3}{Architettura di un sistema operativo}{}% 12
-\BOOKMARK [1][-]{section.3.1}{macchine virtuali}{chapter.3}% 13
-\BOOKMARK [1][-]{section.3.2}{Processi e thread}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.1}{Modello client-server}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.2}{macchine virtuali}{chapter.3}% 14
+\BOOKMARK [2][-]{subsection.3.2.1}{Esokernel}{section.3.2}% 15
+\BOOKMARK [1][-]{section.3.3}{Processi e thread}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.4}{Processi e thread}{chapter.3}% 17
+\BOOKMARK [0][-]{chapter.4}{Processi e threads}{}% 18
+\BOOKMARK [1][-]{section.4.1}{Processi}{chapter.4}% 19
+\BOOKMARK [2][-]{subsection.4.1.1}{Il modello dei processi}{section.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.1.2}{Creazione dei processi}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.3}{Terminazione di un processo}{section.4.1}% 22
+\BOOKMARK [2][-]{subsection.4.1.4}{Gerarchie di processi}{section.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.1.5}{Stati dei processi}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.6}{Implementazione dei processi}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.1.7}{Modellare la multiprogrammazione}{section.4.1}% 26
+\BOOKMARK [1][-]{section.4.2}{Threads}{chapter.4}% 27

@@ -19,6 +19,10 @@ principali tipologie di architettura di sistemi operativi sono:
 		utente e viceversa una volta terminato il processo. Vengono utilizzati da quando le prestazioni di CPU e memoria sono sufficienti a non far percepire all'utente il cambio
 		di modalit\`a. La modularit\`a offre inoltre maggiore sicurezza e portabilit\`a.
 \end{itemize}
+\section{Modello client-server}
+Una variazione del'idea del microkernel \`e quella di distinguere due classi di processi: i server che forniscono un servizio e i client che lo utilizzano. Spesso il livello pi\`u basso
+\`e un microkernel, ma non \`e richiesto. La comunicazione tra client e server avviene tramite scambio di messaggi: per ottenere un servizio il client deve costruire un messaggio e 
+inviarlo al server, che quando lo riceve restituisce la risposta. Se client e server operano sulla stessa macchina sono possibili delle ottimizzazioni.  
 \section{macchine virtuali}
 Le macchine virtuali sono introdotte nel $1972$ da IBM come estremizzazione dell'approccio a livelli persata per offrire un sistema di timesharing multiplo ovvero che permette la
 multiprogrammazione e una macchina estesa che abbia un interfaccia pi\`u semplice del solo hardware. La base della macchina virtuale \`e la separazione di questi due aspetti. La sua parte
@@ -26,6 +30,21 @@ centrale era il virtual machine monitor che permette la multiprogrammazione offr
 hypervisor, usato comuniemente che si trova sull'hardware e permette di eseguire diversi sistemi operativi sulla stessa macchina. Il type 2 hypervisor viene utilizzato su un sistema 
 operativo host nel quale l'hypervisor installa il sistema operativo guest in un disco virtuale che il sistema host vede come un file di grandi dimensioni. La differenza tra i due tipi
 di hypervisor sta nel fatto che quello di tipo 1 si trova direttamente sull'hardware, mentre il tipo 2 viene creato in un sistema operativo host.
+\subsection{Esokernel}
+Piuttosto che clonare la macchina, un'altra strategia per ottenere un sottinsieme delle risorse \`e partizionarla. Al livello pi\`u basso si trova un programma eseguito in modalit\`a
+kernel che alloca risorse alle virtual machine e controlla le loro prove di utilizzarle. Il vantaggio dell'esokernel \`e che evita un livello di mappatura: in altri metodi \`e necessaria
+una mappatura tal disco virtuale a quello fisico, come per tutte le altre risorse. 
+
+\section{Processi e thread}
+Attributi (Process Control Block): contiene un puntatore alla cella di memoria che contiene l’immagine, contiene lo stato del processo in un determinato momento, contiene i registri, le informazioni relative allo stato dell’I/O. 
+Un processo può essere in diversi stati. 
+All’inizio il processo viene creato, poi può essere in esecuzione se gli viene assegnata la CPU o non in esecuzione se non gli viene assegnata la CPU. Il Dispatcher assegna la CPU ai processi che sono pronti, ma non in esecuzione (posso 
+avere diversi processi in memoria, ma solo uno per volta usa la CPU e quindi è effettivamente in esecuzione, a meno di CPU multicore). Quando un processo è pronto e viene creato viene messo nella ReadyQueue (oppure nella coda di un 
+dispositivo cioè la coda in cui viene messo un processo che sta aspettando di accedere a un determinato dispositivo). In realtà esistono diverse code in cui può essere messo un processo. Dispatch e Scheduler sono due componenti diversi, 
+lo scheduler sceglie mentre il dispatcher implementa questa cosa. Context-Switch: salvo tutto quello che c’era nel PCB, tutto quello che stavo utilizzando al momento dell’esecuzione. Due operazioni fondamentali che fa un sistema operativo
+è la creazione e la terminazione del processo. Ogni processo può creare altri processi e questi prendono il nome di processi figli. Il figlio può essere creato in modalità sincrona, cioè finché il figlio è in vita io non faccio niente, 
+oppure in modalità asincrona cioè io creo il figlio e continuo la mia esecuzione. Con la fork il figlio lo creo esattamente uguale al padre, con la exec posso caricare sul figlio un programma diverso rispetto al padre. Con la wait creo 
+un’esecuzione sincrona tra padre e figlio. Una fork può fallire perché o il padre non ha abbastanza memoria o perché non ha i privilegi per creare un figlio. L’exec cambia l’immagine in memoria del figlio. 
 \section{Processi e thread}
 Attributi (Process Control Block): contiene un puntatore alla cella di memoria che contiene l’immagine, contiene lo stato del processo in un determinato momento, contiene i registri, le informazioni relative allo stato dell’I/O. 
 Un processo può essere in diversi stati. 
