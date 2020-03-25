@@ -160,4 +160,29 @@ thread, molto simile alla \emph{fork} se non si considerano i parametri. L'ident
 funzione lo ferma e rilascia lo stack. Gli ultimi due gestiscono la memoria degli attributi inizializzandoli ai valori di default che potranno essere modificati. L'eliminazione degli
 attributi non causa la terminazione del thread. 
 \subsection{Implementazione dei thread nello spazio utente}
-I thread possono essere implementati nel kernel o nello spazio utente, con una soluzione ibrida possibile. 
+I thread possono essere implementati nel kernel o nello spazio utente, con una soluzione ibrida possibile. Quando sono implementati nello spazio utente il kernel consiera processi a 
+thread singolo. Un vantaggio \`e che possono essere implementati in un sistema operativo che non li supporta in una liberia. Vengono eseguiti in un sistema a run-time, che \`e un insieme
+di procedure che li gestiscono. Ogni processo possiede la propria tabella dei thread privata che tiene traccia dei thread nel processo e delle propriet\`a uniche del thread, gestita dal
+sistema a tun-time. Quando un thread deve essere cambiato di stato l'informazione necessaria a farlo ricominciare si trova nella tabella. Quando un thread deve essere bloccato localmente
+chiama una procedura che controlla se tale processo deve essere messo in uno stato bloccat e se lo \`e salva i registri del thread nella tabella, cerca in essa per un thread pronto e 
+ricarica nei registri i valori salvati del nuovo thread che viene eseguito automaticamente. Se la macchina ha istruzioni per salvare tutti i registri e per cricarli l'intero cambio di 
+thread richiede poche istruzioni, molto pi\`u veloce che coinvolgere il kernel. La differenza con i processi \`e quando un thread ferma la propria esecuzione si possono salvare le 
+informazioni del thread nella tabella e pu\`o dire allo scheduler di selezionare un altro thread per l'esecuzione come parametri locali. Permettono inoltre ad ogni processo di possedere
+un proprio algoritmo di scheduling e scalano meglio. I loro problemi riguardano come sono implementate le system calls bloccanti in quanto non possono svolgerle perch\`e bloccherebbero
+tutti i thread. Le system calls potrebbero essere cambiate a nonblocking ma richiedere cambi nel sistema operativo non \`e ottimale. Un'altra alternativa \`e che \`e possibile dire in
+anticipo se una chiamata causa un blocco con una chiamata tipo \emph{exists} che permette al chiamante di dire se una chiamata blocchera. La procedura potr\`a essere cambiata con una 
+nuova che prima fa una chiamata \emph{select} e poi la bloccante solo se \`e sicuro farla. Se blocca non viene fatta e vieme eseguito un nuovo thread. Il codice richiede cambi alla 
+libreria delle system calls ed \`e inefficiente ma necessario, tale codice \`e detto jacket o wrapper. Un altro problema nasce con i page faults: il computer pu\`o non mantenere tutti i 
+problemi nella memoria principale contemporaneamente. Quando accade una page fault il sistema operativo cerca le istruzioni mancanti dal disco bloccando il processo. Se il kernel non
+ha la conoscenza dei thread blocca l'intero processo, anche se altri thread sono pronti. Un ulteriore problema nasce dal fatto che se un thread comincia ad essere eseguito non 
+rilascer\`a mai volontariamente la CPU. Una soluzione \`e richiedere al sistema di run-time un segnale di clock interrupt che d\`a il controllo a altri thread. 
+\subsection{Implementazione dei thread nel kernel}
+Quando i thread sono implementati nel kernel non \`e necessario un sistema a run-time e tabella dei thread per processo. Quando un thread vuole crearne uno nuovo o distruggerlo fa una
+chiamata al kernel che la svolge aggiornando la tabella dei thread che contiene le informazioni per tutti i thread, un sottoinsieme di quelle mantenute per i processi. Tutte le chiamate
+che potrebbero bloccare il thread sono implementate come system calls. Quando un thread blocca il kernel pu\`o eseguire un altro thread dallo stesso processo o uno da un altro. Con i 
+thread a livellu utente il sistema di run-time continuava a eseguire thread dallo stesso processo fino a che il kernel non toglieva l'utilizzo della CPU. A causa del grande costo della
+creazione e distruzione dei thread alcuni sono riciclati: quando un thread \`e distrutto viene marcato come non eseguibile ma le strutture dati non vengono influenzate: quando un nuovo
+thread deve essere creato viene riattivato. I thread del kernel non richiedono nuove system calls non bloccanti e le page fault sono pi\`u semplici da controllare. Lo svantaggio 
+principale \`e il costo delle system calls. 
+\subsection{Implementazioni ibride}
+

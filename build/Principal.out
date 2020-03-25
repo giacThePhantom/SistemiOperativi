@@ -29,3 +29,5 @@
 \BOOKMARK [2][-]{subsection.4.2.2}{Il modello dei thread classico}{section.4.2}% 29
 \BOOKMARK [2][-]{subsection.4.2.3}{Thread POSIX}{section.4.2}% 30
 \BOOKMARK [2][-]{subsection.4.2.4}{Implementazione dei thread nello spazio utente}{section.4.2}% 31
+\BOOKMARK [2][-]{subsection.4.2.5}{Implementazione dei thread nel kernel}{section.4.2}% 32
+\BOOKMARK [2][-]{subsection.4.2.6}{Implementazioni ibride}{section.4.2}% 33

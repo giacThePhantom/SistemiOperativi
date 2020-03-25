@@ -53,3 +53,5 @@
 \contentsline {subsection}{\numberline {4.2.2}Il modello dei thread classico}{17}{subsection.4.2.2}% 
 \contentsline {subsection}{\numberline {4.2.3}Thread POSIX}{18}{subsection.4.2.3}% 
 \contentsline {subsection}{\numberline {4.2.4}Implementazione dei thread nello spazio utente}{18}{subsection.4.2.4}% 
+\contentsline {subsection}{\numberline {4.2.5}Implementazione dei thread nel kernel}{19}{subsection.4.2.5}% 
+\contentsline {subsection}{\numberline {4.2.6}Implementazioni ibride}{19}{subsection.4.2.6}% 
