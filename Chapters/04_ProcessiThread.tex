@@ -223,4 +223,45 @@ space non \`e possibile sapere a quale thread inviare il messaggio, mentre altri
 stack: quando uno stack va in overflow viene aumentato lo spazio e quando un processo ha multipli thread possiede multipli stack. Se il kernel non ne \`e a conoscenza non pu\`o aumentare
 la loro dimensione in quanto non individua l'overflow. 
 \section{Comunicazione tra interprocessi}
-
+I processi frequentemente necessitano di comunicare tra di loro e pertanto si rende necessaria una struttura che non usi interrupt che li utilizzi. Molte delle soluzioni proposte si 
+possono applicare anche ai thread.
+\subsection{Condizioni di competizione}
+In alcuni sistemi operativi processi che lavorano insieme possono condividere dello spazio di salvataggio comune che si pu\`o trovare nella memoria principale o un file condiviso, 
+operando in condizioni di competizione: scritture da parte di un processo possono eliminare o sovrascrivere dati scritti da un altro.
+\subsection{Regioni critiche}
+Per evitare le condizioni di competizione si proibisce a pi\`u di un processo di scrivere o leggere i dati condivisi nello stesso momento, in maniera mutualmente esclusiva. La scelta di 
+operazioni primitive per ottenerla \`e un problema fondamentale nella progettazione di un sistema operativo. La parte condivisa che viene acceduta \`e detta regione critica o sezione
+critica e per avere una buona soluzione si deve porre che:
+\begin{itemize}
+	\item Due processi non possono trovarsi simultaneamente nelle loro regioni critiche.
+	\item Nessun assunzione pu\`o essere fatta su velocit\`a o numero di CPU.
+	\item Nessun processo eseguito fuori dalla sua regione critica pu\`o bloccare nessun processo.
+	\item Nessun processo deve aspettare per sempre prima di entrare la sua regione critica.
+\end{itemize}
+\subsection{Mutua esclusione con busy waiting}
+\subsubsection{Disattivazione degli interrupts}
+Su un sistema a singolo processore la soluzione pi\`u semplice \`e quelladi avere un processo che disattiva tutti gli interrupt appena entra la sua regione critica e li riattiva appena
+prima di uscire. Non possono accadere clock interrupt e pertanto una volta che il processo ha disattivato gli interrupt esamina e aggiorna la memoria condivisa senza che nessun altro 
+processo possa intervenire. Non \`e mai saggio dare questo potere ai processi e non funziona a sistemi a multiprocessore in quanto \emph{disable} influisce unicamente la CPU che la 
+esegue. \`E conveniente per il kernel farlo per poche istruzioni mentre aggiorna variabili o liste speciali. Si nota pertanto come sia utile internamente al sistema operativo ma non
+esternamente e sta diventando meno popolare con l'espansione di chip multicore. 
+\subsubsection{Variabili di lock}
+Si consideri una variabile condivisa di lock inizialmente a $0$. Quando un processo vuole entrare la propria regione critica testa il lock: se \`e a $0$ lo setta a $1$ e entra la 
+regione critica, altrimenti aspetta fino a che torna $0$. Ma non risolve il problema in quanto sposta la competizione verso il lock.
+\subsubsection{Strict alternation}
+Un terzo approccio \`e dato dall'esistenza di una variabile che tiene traccia di chi \`e il turno per entrare nella regione critica. Questo test continuo \`e detto busy waiting e il 
+lock \`e detto spin lock. \`E tipicamente evitato in quanto spreca tempo di CPU. Questa soluzione richiede che due processi si alternino severamente nell'entrare nella regione critica. 
+Evita tutta la competizione ma viola la terza condizione.
+\subsubsection{La soluzione di Peterson}
+Prima di usare le variabili condivise ogni processo chiama \emph{enter\_region} con il proprio numero di processo come parametro che causa un'attesa fino a che \`e sicuro entrare. Dopo
+che ha finito il processo chiama \emph{leave\_region} indicando che ha terminato e permette ad altri processi di entrare. Quando un processo chiama \emph{enter\_region} setta il suo
+array di valori che indica i processi interessati alla regione critica e turn al proprio id. Quando ritorna setta il valore corrispondente nell'array a falso. Se due richieste di entrare
+avvengono quasi contemporaneamente conta solo l'ultima. 
+\subsubsection{Istruzioni TSL}
+Questo metodo richiede un aiuto da parte dell'hardware. Computer progettati con multipli processori specialmente possiedono un istruzione come \emph{TSL RX, LOCK} o test and set lock
+che legge i contenuti della memoria della parola lock nel registro RX e salva un valore nonzero all'indirizzo di memoria lock. Questa operazione \`e garantita indivisibile: la CPU che
+esegue l'istruzione blocca il memory bus impedendo ad altre CPU l'accesso. Per utilizzare questa istruzione si setta una variabile condivisa lock che coordina l'accesso alla memoria
+condivisa. Quando lock \`e a $0$, ogni processo pu\`o settarla a $1$ usando l'istruzione TLS e operare la memoria condivisa. Quando ha finito lock viene settato a $0$ da un'istruzione
+di move. Pertanto prima di entrare nella regione critica un processo chiama \emph{enter\_region} che fa busy waiting fino a che il lock \`e libero. Quando il processo lascia la regione
+chiama \emph{leave\_region} che salva $0$ in lock. Il processo deve chiamare le procedure correttamente.
+\subsubsection{Sleep e wakeup}

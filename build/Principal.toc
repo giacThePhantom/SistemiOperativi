@@ -59,3 +59,12 @@
 \contentsline {subsection}{\numberline {4.2.8}Thread Pop-Up}{21}{subsection.4.2.8}% 
 \contentsline {subsection}{\numberline {4.2.9}Rendere codice a thread singolo multithreaded}{21}{subsection.4.2.9}% 
 \contentsline {section}{\numberline {4.3}Comunicazione tra interprocessi}{22}{section.4.3}% 
+\contentsline {subsection}{\numberline {4.3.1}Condizioni di competizione}{22}{subsection.4.3.1}% 
+\contentsline {subsection}{\numberline {4.3.2}Regioni critiche}{22}{subsection.4.3.2}% 
+\contentsline {subsection}{\numberline {4.3.3}Mutua esclusione con busy waiting}{22}{subsection.4.3.3}% 
+\contentsline {subsubsection}{Disattivazione degli interrupts}{22}{section*.25}% 
+\contentsline {subsubsection}{Variabili di lock}{23}{section*.26}% 
+\contentsline {subsubsection}{Strict alternation}{23}{section*.27}% 
+\contentsline {subsubsection}{La soluzione di Peterson}{23}{section*.28}% 
+\contentsline {subsubsection}{Istruzioni TSL}{23}{section*.29}% 
+\contentsline {subsubsection}{Sleep e wakeup}{23}{section*.30}% 
