@@ -185,4 +185,42 @@ creazione e distruzione dei thread alcuni sono riciclati: quando un thread \`e d
 thread deve essere creato viene riattivato. I thread del kernel non richiedono nuove system calls non bloccanti e le page fault sono pi\`u semplici da controllare. Lo svantaggio 
 principale \`e il costo delle system calls. 
 \subsection{Implementazioni ibride}
+Un modo per combinare i vantaggi dei thread a livello utente e kernel \`e un'implementazione ibrida che usa thread a livello kernel che poi multiplexa thread a livello utente su alcuni
+o tutti i primi. In questo approccio il programmatore pu\`o determinare quanti thread kernel usare e quanti thread a livello utente multiplexare su ognuno di essi, dando al modello il
+maggior grado di flessibilit\`a. Il kernel conosce solo i thread di livello kernel e programma solo quelli, che potrebbero avere su di essi thread a livello utente che sono creati,
+distrutti e gestiti come quelli a livellu utente. Ogni thread di livello kernel ha un insieme di thread a livello utente che fanno a turno per utilizzarlo.
+\subsection{Attivazioni dello scheduler}
+I thread a livello kernel sono pi\`u lenti e un modo per migliorare questa situazione \`e attrvareso le attivazioni dello scheduler il cui obiettivo \`e imitare le funzionalit\`a dei
+thread del kernel con migliori prestazioni e flessibilit\`a: quando un thread si blocca su una system call o su una page fauilt deve essere possibile eseguire altri thread sullo stesso
+processo se sono pronti. L'efficienza \`e raggiunta evitando transizioni non necessarie tra lo spazio utente e del kernel lasciando al run-time utente la possibilit\`a di bloccare i
+thread sincronizzanti e programmare il prossimo da solo. Quando si utilizzano le attivazioni dello scheduler il kernel assegna un numero di processori virtuali a ogni processo e permette
+al sistema di run-time dello spazio utente di allocare thread ai processori. Il numero di processori virtuali inizialmente allocati ad un processo \`e $1$, ma possono aumentare e 
+diminuire in base alle necessit\`a del processo. Quando il kernel sa che un thread \`e stato bloccato notifica il sistema di run-time del processo passando come parametri sullo stack
+il numero del thread in questione e una descrizione dell'evento. Il kernel attiva il sistema di run-time con un meccanismo detto upcall. Una volta attivato il sistema riprogramma i 
+thread marcando i bloccati e prendendo il prossimo dalla lista dei pronti, inizializzando i registri e rieseguendolo. Quando il thread originale pu\`o di nuovo essere eseguito avviene
+un'altra upcall al sistema di run-time che pu\`o decidere se reiniziare il thread o metterlo nella lista dei pronti. Quando accade un hardware interrupt la CPU passa nella modalit\`a
+kernel. Se l'interrupt \`e causato da un evento non significativo al processo interrotto viene ripristinato nello stato precedente all'interrupt, altrimenti viene sospeso e il sistema di
+run-time iniziato su quella CPU virtuale con il thread interrotto sullo stack. Il sistema pu\`o poi decidere quale thread programmare su quella CPU. Le upcall non seguono il principio
+fondamentale del sistema a livelli: fanno chiamate ai livelli superiori. 
+\subsection{Thread Pop-Up}
+I thread sono utili in sistemi distribuiti: quando arrivano messaggi nell'approccio tradizionale si ha un processo o thread che viene bloccato su una system call \emph{receive} che 
+aspetta il messaggio in arrivo. Quando arriva il messaggio lo scompattta, esamina e processa. Un altro approccio \`e possibile quando l'arrivo del messaggio causa la creazione di un
+nuovo thread Pop-up per la sua gestione. Un vantaggio chiave \`e che essendo nuovi non hanno memoria che deve essere ripristinata. Sono tutti identici e permettono una creazione rapida, 
+riducendo la latenza dall'arrivo e l'inizio del processo. Si deve prestare cautela nella pianificazione della loro gestione.
+\subsection{Rendere codice a thread singolo multithreaded}
+Convertire processi a thread singolo a multithread \`e difficile: il codice di un thread consiste di procedure multiple. Le variabili locali non danno problemi come le variabili globali
+al thread ma locali al processo: molte procedure le utilizzano ma altri thread dovrebbero logicamente non usarle. Una soluzione per gestire la sovrascrizione delle variabili globale \`e
+eliminarle, ma l'idea entra in conflitto con troppo software gi\`a esistente. Un altra \`e di assegnare ad ogni thread le proprie variabili globali provate in modo da evitare conflitti,
+creando un nuovo livello di scoping, con variabili visibili unicamente a quelle interne al thread. L'accesso a una variabile globale privata \`e difficile. \`E possibile allocare una 
+parte di memoria per le variabili globali e passarla a ogni procedura nel thread come parametro extra o si possono introdurre nuove librerie per creare, settare e leggere queste
+variabili del thread attraverso due chiamate: una per scriverle e una per leggerle: \emph{set\_global("bifptr, \&buf)} che ritorna uiul valore di un puntatore nella locazione creata
+attraverso \emph{create\_global} e \emph{bufptr = read\_global("bufptr")} che ritorna l'indirizzo salvato nella variabile globale in modo che i propri dati possano essere acceduti. Il
+problema successivo \`e che molte procedure non sono reentrant, ovvero non sono progettate per avere una seconda chiamata fatta a una data procedura mentre un'altra non \`e finita, come
+nel caso di \emph{malloc} che mantiene tabelle riguardo l'utilizzo di memoria: quando \`e occupato ad aggiornare le proprie liste potrebbero trovarsi in uno stato inconsistente e nuove 
+chiamate potrebbero portare a puntatori invalidi e crash. Una soluzione \`e dare a ogni procedura un jacket che setta un bit che marca la libreria come in uno. Ogni tentativo di 
+utilizzarla da parte di un altro thread risulta in un blocco. Anche i segnali, presentano problemi: alcuni sono specifici al thread altri no: se i thread sono implementati nell'user
+space non \`e possibile sapere a quale thread inviare il messaggio, mentre altri, non specifici non si sa quale thread dovrebbe intercettarli. Un altro problema \`e la gestione dello 
+stack: quando uno stack va in overflow viene aumentato lo spazio e quando un processo ha multipli thread possiede multipli stack. Se il kernel non ne \`e a conoscenza non pu\`o aumentare
+la loro dimensione in quanto non individua l'overflow. 
+\section{Comunicazione tra interprocessi}
 
