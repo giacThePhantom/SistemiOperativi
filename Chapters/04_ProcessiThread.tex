@@ -222,35 +222,28 @@ utilizzarla da parte di un altro thread risulta in un blocco. Anche i segnali, p
 space non \`e possibile sapere a quale thread inviare il messaggio, mentre altri, non specifici non si sa quale thread dovrebbe intercettarli. Un altro problema \`e la gestione dello
 stack: quando uno stack va in overflow viene aumentato lo spazio e quando un processo ha multipli thread possiede multipli stack. Se il kernel non ne \`e a conoscenza non pu\`o aumentare
 la loro dimensione in quanto non individua l'overflow.
-\section{Comunicazione tra interprocessi}
-I processi frequentemente necessitano di comunicare tra di loro e pertanto si rende necessaria una struttura che non usi interrupt che li utilizzi. Molte delle soluzioni proposte si
-possono applicare anche ai thread.
+
+\section{Sincronizzazione di processi}
+Abbiamo visto che i processi possono essere eseguiti in modo concorrente o in parallelo. Abbiamo poi visto il ruolo dello scheduler nella selezione di quale processo eseguire e per quanto tempo eseguirlo. Dunque è chiaro che un processo può essere interrotto quando ancora non ha terminato completamente la sua esecuzione e se ciò avviene mentre sono in corso operazioni di modifica su dati condivisi si può cadere in condizioni di incosistenza e perdita di integrità dei dati.
 \subsection{Condizioni di competizione}
-In alcuni sistemi operativi processi che lavorano insieme possono condividere dello spazio di salvataggio comune che si pu\`o trovare nella memoria principale o un file condiviso,
-operando in condizioni di competizione: scritture da parte di un processo possono eliminare o sovrascrivere dati scritti da un altro.
+Nel caso in cui diversi processi accedano o manipolino gli stessi dati in maniera concorrente e il risultato dipenda dall'ordine particolare in cui gli accessi vengano effettuati, si parla di condizioni di competizione. Bisogna quindi fare in modo che i processi accedano ai dati condivisi uno alla volta, ovvero che in qualche modo debbano essere sincronizzati.
 \subsection{Regioni critiche}
-Per evitare le condizioni di competizione si proibisce che più di un processo possa scrivere o leggere i dati condivisi nello stesso momento, in maniera mutualmente esclusiva. La scelta di
-quali operazioni primitive utilizzare per ottenere la mutua esclusione è un problema fondamentale nella progettazione di un sistema operativo. La zona condivisa a cui viene fatto accesso viene detta regione critica o sezione
-critica e per avere una buona soluzione si deve porre che:
+Per evitare le condizioni di competizione si proibisce che più di un processo possa scrivere o leggere i dati condivisi nello stesso momento, in maniera mutualmente esclusiva. La scelta di quali operazioni primitive utilizzare per ottenere la mutua esclusione è un problema fondamentale nella progettazione di un sistema operativo. La zona condivisa a cui viene fatto accesso viene detta regione critica o sezione critica e per avere una buona soluzione si deve porre che:
 \begin{itemize}
 	\item \textbf{Mutua esclusione}: due processi non possono trovarsi simultaneamente nelle loro regioni critiche.
 	\item \textbf{Progresso}: solo i processi che stanno per entrare nella sezione critica possono decidere chi entra.
-	      La decisione non può essere rimandata all'infinito
-	\item \textbf{Attesa limitata}: nessun processo deve aspettare per sempre prima di entrare la sua regione critica.
+	      La decisione non può essere rimandata all'infinito.
+	\item \textbf{Attesa limitata}: nessun processo deve aspettare per sempre prima di entrare nella sua regione critica.
 \end{itemize}
+
 \subsection{Soluzioni software}
-\subsubsection{Disattivazione degli interrupts}
-Su un sistema a singolo processore la soluzione più semplice è quella di avere un processo che disattiva tutti gli interrupt appena entra nella sua regione critica e li riattiva appena
-prima di uscire. Dato che non possono accadere clock interrupt, una volta che il processo ha disattivato gli interrupt esamina e aggiorna la memoria condivisa senza che nessun altro
-processo possa intervenire. È chiaro che dare questo potere ai processi non sia una mossa saggia, inoltre questa tecnica non funziona nel caso di sistemi a multiprocessore in quanto
-\emph{disable} agisce solamente sulla CPU che la esegue. La disattivazione degli interrupt tuttavia è conveniente per il kernel nel caso debba proteggere poche istruzioni mentre aggiorna variabili o liste speciali.
 \subsubsection{Variabili di lock}
-Si consideri una variabile condivisa di lock inizialmente a $0$. Quando un processo vuole entrare la propria regione critica testa il lock: se è a $0$ lo setta a $1$ ed entra nella
+Si consideri una variabile condivisa di lock inizialmente a $0$. Quando un processo vuole entrare nella propria regione critica testa il lock: se è a $0$ lo setta a $1$ ed entra nella
 regione critica, altrimenti resta in attesa fino a quando il lock torna a $0$. Il problema non viene risolto in quanto la competizione viene spostata sul lock.
 Inoltre viene violato il criterio del progresso. Se P0 cede il turno e non ha più necessità di entrare nella sezione critica allora anche P1 non può più entrare nella sezione critica (vedere slide 15 lezione 07).
 
 \subsubsection{Strict alternation}
-Un terzo approccio è dato dall'esistenza di un'ulteriore variabile che tenga conto del turno per poter entrare nella regione critica. Questo test continuo è detto busy waiting e il
+Un ulteriore approccio è dato dall'esistenza di un'ulteriore variabile che tenga conto del turno per poter entrare nella regione critica. Questo test continuo è detto busy waiting e il
 lock è detto spin lock. In genere, tuttavia, lo spin lock viene evitato in quanto è uno spreco di risorse CPU. Questa soluzione richiede che due processi si alternino nell'entrare nella regione critica.
 Viene evitata la competizione sul lock ma c'è il rischio di deadlock. Il deadlock può essere evitato invertendo l'ordine di alcune istruzioni, tuttavia in questo modo viene violato il principio della mutua esclusione.
 
@@ -265,4 +258,20 @@ Questo algoritmo risolve il problema con N processi. L'idea di base è la seguen
 	\item Per casi di numero identico verrà usato un confronto a più livelli (numero, i);
 \end{itemize}
 Per i dettagli del codice vedere slides.
+
+\subsection{Soluzioni hardware}
+\subsubsection{Disattivazione degli interrupts}
+Su un sistema a singolo processore la soluzione più semplice è quella di avere un processo che disattiva tutti gli interrupt appena entra nella sua regione critica e li riattiva appena
+prima di uscire. Dato che non possono accadere clock interrupt, una volta che il processo ha disattivato gli interrupt esamina e aggiorna la memoria condivisa senza che nessun altro
+processo possa intervenire. È chiaro che dare questo potere ai processi non sia una mossa saggia, inoltre questa tecnica non funziona nel caso di sistemi a multiprocessore in quanto
+\emph{disable} agisce solamente sulla CPU che la esegue. La disattivazione degli interrupt tuttavia è conveniente per il kernel nel caso debba proteggere poche istruzioni mentre aggiorna variabili o liste speciali.
+\subsubsection{Istruzioni Test and Set e Swap}
+Un ulteriore modo per risolvere il problema dell'accesso a una risorsa condivisa può essere quello di sfruttare istruzioni particolari implementate a basso livello dall'architettura del processore, in grado di effettuare le operazioni di accesso alla risorsa in un unico ciclo di istruzioni.
+Le soluzioni che analizzeremo sono le istruzioni \emph{test and set} e \emph{swap}.
+La prima prende come argomento un valore booleano \emph{var} per riferimento, gli assegna \emph{TRUE} e ritorna il vecchio valore di \emph{var}.
+La seconda scambia semplicemente i valori dei booleani passati come parametro.
+Seppure il loro utilizzo permetta di ottenere in maniera immediata le tecnica dello spin lock, un'implementazione che rispetti il principio di attesa limitata è più complessa da realizzare (vedere slide 35 lezione 07 per il codice). \\
+In conclusione le soluzioni hardware hanno come vantaggi una migliore scalabilità dovuta al fatto che sono indipendenti dal numero di processi coinvolti e che l'estensione a N sezioni critiche è immediata, ma come svantaggi una maggiore complessità di implementazione per il programmatore e la necessità del busy waiting con conseguente spreco di CPU.
+
+
 
