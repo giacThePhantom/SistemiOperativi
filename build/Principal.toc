@@ -26,13 +26,13 @@
 \contentsline {subsubsection}{Gestione dei processi}{8}{section*.17}% 
 \contentsline {subsubsection}{Gestione della memoria primaria}{8}{section*.18}% 
 \contentsline {subsubsection}{Gestione della memoria secondaria}{8}{section*.19}% 
-\contentsline {subsubsection}{Gestionde dell'I/O}{9}{section*.20}% 
+\contentsline {subsubsection}{Gestionde dell'I/O}{8}{section*.20}% 
 \contentsline {subsubsection}{Gestione dei file}{9}{section*.21}% 
 \contentsline {subsubsection}{Protezione}{9}{section*.22}% 
 \contentsline {subsubsection}{Rete (sistemi distribuiti)}{9}{section*.23}% 
 \contentsline {section}{\numberline {2.2}Interprete dei comandi (shell)}{9}{section.2.2}% 
 \contentsline {subsubsection}{Interfaccia grafica}{9}{section*.24}% 
-\contentsline {subsection}{\numberline {2.2.1}System calls}{10}{subsection.2.2.1}% 
+\contentsline {subsection}{\numberline {2.2.1}System calls}{9}{subsection.2.2.1}% 
 \contentsline {chapter}{\numberline {3}Architettura di un sistema operativo}{11}{chapter.3}% 
 \contentsline {section}{\numberline {3.1}Modello client-server}{12}{section.3.1}% 
 \contentsline {section}{\numberline {3.2}macchine virtuali}{12}{section.3.2}% 
@@ -58,13 +58,19 @@
 \contentsline {subsection}{\numberline {4.2.7}Attivazioni dello scheduler}{20}{subsection.4.2.7}% 
 \contentsline {subsection}{\numberline {4.2.8}Thread Pop-Up}{21}{subsection.4.2.8}% 
 \contentsline {subsection}{\numberline {4.2.9}Rendere codice a thread singolo multithreaded}{21}{subsection.4.2.9}% 
-\contentsline {section}{\numberline {4.3}Comunicazione tra interprocessi}{22}{section.4.3}% 
+\contentsline {section}{\numberline {4.3}Sincronizzazione di processi}{22}{section.4.3}% 
 \contentsline {subsection}{\numberline {4.3.1}Condizioni di competizione}{22}{subsection.4.3.1}% 
 \contentsline {subsection}{\numberline {4.3.2}Regioni critiche}{22}{subsection.4.3.2}% 
-\contentsline {subsection}{\numberline {4.3.3}Mutua esclusione con busy waiting}{22}{subsection.4.3.3}% 
-\contentsline {subsubsection}{Disattivazione degli interrupts}{22}{section*.25}% 
-\contentsline {subsubsection}{Variabili di lock}{23}{section*.26}% 
-\contentsline {subsubsection}{Strict alternation}{23}{section*.27}% 
-\contentsline {subsubsection}{La soluzione di Peterson}{23}{section*.28}% 
-\contentsline {subsubsection}{Istruzioni TSL}{23}{section*.29}% 
-\contentsline {subsubsection}{Sleep e wakeup}{23}{section*.30}% 
+\contentsline {subsection}{\numberline {4.3.3}Soluzioni software}{22}{subsection.4.3.3}% 
+\contentsline {subsubsection}{Variabili di lock}{22}{section*.25}% 
+\contentsline {subsubsection}{Strict alternation}{23}{section*.26}% 
+\contentsline {subsubsection}{Soluzione strict alternation}{23}{section*.27}% 
+\contentsline {subsubsection}{Algoritmo del fornaio}{23}{section*.28}% 
+\contentsline {subsection}{\numberline {4.3.4}Soluzioni hardware}{23}{subsection.4.3.4}% 
+\contentsline {subsubsection}{Disattivazione degli interrupts}{23}{section*.29}% 
+\contentsline {subsubsection}{Istruzioni Test and Set e Swap}{23}{section*.30}% 
+\contentsline {subsection}{\numberline {4.3.5}Semafori}{24}{subsection.4.3.5}% 
+\contentsline {subsubsection}{Semafori binari - implementazione}{24}{section*.31}% 
+\contentsline {subsubsection}{Semafori interi - implementazione con busy waiting}{24}{section*.32}% 
+\contentsline {subsubsection}{Semafori interi - implementazione senza busy waiting}{24}{section*.33}% 
+\contentsline {subsubsection}{Utilizzo dei semafori}{25}{section*.34}% 

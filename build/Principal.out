@@ -34,7 +34,9 @@
 \BOOKMARK [2][-]{subsection.4.2.7}{Attivazioni dello scheduler}{section.4.2}% 34
 \BOOKMARK [2][-]{subsection.4.2.8}{Thread Pop-Up}{section.4.2}% 35
 \BOOKMARK [2][-]{subsection.4.2.9}{Rendere codice a thread singolo multithreaded}{section.4.2}% 36
-\BOOKMARK [1][-]{section.4.3}{Comunicazione tra interprocessi}{chapter.4}% 37
+\BOOKMARK [1][-]{section.4.3}{Sincronizzazione di processi}{chapter.4}% 37
 \BOOKMARK [2][-]{subsection.4.3.1}{Condizioni di competizione}{section.4.3}% 38
 \BOOKMARK [2][-]{subsection.4.3.2}{Regioni critiche}{section.4.3}% 39
-\BOOKMARK [2][-]{subsection.4.3.3}{Mutua esclusione con busy waiting}{section.4.3}% 40
+\BOOKMARK [2][-]{subsection.4.3.3}{Soluzioni software}{section.4.3}% 40
+\BOOKMARK [2][-]{subsection.4.3.4}{Soluzioni hardware}{section.4.3}% 41
+\BOOKMARK [2][-]{subsection.4.3.5}{Semafori}{section.4.3}% 42
