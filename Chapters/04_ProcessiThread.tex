@@ -274,4 +274,33 @@ Seppure il loro utilizzo permetta di ottenere in maniera immediata le tecnica de
 In conclusione le soluzioni hardware hanno come vantaggi una migliore scalabilità dovuta al fatto che sono indipendenti dal numero di processi coinvolti e che l'estensione a N sezioni critiche è immediata, ma come svantaggi una maggiore complessità di implementazione per il programmatore e la necessità del busy waiting con conseguente spreco di CPU.
 
 
+\subsection{Semafori}
+Le soluzioni al problema della sezione critica e della sincronizzazione di processi che abbiamo visto fino ad ora hanno principalmente due problemi: non è semplice implementarle nei programmi e sono basate su busy waiting. Vediamo ora i semafori, una soluzione generica, relativamente semplice da implementare e in grado di funzionare per qualsiasi problema. \\
+Un semaforo è una variabile intera \emph{s} a cui si accede \textbf{solamente} attraverso due primitive atomiche:
+\begin{itemize}
+	\item Signal: V(s) incrementa di $1$ il valore di \emph{s};
+	\item Wait: P(s) tenta di decrementare di $1$ il valore di \emph{s}, se $s = 0$ resta in attesa.
+\end{itemize}
+Esistono due tipi di semafori, i semafori binari e i semafori a valori interi, che si differenziano per implementazione e utilizzo. È importante sottolineare che i semafori a valori interi si basano sull'implementazione dei semafori binari.
 
+\subsubsection{Semafori binari - implementazione}
+Dato che le primitive P() e V() devono essere atomiche, nel caso del semaforo binario risulta necessario l'utilizzo delle istruzioni atomiche di cui avevamo parlato precedentemente come \emph{swap} e \emph{test and set}. In particolare nel caso della primitiva P(), il semaforo si comporta come uno spinlock (mantenendo il problema del busy waiting) utilizzando l'istruzione \emph{swap}.
+La primitiva V() invece consiste semplicemente di un'assegnazione a \emph{TRUE} del semaforo.
+
+\subsubsection{Semafori interi - implementazione con busy waiting}
+Nel caso di semafori interi si rende necessario l'utilizzo di due semafori binari interni \emph{mutex} e \emph{delay}, rispettivamente di mutua esclusione inizializzato a \emph{TRUE} e di delay inizializzato a \emph{FALSE}. Il primo ha il compito di proteggere $s$ da altre modifiche, il secondo serve ad attendere che il semaforo abbia un valore maggiore di zero prima poterlo liberare.
+
+\subsubsection{Semafori interi - implementazione senza busy waiting}
+Le implementazioni appena viste chiaramente non risolvono il problema del busy waiting, entrambe le tipologie di semafori infatti possono dover restare in attesa di essere "liberati" da altri processi, sprecando cicli di CPU. Una soluzione per il semaforo intero è l'aggiunta all'interno del semaforo di una coda di puntatori a PCB, in sostituzione del semaforo di \emph{delay}. In questo modo, invece di restare in attesa attiva durante l'esecuzione della primitiva P(), il processo si appende nella lista di PCB del semaforo per poi chiamare la procedura \emph{sleep()}.
+Nella primitiva V(), invece di chiamare \emph{V(delay)}, si estrae dalla coda in modo FIFO un processo e con la procedura \emph{wakeup()} si termina l'attesa per quel semaforo.
+Questa soluzione risolve parzialmente il problema dell'attesa attiva in quanto il semaforo binario \emph{mutex} ha un implementazione di tipo spinlock. Tuttavia le operazioni sul \emph{mutex} sono veloci e implicano poca attesa, quindi lo spreco di risorse è accettabile.
+\\
+Una possibile alternativa sarebbe la disabilitazione degli interrupt durante P() e V(). Dato che P() e V() sono funzioni con sezione critica breve e conosciuta a priori, non si presentano i rischi discussi in precedenza. In ogni caso questa alternativa non viene molto utilizzata dai moderni sistemi operativi.
+\\
+Dunque si presentano due modalità distinte di implementazione. Nel caso del \emph{busy waiting} abbiamo che la CPU controlla attivamente il verificarsi della condizione di accesso alla sezione critica. Nel caso di \emph{sleep} il processo viene messo in attesa che si verifichi la condizione di accesso alla sezione critica. \\
+Il primo è scalabile e più veloce ma CPU-intensive e quindi adatto per attese brevi come l'accesso alla memoria; il secondo più lento e quindi adatto per attese lunghe come I/O.
+
+\subsubsection{Utilizzo dei semafori}
+I semafori binari vengono utilizzati principalmente con la funzione di lock di mutua esclusione per l'accesso a una sezione critica se inizializzati a $1$. Se inizializzati a $0$ invece hanno una funzione di sincronizzazione (in attesa di un evento) tra diversi processi.
+\\
+I semafori interi vengono utilizzati per controllare l'accesso a una risorsa composta da un numero finito di istanze. Il semaforo viene inizializzato al numero di risorse disponibili e ogni processo che desideri utilizzare una risorsa effettua un operazione P() sul semaforo, quando la libera effettua una V(). In questo modo quando il semaforo raggiunge il valore $0$, significa che tutte le risorse sono occupate.
