@@ -304,3 +304,26 @@ Il primo è scalabile e più veloce ma CPU-intensive e quindi adatto per attese 
 I semafori binari vengono utilizzati principalmente con la funzione di lock di mutua esclusione per l'accesso a una sezione critica se inizializzati a $1$. Se inizializzati a $0$ invece hanno una funzione di sincronizzazione (in attesa di un evento) tra diversi processi.
 \\
 I semafori interi vengono utilizzati per controllare l'accesso a una risorsa composta da un numero finito di istanze. Il semaforo viene inizializzato al numero di risorse disponibili e ogni processo che desideri utilizzare una risorsa effettua un operazione P() sul semaforo, quando la libera effettua una V(). In questo modo quando il semaforo raggiunge il valore $0$, significa che tutte le risorse sono occupate.
+
+\section{Monitor}
+Nonostante i semafori siano uno strumento molto potente, in grado di risolvere qualsiasi problema di sincronizzazione, non sempre per il programmatore è semplice capire come utilizzarli per risolvere il problema e risulta comunque difficile dimostrare la correttezza della soluzione implementata. Possono infatti esserci degli errori che si verificano solo in particolari condizioni di esecuzione e per questo difficili da individuare.
+Per questi motivi i linguaggi di programmazione di alto livello spesso forniscono altri strumenti come i \textbf{monitor}, le classi \textbf{syncronized} di Java e le \textbf{CCR} (Conditional Critical Region).
+I monitor sono un \textbf{tipo di dato astratto}, una sorta di "classe" che incapsula variabili e procedure che saranno \textbf{protette} in automatico con la mutua esclusione. In questo modo il programmatore non si deve preoccupare di utilizzare \emph{lock} o \emph{semafori mutex} per potervi accedere.
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{Pictures/monitorPseudocode.png}
+	\caption{Struttura di un monitor in pseudocodice.}
+\end{figure}
+Le variabili dichiarate in un monitor formano lo \textbf{stato} del monitor e le funzioni definite nel monitor possono accedere solamente alle variabili dello stato, oltre che a quelle dichiarate localmente alla funzione ovviamente. Il monitor garantisce inoltre che un solo processo alla volta possa essere attivo all'interno del monitor (mutua esclusione).
+Il monitor è provvisto di un ulteriore meccanismo di sincronizzazione dato dal costrutto \emph{condition}. Le uniche operazioni che possono essere invocate su una variabile condition sono \emph{wait()} e \emph{signal()}, le quali si comportano in maniera simile alle operazioni \emph{P()} e \emph{V()} dei semafori. Tuttavia \emph{wait()} blocca \textbf{sempre} il processo che la chiama e \emph{signal()} svaglia esattamente un solo processo, se non c'è nessun processo in attesa non succede nulla. Nel caso di \emph{signal} ci sono due comportamenti possibili:
+\begin{itemize}
+	\item \textbf{Signal and wait}. Il processo che ha chiamato signal attende e l'esecuzione passa al processo che si è sbloccato.
+	\item \textbf{Signal and continue}. Il processo che ha chiamato signal continua la sua esecuzione ed esce dal monitor (in questo caso signal deve essere l'ultima istruzione della procedura).
+\end{itemize}
+
+Per concludere la trattazione sui monitor bisogna evidenziare come, sebbene essi siano più semplici da utilizzare per il programmatore, pochi linguaggi li implementano e per funzionare necessitino di memoria condivisa.
+
+\section{Classi syncronized in Java}
+Java come linguaggio ad alto livello fornisce un suo meccanismo per la sincronizzazione dei processi ovvero la keyword \emph{\textbf{syncronized}}.
+Un metodo \emph{syncronized} è un metodo che può essere eseguito da una sola thread alla volta. Ciò viene realizzato mantendendo un singolo lock (detto monitor, ma da non confondere con i monitor trattati in precedenza) per oggetto. Se il metodo \emph{syncronized} è statico allora il lock viene messo sulla classe.
+E' possibile inoltre definire una sezione critica su qualsiasi blocco utilizzando sempre la keyword \emph{syncronized}.
+Sono disponibili inoltre altri metodi di sincronizzazione disponibili nella classe Object e quindi ereditati da tutti gli oggetti, ovvero \emph{\textbf{wait()}, \textbf{notify()}, \textbf{notifyAll()}}.
