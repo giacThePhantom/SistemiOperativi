@@ -74,3 +74,5 @@
 \contentsline {subsubsection}{Semafori interi - implementazione con busy waiting}{24}{section*.32}% 
 \contentsline {subsubsection}{Semafori interi - implementazione senza busy waiting}{24}{section*.33}% 
 \contentsline {subsubsection}{Utilizzo dei semafori}{25}{section*.34}% 
+\contentsline {section}{\numberline {4.4}Monitor}{25}{section.4.4}% 
+\contentsline {section}{\numberline {4.5}Classi syncronized in Java}{26}{section.4.5}% 
