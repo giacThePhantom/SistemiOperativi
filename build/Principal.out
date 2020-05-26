@@ -15,30 +15,84 @@
 \BOOKMARK [2][-]{subsection.3.2.1}{Esokernel}{section.3.2}% 15
 \BOOKMARK [1][-]{section.3.3}{Processi e thread}{chapter.3}% 16
 \BOOKMARK [1][-]{section.3.4}{Processi e thread}{chapter.3}% 17
-\BOOKMARK [0][-]{chapter.4}{Processi e threads}{}% 18
+\BOOKMARK [0][-]{chapter.4}{Processi e thread}{}% 18
 \BOOKMARK [1][-]{section.4.1}{Processi}{chapter.4}% 19
-\BOOKMARK [2][-]{subsection.4.1.1}{Il modello dei processi}{section.4.1}% 20
-\BOOKMARK [2][-]{subsection.4.1.2}{Creazione dei processi}{section.4.1}% 21
-\BOOKMARK [2][-]{subsection.4.1.3}{Terminazione di un processo}{section.4.1}% 22
-\BOOKMARK [2][-]{subsection.4.1.4}{Gerarchie di processi}{section.4.1}% 23
-\BOOKMARK [2][-]{subsection.4.1.5}{Stati dei processi}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.6}{Implementazione dei processi}{section.4.1}% 25
-\BOOKMARK [2][-]{subsection.4.1.7}{Modellare la multiprogrammazione}{section.4.1}% 26
-\BOOKMARK [1][-]{section.4.2}{Threads}{chapter.4}% 27
-\BOOKMARK [2][-]{subsection.4.2.1}{Utilizzo dei thread}{section.4.2}% 28
-\BOOKMARK [2][-]{subsection.4.2.2}{Il modello dei thread classico}{section.4.2}% 29
-\BOOKMARK [2][-]{subsection.4.2.3}{Thread POSIX}{section.4.2}% 30
-\BOOKMARK [2][-]{subsection.4.2.4}{Implementazione dei thread nello spazio utente}{section.4.2}% 31
-\BOOKMARK [2][-]{subsection.4.2.5}{Implementazione dei thread nel kernel}{section.4.2}% 32
-\BOOKMARK [2][-]{subsection.4.2.6}{Implementazioni ibride}{section.4.2}% 33
-\BOOKMARK [2][-]{subsection.4.2.7}{Attivazioni dello scheduler}{section.4.2}% 34
-\BOOKMARK [2][-]{subsection.4.2.8}{Thread Pop-Up}{section.4.2}% 35
-\BOOKMARK [2][-]{subsection.4.2.9}{Rendere codice a thread singolo multithreaded}{section.4.2}% 36
-\BOOKMARK [1][-]{section.4.3}{Sincronizzazione di processi}{chapter.4}% 37
-\BOOKMARK [2][-]{subsection.4.3.1}{Condizioni di competizione}{section.4.3}% 38
-\BOOKMARK [2][-]{subsection.4.3.2}{Regioni critiche}{section.4.3}% 39
-\BOOKMARK [2][-]{subsection.4.3.3}{Soluzioni software}{section.4.3}% 40
-\BOOKMARK [2][-]{subsection.4.3.4}{Soluzioni hardware}{section.4.3}% 41
-\BOOKMARK [2][-]{subsection.4.3.5}{Semafori}{section.4.3}% 42
-\BOOKMARK [1][-]{section.4.4}{Monitor}{chapter.4}% 43
-\BOOKMARK [1][-]{section.4.5}{Classi syncronized in Java}{chapter.4}% 44
+\BOOKMARK [2][-]{subsection.4.1.1}{Immagine in memoria}{section.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.1.2}{Stati di un processo}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.3}{Scheduling}{section.4.1}% 22
+\BOOKMARK [2][-]{subsection.4.1.4}{Operazione di dispatch}{section.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.1.5}{Operazioni sui processi}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.6}{Stati di un processo}{section.4.1}% 25
+\BOOKMARK [1][-]{section.4.2}{Threads}{chapter.4}% 26
+\BOOKMARK [2][-]{subsection.4.2.1}{Multi-threading}{section.4.2}% 27
+\BOOKMARK [2][-]{subsection.4.2.2}{Vantaggi dei thread}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.3}{Stati di un thread}{section.4.2}% 29
+\BOOKMARK [2][-]{subsection.4.2.4}{Implementazione dei thread}{section.4.2}% 30
+\BOOKMARK [2][-]{subsection.4.2.5}{La libreria posix pthreads}{section.4.2}% 31
+\BOOKMARK [1][-]{section.4.3}{Relazione tra processi}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.3.1}{Scambio di messaggi}{section.4.3}% 33
+\BOOKMARK [2][-]{subsection.4.3.2}{Memoria condivisa}{section.4.3}% 34
+\BOOKMARK [1][-]{section.4.4}{Gestione dei processi del sistema operativo}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.4.1}{Kernel separato}{section.4.4}% 36
+\BOOKMARK [2][-]{subsection.4.4.2}{Kernel in processi utente}{section.4.4}% 37
+\BOOKMARK [2][-]{subsection.4.4.3}{Kernel come processo}{section.4.4}% 38
+\BOOKMARK [0][-]{chapter.5}{Scheduling CPU}{}% 39
+\BOOKMARK [1][-]{section.5.1}{Tipi di scheduling}{chapter.5}% 40
+\BOOKMARK [2][-]{subsection.5.1.1}{Caratteristiche degli scheduler}{section.5.1}% 41
+\BOOKMARK [2][-]{subsection.5.1.2}{Scheduling a medio termine}{section.5.1}% 42
+\BOOKMARK [1][-]{section.5.2}{Scheduling della CPU}{chapter.5}% 43
+\BOOKMARK [2][-]{subsection.5.2.1}{Dispatcher}{section.5.2}% 44
+\BOOKMARK [2][-]{subsection.5.2.2}{Modello astratto del sistema}{section.5.2}% 45
+\BOOKMARK [2][-]{subsection.5.2.3}{Prelazione \(preemption\)}{section.5.2}% 46
+\BOOKMARK [2][-]{subsection.5.2.4}{Metriche di scheduling}{section.5.2}% 47
+\BOOKMARK [1][-]{section.5.3}{Algoritmi di scheduling}{chapter.5}% 48
+\BOOKMARK [2][-]{subsection.5.3.1}{First-Come, First-Served \(FCFS\)}{section.5.3}% 49
+\BOOKMARK [2][-]{subsection.5.3.2}{Shortest-Job-First \(SJF\)}{section.5.3}% 50
+\BOOKMARK [2][-]{subsection.5.3.3}{Scheduling a priorit\340}{section.5.3}% 51
+\BOOKMARK [2][-]{subsection.5.3.4}{Higher response ratio next \(HRRN\)}{section.5.3}% 52
+\BOOKMARK [2][-]{subsection.5.3.5}{Round robin \(RR\)}{section.5.3}% 53
+\BOOKMARK [2][-]{subsection.5.3.6}{Code multilivello}{section.5.3}% 54
+\BOOKMARK [2][-]{subsection.5.3.7}{Code multilivello con feedback}{section.5.3}% 55
+\BOOKMARK [2][-]{subsection.5.3.8}{Scheduling fair share}{section.5.3}% 56
+\BOOKMARK [2][-]{subsection.5.3.9}{Valutazione degli algoritmi}{section.5.3}% 57
+\BOOKMARK [0][-]{chapter.6}{Sincronizzazione tra processi}{}% 58
+\BOOKMARK [1][-]{subsection.6.0.1}{Buffer: modello software}{chapter.6}% 59
+\BOOKMARK [2][-]{subsection.6.0.2}{Sezione critica}{subsection.6.0.1}% 60
+\BOOKMARK [1][-]{section.6.1}{Soluzioni software}{chapter.6}% 61
+\BOOKMARK [2][-]{subsection.6.1.1}{Algoritmo 2}{section.6.1}% 62
+\BOOKMARK [2][-]{subsection.6.1.2}{Algoritmo 3}{section.6.1}% 63
+\BOOKMARK [2][-]{subsection.6.1.3}{Algoritmo del fornaio}{section.6.1}% 64
+\BOOKMARK [1][-]{section.6.2}{Soluzioni hardware}{chapter.6}% 65
+\BOOKMARK [2][-]{subsection.6.2.1}{Test and Set}{section.6.2}% 66
+\BOOKMARK [2][-]{subsection.6.2.2}{Swap}{section.6.2}% 67
+\BOOKMARK [2][-]{subsection.6.2.3}{Test and Set con attesa limitata}{section.6.2}% 68
+\BOOKMARK [2][-]{subsection.6.2.4}{Conclusioni}{section.6.2}% 69
+\BOOKMARK [1][-]{section.6.3}{Semafori}{chapter.6}% 70
+\BOOKMARK [2][-]{subsection.6.3.1}{Semafori binari}{section.6.3}% 71
+\BOOKMARK [2][-]{subsection.6.3.2}{Semafori interi}{section.6.3}% 72
+\BOOKMARK [2][-]{subsection.6.3.3}{Implementazione}{section.6.3}% 73
+\BOOKMARK [2][-]{subsection.6.3.4}{Applicazioni}{section.6.3}% 74
+\BOOKMARK [2][-]{subsection.6.3.5}{Limitazioni}{section.6.3}% 75
+\BOOKMARK [1][-]{section.6.4}{Problemi classici dei semafori}{chapter.6}% 76
+\BOOKMARK [2][-]{subsection.6.4.1}{Produttore consumatore}{section.6.4}% 77
+\BOOKMARK [2][-]{subsection.6.4.2}{Dining philosophers}{section.6.4}% 78
+\BOOKMARK [2][-]{subsection.6.4.3}{Sleepy barber}{section.6.4}% 79
+\BOOKMARK [2][-]{subsection.6.4.4}{Limitazioni dei semafori}{section.6.4}% 80
+\BOOKMARK [1][-]{section.6.5}{Monitor}{chapter.6}% 81
+\BOOKMARK [2][-]{subsection.6.5.1}{Operazioni del monitor}{section.6.5}% 82
+\BOOKMARK [2][-]{subsection.6.5.2}{Limitazioni}{section.6.5}% 83
+\BOOKMARK [1][-]{section.6.6}{Sincronizzazione in Java}{chapter.6}% 84
+\BOOKMARK [2][-]{subsection.6.6.1}{Buffer produttore consumatore}{section.6.6}% 85
+\BOOKMARK [1][-]{section.6.7}{Conclusioni}{chapter.6}% 86
+\BOOKMARK [1][-]{section.6.8}{Problema degli scrittori e dei lettori}{chapter.6}% 87
+\BOOKMARK [0][-]{chapter.7}{Deadlock}{}% 88
+\BOOKMARK [1][-]{subsection.7.0.1}{Condizioni necessarie}{chapter.7}% 89
+\BOOKMARK [1][-]{section.7.1}{Modello astratto: resource allocation graph \(RAG\)}{chapter.7}% 90
+\BOOKMARK [1][-]{section.7.2}{Gestione dei deadlock}{chapter.7}% 91
+\BOOKMARK [2][-]{subsection.7.2.1}{Prevenzione statica}{section.7.2}% 92
+\BOOKMARK [2][-]{subsection.7.2.2}{Prevenzione dinamica \(avoidance\)}{section.7.2}% 93
+\BOOKMARK [2][-]{subsection.7.2.3}{Rilevamento \(detection\) e ripristino \(recovery\)}{section.7.2}% 94
+\BOOKMARK [2][-]{subsection.7.2.4}{Algoritmo dello struzzo}{section.7.2}% 95
+\BOOKMARK [1][-]{section.7.3}{Conclusioni}{chapter.7}% 96
+\BOOKMARK [2][-]{subsection.7.3.1}{Partizionamento in classi}{section.7.3}% 97
+\BOOKMARK [2][-]{subsection.7.3.2}{Algoritmi specifici}{section.7.3}% 98

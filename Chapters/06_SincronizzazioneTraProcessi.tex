@@ -1,0 +1,241 @@
+\chapter{Sincronizzazione tra processi}
+Il modello astratto della sincronizzazione tra processi \`e quello del produttore-consumatore: il primo produce un messaggio e il secondo lo consuma in esecuzione concorrente. Essendo il
+buffer limitato ci sono dei vincoli: non si pu\`o aggiungere in buffer pieni e non si pu\`o consumare da buffer vuoti.
+\subsection{Buffer: modello software}
+In software il buffer \`e circolare di $N$ posizioni, con $in$ che indica la prima posizione libera e $out$ la prima posizione occupata. Il buffer \`e vuoto quando $in=out$ e pieno 
+quando $out = (in + 1) \% n$. Per semplicit\`a si utilizza una variabile counter per indicare il numero di elementi nel buffer. Il produttore svolger\`a la sua operazione incrementando
+il counter se e solo se il counter \`e minore di $N$ e il consumatore lo decrementa solo se \`e maggiore di $0$. Essendo le operazioni di incremento e decremento non atomiche (sono pi\`u
+istruzioni assembly) non \`e noto l'ordine di interleaving tra i processi e possono nascere delle inconsistenze in quanto produttore e consumatore possono modificare \emph{counter}
+contemporaneamente. Si rende necessario proteggere l'accesso alla sezione critica. 
+\subsection{Sezione critica}
+Si intende per sezione critica una porzione di codice in cui si accede ad una risorsa condivisa. La soluzione al suo problema deve rispettare:
+\begin{itemize}
+	\item Mutua esclusione: unicamente un processo alla volta pu\`o accedere alla sezione critica.
+	\item Progresso: solo i processi che stanno per entrare nella sezione critica possono decidere chi entra e la decisione non pu\`o essere rimandata all'infinito.
+	\item Attesa limitata: deve esistere un massimo numero di volte per cui un processo pu\`o aspettare di seguito.
+\end{itemize}
+Un generico processo che accede ad una risorsa condivisa ha una struttura che contiene un'operazione ripetuta contenente prima delle operazioni sulla sezione critica le regole di 
+ingresso alla sezione critica, le operazioni su di essa, una sezione di uscita dalla stessa e successivamente le operazioni sulla sezione non critica.
+\subsubsection{Soluzione}
+Assumendo una sincronizzazione in ambiente globale con condivisione di celle di memoria, le soluzioni software riguardano aggiunta di codice alle applicazioni senza nessun supporto 
+hardware o del sistema operativo, mentre le soluzioni hardware riguardano codice alle applicazioni con supporto hardware. 
+\section{Soluzioni software}
+\lstinputlisting[caption={PROCESS i}, language={C}]{Algoritmi/IPC-algoritmo1.c}
+Questo algoritmo richiede stretta alternanza tra i processi: possono entrare nella zona critica unicamente alternativamente. Inoltre non rispetta il criterio del progresso in quanto
+non esiste alcuna nozione di stato.
+\subsection{Algoritmo 2}
+\lstinputlisting[caption={PROCESS i}, language={C}]{Algoritmi/IPC-algoritmo2.c}
+Risolve il problema dell'algoritmo 1 ma l'esecuzione in sequenza dell'istruzione \emph{flag[] = true} da parte dei due processi porta a deadlock. Invertendo le istruzioni della sezione
+di entrata si viola la mutua esclusione in quanto entrambi i processi possono trovarsi nella sezione critica se eseguono in sequenza il \emph{while} prima di impostare la \emph{flag} a
+\emph{true}
+\subsection{Algoritmo 3}
+\lstinputlisting[caption={PROCESS i}, language={C}]{Algoritmi/IPC-algoritmo3.c}
+\`E la soluzione corretta in quanto entra il primo processo che esegue \emph{turn = j} oppure \emph{turn = i}
+\subsubsection{Dimostrazione}
+\paragraph{Mutua esclusione}
+$P_i$ entra nella sezione critica se e solo se $flag[j] = false$ o $turn = i$. Se $P_i$ e $P_j$ sono entrambi nella sezione critica allora $flag[i]=flag[j]=true$, ma $P_i$ e $P_j$ non
+possono aver superato entrambi il \emph{while} perch\`e $turn$ vale $i$ oppure $j$, pertanto solo uno dei due $P$ \`e entrato. 
+\paragraph{Progresso e attesa limitata}
+Se $P_j$ non \`e pronto per entrare nella sezione critica allora $flag[j]=false$ e $P_i$ pu\`o entrare. Se $P_j$ ha impostato $flag[j]=true$ e si trova nel \emph{while} allora $turn = i$
+oppure $turn = j$. Se $turn = i$ $P_i$ entra nella sezione critica, se $turn = j$ vi entra $P_j$. In ogni caso quando $P_j$ esce dalla sezione critica imposta $flag[j]=false$ e 
+quindi $P_i$ pu\`o entrare nella sezione critica e $P_i$ entra nella sezione critica al massimo dopo un'entrata di $P_j$. 
+\subsection{Algoritmo del fornaio}
+Risolve il problema con $N$ processi: ogni processo sceglie un numero (\emph{choosing[i] = l}), il numero pi\`u basso viene servito per primo e per situazioni di numero identico si
+usa un confronto a due livelli (\emph{numero, i}). L'algoritmo \`e corretto. 
+\lstinputlisting[caption={PROCESS i}, language={C}]{Algoritmi/IPC-algoritmo-fornaio.c}
+\section{Soluzioni hardware}
+Un modo hardware per risolvere il problema della sezione critica \`e di disabilitare gli interrupt mentre una variabile condivisa viene modificata. Da questo nasce un problema in quanto
+se il test per l'accesso \`e lungo gli interrupt devono essere disabilitati per troppo tempo. Un'alternativa \`e che l'operazione per l'accesso alla risorsa deve occupare un unico ciclo
+di istruzione non interrompibile, con istruzioni atomiche di \emph{Test-and-set} e \emph{swap}
+\subsection{Test and Set}
+\lstinputlisting[caption={Test and Set}, language={C}]{Algoritmi/Test_and_set.c}
+Il valore di ritorno \`e il valore di \emph{var} a cui viene assegnato \emph{true}. Si passa a questa funzione un lock che permette il controllo della sezione critica a un processo alla 
+volta in quanto passa solo il primo processo che arriva e trova \emph{lock = false}. Quando il processo termina le operazioni sulla sezione critica pone \emph{lock = false}.
+\subsection{Swap}
+\lstinputlisting[caption={Swap}, language={C}]{Algoritmi/Swap.c}
+Lo \emph{swap} viene utilizzato sul \emph{lock} e una variabile locale, che permette l'accesso solo quando quella locale diventa \emph{false} in modo da eliminare la competizione sul
+\emph{lock}. Si noti come \emph{TestAndSet} e \emph{Swap} non rispettano attesa limitata in quanto manca l'equivalente della variabile \emph{turn} e sono pertanto necessarie variabili
+addizionali.
+\subsection{Test and Set con attesa limitata}
+\lstinputlisting[caption={PROCESS i}, language={C}]{Algoritmi/TestSetLimitata.c}
+\subsection{Conclusioni}
+I vantaggi delle soluzioni hardware sono la scalabilit\`a in quanto indipendenti dal numero di processi coinvolti e il fatto che l'estensione a $N$ sezioni critiche \`e immediato. 
+Offrono per\`o maggiore complessit\`a al programmatore rispetto alle soluzioni software e serve busy waiting con spreco di CPU.
+\section{Semafori}
+Si nota come le soluzioni precedenti non sono banali da aggiungere a programmi e sono basate su busy waiting. I semafori offrono una soluzione generica che funziona sempre. Si intende
+per semaforo una variabile intera $S$ a cui si accede attraverso due primitive atomiche: 
+\begin{itemize}
+	\item Signal: \emph{V(s)} che incrementa il valore di $S$ di $1$. 
+	\item Wait: \emph{P(s)} che tenta di decrementare il valore di $S$ di $1$, se \`e $0$ non si pu\`o ed \`e necessario attendere.
+\end{itemize}
+Esistono i semafori in versione binaria (con $S$ $0$ o $1$) o generica (con $S$ a valori interi maggiori o uguali di $0$).
+\subsection{Semafori binari} 
+Si noti come i semafori binari abbiano lo stesso potere espressivo di quelli a valori interi.
+\lstinputlisting[caption={Implementazione concettuale}, language={C}]{Algoritmi/SemBinCon.c}
+\subsubsection{Con busy waiting}
+\begin{multicols}{2}
+	\lstinputlisting[caption={Semaforo binario}, language={C}]{Algoritmi/SemBinWBW-P.c}
+	\columnbreak
+	\lstinputlisting[caption={Semaforo binario}, language={C}]{Algoritmi/SemBinWBW-V.c}
+\end{multicols}
+\subsection{Semafori interi}
+Il problema dei semafori interi \`e garantirne l'atomicit\`a. 
+\lstinputlisting[caption={Implementazione concettuale}, language={C}]{Algoritmi/SemIntCon.c}
+\subsubsection{Con busy waiting}
+Sia \emph{bool mutex} un semaforo binario inizializzato a \emph{TRUE} e \emph{bool delay} un semaforo binario inizializzato a \emph{FALSE}. Sia in \emph{P} che in \emph{V} l'operazione
+\emph{P(mutex)} protegge $S$ da un'altra modifica. In \emph{V} \emph{V(delay)} permette la liberazione di un processo in attesa. In \emph{P} se qualcuno occupa il semaforo si attende, 
+altrimenti lo si passa. 
+\begin{multicols}{2}
+	\lstinputlisting[caption={Semaforo intero}, language={C}]{Algoritmi/SemIntWBW-P.c}
+	\columnbreak
+	\lstinputlisting[caption={Semaforo intero}, language={C}]{Algoritmi/SemIntWBW-V.c}
+\end{multicols}
+\subsubsection{Senza busy waiting}
+Nei semafori interi senza busy waiting si necessita di \emph{bool mutex}, un semaforo binario inizializzato a \emph{TRUE}. Inoltre il semaforo non \`e pi\`u un intero ma una 
+\emph{struct} contenente un valore intero (con semantica analoga a quello con busy wating) e una lista contenente i PCB (process control block). Inoltre l'operazione di \emph{sleep()}
+mette il processo nello stato di waiting mentre \emph{wakeup} lo mette nello stato ready. Si noti come si deve decidere l'ordine di \emph{wakeup} dei processi.
+\lstinputlisting[caption={Semaforo intero}, language={C}]{Algoritmi/SemIntWoutBW.c}
+\begin{multicols}{2}
+	\lstinputlisting[caption={Semaforo intero}, language={C}]{Algoritmi/SemIntWoutBW-P.c}
+	\columnbreak
+	\lstinputlisting[caption={Semaforo intero}, language={C}]{Algoritmi/SemIntWoutBW-V.c}
+\end{multicols}
+In questo caso il busy waiting viene eliminato dalla entry section ma rimane nella \emph{P} e \emph{V} del mutex che essendo veloce porta a poco spreco di CPU. Un alternativa \`e 
+disabilitare gli interrupt durante \emph{P} e \emph{V} in cui istruzioni di processi diversi non possono essere eseguite in modo alternato. 
+\subsection{Implementazione}
+Si noti come l'implementazione reale \`e diversa da quella concettuale: il valore di \emph{s} pu\`o diventare minore di zero per i semafori interi in quanto conta quanti processi ci 
+sono in attesa. La lista dei PCB pu\`o essere FIFO (strong semaphore) garantendo cos\`i attesa limitata. Nella modalit\`a di implementazione con busy waiting (spinlock) la CPU controlla
+attivamente il verificarsi della condizione di accesso alla sezione critica. \`E una soluzione scalabile e veloce, CPU-intensive e adatta per attese brevi, come l'accesso a memoria.
+Nella modalit\`a senza busy waiting con sleep (mutex, semaforo) il processo viene messo inattesa che si verifichi la condizione di accesso alla sezione critica. \`E pi\`u lento e 
+adatto per attese lunghe come l'I/O.
+\subsection{Applicazioni}
+Un semaforo binario con valore iniziale $1$ (mutex) viene utilizzato per la protezione di una sezione critica per $n$ processi. Un semaforo binario con valore iniziale $0$ viene 
+utilizzato per la sincronizzazione del tipo di attesa di evento tra processi.
+\subsubsection{Sezione critica}
+Si dice mutex un semaforo binario di mutua esclusione. In questo caso $n$ processi condividono la variabile $s$.
+\lstinputlisting[caption={Mutex}, language={C}]{Algoritmi/SemBinSezCrit.c}
+\subsubsection{Semafori per attesa evento}
+Si consideri il caso di due processi $P1$ e $P2$ che devono sincronizzarsi rispetto all'esecuzione di due operazioni $A$ e $B$ in modo che $P2$ possa eseguire $B$ solo dopo che $P1$
+ha eseguito $A$. In questo caso si usa un semaforo binario $s$ inizializzato a $0$ tale che $P1$ svolga \emph{V(s)} dopo $A$ e $P2$ svolga $B$ dopo \emph{P(s)}.\\
+Si consideri il caso di due processi $P1$ e $P2$ che devono sincronizzarsi rispetto all'esecuzione di un'operazione $A$ in maniera alternata. Vengono pertanto utilizzati due semafori 
+$s1$ inizializzato a $1$ e $s2$ inizializzato a $0$ in modo che $P1$ svolga \emph{P(s1)} prima di $A$ e \emph{V(s2)} dopo, mentre $P2$ \emph{P(s2)} prima e \emph{V(s1)} dopo. 
+\subsection{Limitazioni}
+I semafori possono generare deadlock, in cui il processo viene bloccato in attesa di un evento che solo lui pu\`o generare o starvation, in cui avviene un'attesa indefinita all'interno
+del semaforo. 
+\section{Problemi classici dei semafori}
+\subsection{Produttore consumatore}
+Il problema del produttore consumatore consiste di due processi con accesso sullo stesso buffer di dimensione limitata. Il produttore scrive nel buffer  mentre il consumatore legge e
+lo svuota. IL problema richiede tre semafori:
+\begin{itemize}
+	\item Mutex, un semaforo binario inizializzato a \emph{TRUE} che garantisce la mutua esclusione per il buffer.
+	\item Empty, un semaforo intero inizializzato a $N$ che blocca $P$ se il buffer \`e pieno.
+	\item Full, un semaforo intero inizializzato a $0$ che blocca $C$ se il buffer \`e vuoto.
+\end{itemize}
+\newpage
+\begin{multicols}{2}
+	\lstinputlisting[caption={Produttore}, language={C}]{Algoritmi/Produttore.c}
+	\columnbreak
+	\lstinputlisting[caption={Consumatore}, language={C}]{Algoritmi/Consumatore.c}
+\end{multicols}
+\subsection{Dining philosophers}
+Si considerino $N$ filosofi che passano la vita mangiando e pensando. Si trova $1$ tavola con $N$ bacchette e una ciotola di riso. Se un filosofo pensa non interagisce con gli altri.
+Se un filosofo ha fame prende $2$ bacchette e inizia a mangiare. Il filosofo pu\`o prendere solo le bacchette che sono alla sua destra e alla sua sinistra e pu\`o prenderne solo una 
+alla volta. Se non ci sono due bacchette libere non pu\`o mangiare. Quando un filosofo termina di mangiare rilascia le bacchette.
+\subsubsection{Prima soluzione}
+\begin{multicols}{2}
+	\paragraph{Dati condivisi}
+	\begin{itemize}
+		\item Ci sono $n$ semafori $s[N]$ inizializzati a $1$.
+		\item $P(s[j])$ vuol dire che si cerca di prendere la bacchetta $j$;
+		\item $V(s[j])$ rilascia la bacchetta $j$>
+	\end{itemize}
+	\paragraph{La soluzione \`e incompleta} C'\`e un possibile deadlock se tutti i filosofi tentano di prendere la bacchetta alla loro destra (sinistra) contemporaneamente. 
+	\columnbreak
+	\lstinputlisting[caption={Dining philosopher}, language={C}]{Algoritmi/Philosopher1.c}
+\end{multicols}
+\paragraph{Deadlock}
+Questa soluzione presenta un problema in quanto nasce un deadlock nel caso in cui ogni filosofo prende la bacchetta di destra e si trovano tutti ad aspettare che si liberi quella di 
+sinistra che nessuno pu\`o rilasciare. 
+\paragraph{Possibili soluzioni parziali}
+\begin{itemize}
+	\item Si permette solo a quattro filosofi di mangiare contemporaneamente.
+	\item Soluzione asimmetrica in cui i filosofi in posizione pari prendono la bacchetta sinistra seguita dalla destra mentre i filosofi in posizione dispari fanno il contrario.
+	\item I filosofi si passano un token.
+	\item Si permette ai filosofi di prendere la bacchetta solo se sono entrambe disponibili.
+\end{itemize}
+\subsubsection{Soluzione corretta}
+In questa soluzione ogni filosofo si pu\`o trovare in tre stati: pensante (\emph{THINKING}), affamato (\emph{HUNGRY}) e  mangiante (\emph{EATING}). Le variabili condivise sono un 
+semaforo mutex inizializzato a $1$ $N$ semafori $f[N] = 0$ e lo stato di ogni filosofo $stato[N]$. 
+\begin{multicols}{2}
+	\lstinputlisting[caption={Dining philosopher}, language={C}]{Algoritmi/Philosopher2.c}
+	\lstinputlisting[caption={Test}, language={C}]{Algoritmi/Philosopher2-test.c}
+	\columnbreak	
+	\lstinputlisting[caption={Drop fork}, language={C}]{Algoritmi/Philosopher2-dropfork.c}
+	\lstinputlisting[caption={Take fork}, language={C}]{Algoritmi/Philosopher2-takefork.c}
+\end{multicols}
+\subsection{Sleepy barber}
+Un negozio ha una sala d'attesa con $N$ sedie ed una stanza con la sedia del barbiere. In assenza di clienti il barbiere si addormenta. Quando entra un cliente se le sedie sono 
+occupate il cliente se ne va, se il barbiere \`e occupato si siede e se \`e addormentato lo sveglia. 
+\subsubsection{Soluzione}
+\paragraph{Dati condivisi}
+\begin{itemize}
+	\item Semaforo intero customer inizializzato a zero che sveglia il barbiere.
+	\item Semaforo binario barbers inizializzato a zero che rappresenta lo stato del barbiere.
+	\item Semaforo binario mutex inizializzato a $1$ che protegge la sezione critica.
+	\item \emph{int waiting = 0} che conta i clienti in attesa.
+\end{itemize}
+\begin{multicols}{2}
+	\lstinputlisting[caption={Barber}, language={C}]{Algoritmi/Barber.c}
+	\columnbreak
+	\lstinputlisting[caption={Consumer}, language={C}]{Algoritmi/Customer.c}
+\end{multicols}
+\subsection{Limitazioni dei semafori}
+L'utilizzo dei semafori presenta delle difficolt\`a in quanto risulta difficile scrivere programmi e la correttezza delle soluzioni \`e difficilmente dimostrabile. In alternativa 
+vengono pertanto utilizzati specifici costrutti forniti da linguaggi di programmazione ad alto livello come monitor, classi synchronized in Java e CCR (conditional critical region) e 
+altri. 
+\section{Monitor}
+Sono costrutti per la condivisione sicura ed efficiente di dati da processi. Sono simili al concetto di classe.
+\lstinputlisting[caption={Monitor}, language={C}]{Algoritmi/Monitor.c}
+Le variabili del monitor sono visibili solo all'interno del monitor stesso e le procedure del monitor accedono solo alle variabili definite nel monitor. Un solo processo alla volta 
+risulta attivo in un monitor in modo che il programmatore non debba codificare esplicitamente la mutua esclusione. 
+\subsection{Operazioni del monitor}
+Per permettere ad un processo di attendere all'interno del monitor si rendono necessari opportune sincronizzazioni: le variabili condition dichiarate all'interno del monitor e 
+accessibili solo tramite due primitive analoghe a quelle dei semafori: \emph{wait()} come \emph{P()} e \emph{signal()} come \emph{V()}. Il processo che invoca \emph{x.wait()} \`e 
+bloccato fino all'invocazione della corrispondente \emph{x.signal()} da parte di un altro. 
+\subsubsection{Wait}
+La \emph{wait} blocca sempre il processo che la chiama e si deve pertanto prestare attenzione alla logica che regola tale chiamata. 
+\subsubsection{Signal}
+La \emph{signal} sveglia esattamente un processo e se ne trovano pi\`u in attesa lo scheduler decide quale processo pu\`o entrare. Se nessun processo si trova in attesa non c'\`e nessun
+effetto. Successivamente a questa operazione il processo che la invoca si pu\`o bloccare passando l'esecuzione al processo sbloccato o esce dal monito, caso in cui signal deve essere
+l'ultima istruzione di una procedura. 
+\subsubsection{Buffer produttore consumatore}
+\begin{multicols}{2}
+	\lstinputlisting[caption={Produttore}, language={C}]{Algoritmi/MonitorProduttore.c}
+	\columnbreak
+	\lstinputlisting[caption={Consumatore}, language={C}]{Algoritmi/MonitorConsumatore.c}
+\end{multicols}
+\lstinputlisting[caption={Monitor per buffer}, language={C}]{Algoritmi/MonitorProducerConsumer.c}
+\subsubsection{Semaforo binario nel monitor}
+\lstinputlisting[caption={Semaforo binario nel monitor}, language={C}]{Algoritmi/MonitorSemBin.c}
+\subsection{Limitazioni}
+Pur essendo meno proni ad errori rispetto ai semafori i monitor sono forniti da pochi linguaggi e richiedono sempre presenza di memoria condivisa. 
+\section{Sincronizzazione in Java}
+La sezione critica viene indicata dalla keyword synchronized e i metodi synchronized possono essere eseguiti da un solo thread alla volta e vengono realizzati mantenendo un singolo lock
+detto monitor per oggetto. I metodi static synchronized presentano un solo lock per classe, mentre per i blocchi synchronized \`e possibile mettere un lock su qualsiasi oggetto per 
+definire una sezione critica. Altri metodi di sincronizzazione sono \emph{wait()} \emph{notify()} e \emph{notifyAll()}, che vengono ereditati da tutti gli oggetti. 
+\subsection{Buffer produttore consumatore}
+\begin{multicols}{2}
+	\lstinputlisting[caption={Bounded buffer}, language={Java}]{Algoritmi/BoundedBuffer.java}
+	\columnbreak
+	\lstinputlisting[caption={Deposit}, language={Java}]{Algoritmi/Deposit.java}
+	\lstinputlisting[caption={Remove}, language={Java}]{Algoritmi/Remove.java}
+\end{multicols}
+\section{Conclusioni}
+IL problema della soluzione critica \`e un'astrazione della concorrenza tra processi. Esistono soluzioni con diversi compromessi tra complessit\`a e difficolt\`a di utilizzo. Si 
+deve prestare attenzione alla gestione del blocco critico di un insieme di processi (deadlock) dipendente dalla sequenza temporale degli accessi.
+\section{Problema degli scrittori e dei lettori}
+C'\`e un area di dati condivisa ed esistono dei lettori che possono solo leggere i dati e scrittori che possono solo scriverli. Pi\`u lettori possono leggere il file contemporaneamente, 
+solo uno scrittore alla volta pu\`o scrivere nel file, se uno scrittore sta scrivendo nel file nessun lettore pu\`o leggerlo, gli scrittori non possono leggere e i lettori non possono
+essere anche scrittori. 
+\lstinputlisting[caption={Scrittore}, language={C}]{Algoritmi/Scrittore.c}
+\lstinputlisting[caption={Lettore}, language={C}]{Algoritmi/Lettore.c}

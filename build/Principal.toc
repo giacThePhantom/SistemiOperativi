@@ -1,78 +1,185 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {chapter}{\numberline {1}Introduzione}{3}{chapter.1}% 
-\contentsline {subsubsection}{Componenti}{3}{section*.3}% 
-\contentsline {subsection}{\numberline {1.0.1}Punti chiave nel progetto di calcolatori}{3}{subsection.1.0.1}% 
-\contentsline {subsubsection}{Punto di vista dell'utente}{3}{section*.4}% 
-\contentsline {subsubsection}{Punto di vista del sistema}{4}{section*.5}% 
-\contentsline {section}{\numberline {1.1}Storia dei sistemi operativi}{4}{section.1.1}% 
-\contentsline {subsection}{\numberline {1.1.1}Prima generazione (1946-1955)}{4}{subsection.1.1.1}% 
-\contentsline {subsubsection}{Evoluzione}{5}{section*.6}% 
-\contentsline {subsection}{\numberline {1.1.2}Seconda generazione (1955-1965)}{5}{subsection.1.1.2}% 
-\contentsline {subsubsection}{Evoluzione}{5}{section*.7}% 
-\contentsline {subsubsection}{Limitazioni}{5}{section*.8}% 
-\contentsline {subsubsection}{Sovrapposizione tra CPU e I/O}{5}{section*.9}% 
-\contentsline {paragraph}{Polling}{5}{section*.10}% 
-\contentsline {paragraph}{Interrupt e I/O}{5}{section*.11}% 
-\contentsline {paragraph}{DMA e I/O}{6}{section*.12}% 
-\contentsline {paragraph}{Buffering}{6}{section*.13}% 
-\contentsline {paragraph}{Spooling}{6}{section*.14}% 
-\contentsline {subsection}{\numberline {1.1.3}Terza generazione (1965-1980)}{6}{subsection.1.1.3}% 
-\contentsline {subsubsection}{Protezione}{6}{section*.15}% 
-\contentsline {subsection}{\numberline {1.1.4}Quarta generazione (1980-1990)}{7}{subsection.1.1.4}% 
-\contentsline {subsubsection}{Quinta generazione (1990- oggi)}{7}{section*.16}% 
-\contentsline {chapter}{\numberline {2}Componenti di un sistema operativo}{8}{chapter.2}% 
-\contentsline {section}{\numberline {2.1}Servizi di gestione}{8}{section.2.1}% 
-\contentsline {subsubsection}{Gestione dei processi}{8}{section*.17}% 
-\contentsline {subsubsection}{Gestione della memoria primaria}{8}{section*.18}% 
-\contentsline {subsubsection}{Gestione della memoria secondaria}{8}{section*.19}% 
-\contentsline {subsubsection}{Gestionde dell'I/O}{8}{section*.20}% 
-\contentsline {subsubsection}{Gestione dei file}{9}{section*.21}% 
-\contentsline {subsubsection}{Protezione}{9}{section*.22}% 
-\contentsline {subsubsection}{Rete (sistemi distribuiti)}{9}{section*.23}% 
-\contentsline {section}{\numberline {2.2}Interprete dei comandi (shell)}{9}{section.2.2}% 
-\contentsline {subsubsection}{Interfaccia grafica}{9}{section*.24}% 
-\contentsline {subsection}{\numberline {2.2.1}System calls}{9}{subsection.2.2.1}% 
-\contentsline {chapter}{\numberline {3}Architettura di un sistema operativo}{11}{chapter.3}% 
-\contentsline {section}{\numberline {3.1}Modello client-server}{12}{section.3.1}% 
-\contentsline {section}{\numberline {3.2}macchine virtuali}{12}{section.3.2}% 
-\contentsline {subsection}{\numberline {3.2.1}Esokernel}{12}{subsection.3.2.1}% 
-\contentsline {section}{\numberline {3.3}Processi e thread}{12}{section.3.3}% 
-\contentsline {section}{\numberline {3.4}Processi e thread}{13}{section.3.4}% 
-\contentsline {chapter}{\numberline {4}Processi e threads}{14}{chapter.4}% 
-\contentsline {section}{\numberline {4.1}Processi}{14}{section.4.1}% 
-\contentsline {subsection}{\numberline {4.1.1}Il modello dei processi}{14}{subsection.4.1.1}% 
-\contentsline {subsection}{\numberline {4.1.2}Creazione dei processi}{14}{subsection.4.1.2}% 
-\contentsline {subsection}{\numberline {4.1.3}Terminazione di un processo}{15}{subsection.4.1.3}% 
-\contentsline {subsection}{\numberline {4.1.4}Gerarchie di processi}{16}{subsection.4.1.4}% 
-\contentsline {subsection}{\numberline {4.1.5}Stati dei processi}{16}{subsection.4.1.5}% 
-\contentsline {subsection}{\numberline {4.1.6}Implementazione dei processi}{17}{subsection.4.1.6}% 
-\contentsline {subsection}{\numberline {4.1.7}Modellare la multiprogrammazione}{17}{subsection.4.1.7}% 
-\contentsline {section}{\numberline {4.2}Threads}{18}{section.4.2}% 
-\contentsline {subsection}{\numberline {4.2.1}Utilizzo dei thread}{18}{subsection.4.2.1}% 
-\contentsline {subsection}{\numberline {4.2.2}Il modello dei thread classico}{18}{subsection.4.2.2}% 
-\contentsline {subsection}{\numberline {4.2.3}Thread POSIX}{19}{subsection.4.2.3}% 
-\contentsline {subsection}{\numberline {4.2.4}Implementazione dei thread nello spazio utente}{19}{subsection.4.2.4}% 
-\contentsline {subsection}{\numberline {4.2.5}Implementazione dei thread nel kernel}{20}{subsection.4.2.5}% 
-\contentsline {subsection}{\numberline {4.2.6}Implementazioni ibride}{20}{subsection.4.2.6}% 
-\contentsline {subsection}{\numberline {4.2.7}Attivazioni dello scheduler}{20}{subsection.4.2.7}% 
-\contentsline {subsection}{\numberline {4.2.8}Thread Pop-Up}{21}{subsection.4.2.8}% 
-\contentsline {subsection}{\numberline {4.2.9}Rendere codice a thread singolo multithreaded}{21}{subsection.4.2.9}% 
-\contentsline {section}{\numberline {4.3}Sincronizzazione di processi}{22}{section.4.3}% 
-\contentsline {subsection}{\numberline {4.3.1}Condizioni di competizione}{22}{subsection.4.3.1}% 
-\contentsline {subsection}{\numberline {4.3.2}Regioni critiche}{22}{subsection.4.3.2}% 
-\contentsline {subsection}{\numberline {4.3.3}Soluzioni software}{22}{subsection.4.3.3}% 
-\contentsline {subsubsection}{Variabili di lock}{22}{section*.25}% 
-\contentsline {subsubsection}{Strict alternation}{23}{section*.26}% 
-\contentsline {subsubsection}{Soluzione strict alternation}{23}{section*.27}% 
-\contentsline {subsubsection}{Algoritmo del fornaio}{23}{section*.28}% 
-\contentsline {subsection}{\numberline {4.3.4}Soluzioni hardware}{23}{subsection.4.3.4}% 
-\contentsline {subsubsection}{Disattivazione degli interrupts}{23}{section*.29}% 
-\contentsline {subsubsection}{Istruzioni Test and Set e Swap}{23}{section*.30}% 
-\contentsline {subsection}{\numberline {4.3.5}Semafori}{24}{subsection.4.3.5}% 
-\contentsline {subsubsection}{Semafori binari - implementazione}{24}{section*.31}% 
-\contentsline {subsubsection}{Semafori interi - implementazione con busy waiting}{24}{section*.32}% 
-\contentsline {subsubsection}{Semafori interi - implementazione senza busy waiting}{24}{section*.33}% 
-\contentsline {subsubsection}{Utilizzo dei semafori}{25}{section*.34}% 
-\contentsline {section}{\numberline {4.4}Monitor}{25}{section.4.4}% 
-\contentsline {section}{\numberline {4.5}Classi syncronized in Java}{26}{section.4.5}% 
+\contentsline {chapter}{\numberline {1}Introduzione}{4}{chapter.1}% 
+\contentsline {subsubsection}{Componenti}{4}{section*.3}% 
+\contentsline {subsection}{\numberline {1.0.1}Punti chiave nel progetto di calcolatori}{4}{subsection.1.0.1}% 
+\contentsline {subsubsection}{Punto di vista dell'utente}{4}{section*.4}% 
+\contentsline {subsubsection}{Punto di vista del sistema}{5}{section*.5}% 
+\contentsline {section}{\numberline {1.1}Storia dei sistemi operativi}{5}{section.1.1}% 
+\contentsline {subsection}{\numberline {1.1.1}Prima generazione (1946-1955)}{5}{subsection.1.1.1}% 
+\contentsline {subsubsection}{Evoluzione}{6}{section*.6}% 
+\contentsline {subsection}{\numberline {1.1.2}Seconda generazione (1955-1965)}{6}{subsection.1.1.2}% 
+\contentsline {subsubsection}{Evoluzione}{6}{section*.7}% 
+\contentsline {subsubsection}{Limitazioni}{6}{section*.8}% 
+\contentsline {subsubsection}{Sovrapposizione tra CPU e I/O}{6}{section*.9}% 
+\contentsline {paragraph}{Polling}{6}{section*.10}% 
+\contentsline {paragraph}{Interrupt e I/O}{6}{section*.11}% 
+\contentsline {paragraph}{DMA e I/O}{7}{section*.12}% 
+\contentsline {paragraph}{Buffering}{7}{section*.13}% 
+\contentsline {paragraph}{Spooling}{7}{section*.14}% 
+\contentsline {subsection}{\numberline {1.1.3}Terza generazione (1965-1980)}{7}{subsection.1.1.3}% 
+\contentsline {subsubsection}{Protezione}{7}{section*.15}% 
+\contentsline {subsection}{\numberline {1.1.4}Quarta generazione (1980-1990)}{8}{subsection.1.1.4}% 
+\contentsline {subsubsection}{Quinta generazione (1990- oggi)}{8}{section*.16}% 
+\contentsline {chapter}{\numberline {2}Componenti di un sistema operativo}{9}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Servizi di gestione}{9}{section.2.1}% 
+\contentsline {subsubsection}{Gestione dei processi}{9}{section*.17}% 
+\contentsline {subsubsection}{Gestione della memoria primaria}{9}{section*.18}% 
+\contentsline {subsubsection}{Gestione della memoria secondaria}{9}{section*.19}% 
+\contentsline {subsubsection}{Gestionde dell'I/O}{9}{section*.20}% 
+\contentsline {subsubsection}{Gestione dei file}{10}{section*.21}% 
+\contentsline {subsubsection}{Protezione}{10}{section*.22}% 
+\contentsline {subsubsection}{Rete (sistemi distribuiti)}{10}{section*.23}% 
+\contentsline {section}{\numberline {2.2}Interprete dei comandi (shell)}{10}{section.2.2}% 
+\contentsline {subsubsection}{Interfaccia grafica}{10}{section*.24}% 
+\contentsline {subsection}{\numberline {2.2.1}System calls}{10}{subsection.2.2.1}% 
+\contentsline {chapter}{\numberline {3}Architettura di un sistema operativo}{12}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Modello client-server}{13}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}macchine virtuali}{13}{section.3.2}% 
+\contentsline {subsection}{\numberline {3.2.1}Esokernel}{13}{subsection.3.2.1}% 
+\contentsline {section}{\numberline {3.3}Processi e thread}{13}{section.3.3}% 
+\contentsline {section}{\numberline {3.4}Processi e thread}{14}{section.3.4}% 
+\contentsline {chapter}{\numberline {4}Processi e thread}{15}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Processi}{15}{section.4.1}% 
+\contentsline {subsection}{\numberline {4.1.1}Immagine in memoria}{15}{subsection.4.1.1}% 
+\contentsline {subsubsection}{Attributi}{15}{section*.25}% 
+\contentsline {subsection}{\numberline {4.1.2}Stati di un processo}{15}{subsection.4.1.2}% 
+\contentsline {subsection}{\numberline {4.1.3}Scheduling}{15}{subsection.4.1.3}% 
+\contentsline {subsubsection}{Code di scheduling}{16}{section*.26}% 
+\contentsline {subsection}{\numberline {4.1.4}Operazione di dispatch}{16}{subsection.4.1.4}% 
+\contentsline {subsubsection}{Cambio di contesto}{16}{section*.27}% 
+\contentsline {subsection}{\numberline {4.1.5}Operazioni sui processi}{16}{subsection.4.1.5}% 
+\contentsline {subsubsection}{Creazione di un processo}{16}{section*.28}% 
+\contentsline {subsubsection}{Terminazione di un processo}{16}{section*.29}% 
+\contentsline {subsection}{\numberline {4.1.6}Stati di un processo}{17}{subsection.4.1.6}% 
+\contentsline {section}{\numberline {4.2}Threads}{17}{section.4.2}% 
+\contentsline {subsection}{\numberline {4.2.1}Multi-threading}{17}{subsection.4.2.1}% 
+\contentsline {subsection}{\numberline {4.2.2}Vantaggi dei thread}{17}{subsection.4.2.2}% 
+\contentsline {subsection}{\numberline {4.2.3}Stati di un thread}{18}{subsection.4.2.3}% 
+\contentsline {subsection}{\numberline {4.2.4}Implementazione dei thread}{18}{subsection.4.2.4}% 
+\contentsline {subsubsection}{Thread user-level}{18}{section*.31}% 
+\contentsline {subsubsection}{Thread kernel-level}{18}{section*.32}% 
+\contentsline {subsection}{\numberline {4.2.5}La libreria posix pthreads}{18}{subsection.4.2.5}% 
+\contentsline {subsubsection}{Creazione di un thread}{18}{section*.33}% 
+\contentsline {subsubsection}{terminazione di un thread}{19}{section*.34}% 
+\contentsline {subsubsection}{Sincronizzazione fra thread}{19}{section*.35}% 
+\contentsline {subsubsection}{Sincronizzazione fra thread}{19}{section*.36}% 
+\contentsline {paragraph}{Condivisione dello spazio logico}{19}{section*.37}% 
+\contentsline {paragraph}{Sincronizzazione dell'esecuzione}{19}{section*.38}% 
+\contentsline {section}{\numberline {4.3}Relazione tra processi}{19}{section.4.3}% 
+\contentsline {subsection}{\numberline {4.3.1}Scambio di messaggi}{19}{subsection.4.3.1}% 
+\contentsline {subsubsection}{Comunicazioni dirette}{19}{section*.39}% 
+\contentsline {subsubsection}{Comunicazioni indirette}{20}{section*.40}% 
+\contentsline {subsubsection}{Sincronizzazione}{20}{section*.41}% 
+\contentsline {paragraph}{Bloccante (sincrono)}{20}{section*.42}% 
+\contentsline {paragraph}{Non bloccante (asincrono)}{20}{section*.43}% 
+\contentsline {subsection}{\numberline {4.3.2}Memoria condivisa}{20}{subsection.4.3.2}% 
+\contentsline {subsubsection}{Pipe}{20}{section*.44}% 
+\contentsline {paragraph}{Pipe ordinarie}{20}{section*.45}% 
+\contentsline {paragraph}{Pipe con nome}{20}{section*.46}% 
+\contentsline {section}{\numberline {4.4}Gestione dei processi del sistema operativo}{21}{section.4.4}% 
+\contentsline {subsection}{\numberline {4.4.1}Kernel separato}{21}{subsection.4.4.1}% 
+\contentsline {subsection}{\numberline {4.4.2}Kernel in processi utente}{21}{subsection.4.4.2}% 
+\contentsline {subsection}{\numberline {4.4.3}Kernel come processo}{21}{subsection.4.4.3}% 
+\contentsline {chapter}{\numberline {5}Scheduling CPU}{22}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Tipi di scheduling}{22}{section.5.1}% 
+\contentsline {subsection}{\numberline {5.1.1}Caratteristiche degli scheduler}{22}{subsection.5.1.1}% 
+\contentsline {subsection}{\numberline {5.1.2}Scheduling a medio termine}{22}{subsection.5.1.2}% 
+\contentsline {section}{\numberline {5.2}Scheduling della CPU}{22}{section.5.2}% 
+\contentsline {subsection}{\numberline {5.2.1}Dispatcher}{23}{subsection.5.2.1}% 
+\contentsline {subsection}{\numberline {5.2.2}Modello astratto del sistema}{23}{subsection.5.2.2}% 
+\contentsline {subsection}{\numberline {5.2.3}Prelazione (preemption)}{23}{subsection.5.2.3}% 
+\contentsline {subsection}{\numberline {5.2.4}Metriche di scheduling}{23}{subsection.5.2.4}% 
+\contentsline {section}{\numberline {5.3}Algoritmi di scheduling}{23}{section.5.3}% 
+\contentsline {subsection}{\numberline {5.3.1}First-Come, First-Served (FCFS)}{23}{subsection.5.3.1}% 
+\contentsline {subsection}{\numberline {5.3.2}Shortest-Job-First (SJF)}{24}{subsection.5.3.2}% 
+\contentsline {subsubsection}{Calcolo del prossimo burst di CPU}{24}{section*.47}% 
+\contentsline {subsection}{\numberline {5.3.3}Scheduling a priorit\`a}{24}{subsection.5.3.3}% 
+\contentsline {subsection}{\numberline {5.3.4}Higher response ratio next (HRRN)}{24}{subsection.5.3.4}% 
+\contentsline {subsection}{\numberline {5.3.5}Round robin (RR)}{24}{subsection.5.3.5}% 
+\contentsline {subsection}{\numberline {5.3.6}Code multilivello}{25}{subsection.5.3.6}% 
+\contentsline {subsection}{\numberline {5.3.7}Code multilivello con feedback}{25}{subsection.5.3.7}% 
+\contentsline {subsection}{\numberline {5.3.8}Scheduling fair share}{25}{subsection.5.3.8}% 
+\contentsline {subsection}{\numberline {5.3.9}Valutazione degli algoritmi}{25}{subsection.5.3.9}% 
+\contentsline {subsubsection}{Modello deterministico (analitico)}{25}{section*.48}% 
+\contentsline {subsubsection}{Modello a reti di code}{25}{section*.49}% 
+\contentsline {subsubsection}{Simulazione}{25}{section*.50}% 
+\contentsline {subsubsection}{Implementazione}{25}{section*.51}% 
+\contentsline {chapter}{\numberline {6}Sincronizzazione tra processi}{26}{chapter.6}% 
+\contentsline {subsection}{\numberline {6.0.1}Buffer: modello software}{26}{subsection.6.0.1}% 
+\contentsline {subsection}{\numberline {6.0.2}Sezione critica}{26}{subsection.6.0.2}% 
+\contentsline {subsubsection}{Soluzione}{27}{section*.52}% 
+\contentsline {section}{\numberline {6.1}Soluzioni software}{27}{section.6.1}% 
+\contentsline {subsection}{\numberline {6.1.1}Algoritmo 2}{27}{subsection.6.1.1}% 
+\contentsline {subsection}{\numberline {6.1.2}Algoritmo 3}{27}{subsection.6.1.2}% 
+\contentsline {subsubsection}{Dimostrazione}{28}{section*.53}% 
+\contentsline {paragraph}{Mutua esclusione}{28}{section*.54}% 
+\contentsline {paragraph}{Progresso e attesa limitata}{28}{section*.55}% 
+\contentsline {subsection}{\numberline {6.1.3}Algoritmo del fornaio}{28}{subsection.6.1.3}% 
+\contentsline {section}{\numberline {6.2}Soluzioni hardware}{28}{section.6.2}% 
+\contentsline {subsection}{\numberline {6.2.1}Test and Set}{29}{subsection.6.2.1}% 
+\contentsline {subsection}{\numberline {6.2.2}Swap}{29}{subsection.6.2.2}% 
+\contentsline {subsection}{\numberline {6.2.3}Test and Set con attesa limitata}{29}{subsection.6.2.3}% 
+\contentsline {subsection}{\numberline {6.2.4}Conclusioni}{30}{subsection.6.2.4}% 
+\contentsline {section}{\numberline {6.3}Semafori}{30}{section.6.3}% 
+\contentsline {subsection}{\numberline {6.3.1}Semafori binari}{30}{subsection.6.3.1}% 
+\contentsline {subsubsection}{Con busy waiting}{30}{section*.56}% 
+\contentsline {subsection}{\numberline {6.3.2}Semafori interi}{31}{subsection.6.3.2}% 
+\contentsline {subsubsection}{Con busy waiting}{31}{section*.57}% 
+\contentsline {subsubsection}{Senza busy waiting}{31}{section*.58}% 
+\contentsline {subsection}{\numberline {6.3.3}Implementazione}{32}{subsection.6.3.3}% 
+\contentsline {subsection}{\numberline {6.3.4}Applicazioni}{32}{subsection.6.3.4}% 
+\contentsline {subsubsection}{Sezione critica}{32}{section*.59}% 
+\contentsline {subsubsection}{Semafori per attesa evento}{33}{section*.60}% 
+\contentsline {subsection}{\numberline {6.3.5}Limitazioni}{33}{subsection.6.3.5}% 
+\contentsline {section}{\numberline {6.4}Problemi classici dei semafori}{33}{section.6.4}% 
+\contentsline {subsection}{\numberline {6.4.1}Produttore consumatore}{33}{subsection.6.4.1}% 
+\contentsline {subsection}{\numberline {6.4.2}Dining philosophers}{34}{subsection.6.4.2}% 
+\contentsline {subsubsection}{Prima soluzione}{34}{section*.61}% 
+\contentsline {paragraph}{Dati condivisi}{34}{section*.62}% 
+\contentsline {paragraph}{La soluzione \`e incompleta}{34}{section*.63}% 
+\contentsline {paragraph}{Deadlock}{34}{section*.64}% 
+\contentsline {paragraph}{Possibili soluzioni parziali}{34}{section*.65}% 
+\contentsline {subsubsection}{Soluzione corretta}{35}{section*.66}% 
+\contentsline {subsection}{\numberline {6.4.3}Sleepy barber}{35}{subsection.6.4.3}% 
+\contentsline {subsubsection}{Soluzione}{35}{section*.67}% 
+\contentsline {paragraph}{Dati condivisi}{35}{section*.68}% 
+\contentsline {subsection}{\numberline {6.4.4}Limitazioni dei semafori}{36}{subsection.6.4.4}% 
+\contentsline {section}{\numberline {6.5}Monitor}{36}{section.6.5}% 
+\contentsline {subsection}{\numberline {6.5.1}Operazioni del monitor}{37}{subsection.6.5.1}% 
+\contentsline {subsubsection}{Wait}{37}{section*.69}% 
+\contentsline {subsubsection}{Signal}{37}{section*.70}% 
+\contentsline {subsubsection}{Buffer produttore consumatore}{37}{section*.71}% 
+\contentsline {subsubsection}{Semaforo binario nel monitor}{38}{section*.72}% 
+\contentsline {subsection}{\numberline {6.5.2}Limitazioni}{38}{subsection.6.5.2}% 
+\contentsline {section}{\numberline {6.6}Sincronizzazione in Java}{39}{section.6.6}% 
+\contentsline {subsection}{\numberline {6.6.1}Buffer produttore consumatore}{39}{subsection.6.6.1}% 
+\contentsline {section}{\numberline {6.7}Conclusioni}{39}{section.6.7}% 
+\contentsline {section}{\numberline {6.8}Problema degli scrittori e dei lettori}{39}{section.6.8}% 
+\contentsline {chapter}{\numberline {7}Deadlock}{41}{chapter.7}% 
+\contentsline {subsection}{\numberline {7.0.1}Condizioni necessarie}{41}{subsection.7.0.1}% 
+\contentsline {section}{\numberline {7.1}Modello astratto: resource allocation graph (RAG)}{41}{section.7.1}% 
+\contentsline {section}{\numberline {7.2}Gestione dei deadlock}{42}{section.7.2}% 
+\contentsline {subsection}{\numberline {7.2.1}Prevenzione statica}{42}{subsection.7.2.1}% 
+\contentsline {subsubsection}{Mutua esclusione}{42}{section*.73}% 
+\contentsline {subsubsection}{Hold and Wait}{42}{section*.74}% 
+\contentsline {subsubsection}{No preemption}{42}{section*.75}% 
+\contentsline {subsubsection}{Attesa circolare}{42}{section*.76}% 
+\contentsline {subsection}{\numberline {7.2.2}Prevenzione dinamica (avoidance)}{42}{subsection.7.2.2}% 
+\contentsline {subsubsection}{Stato Safe}{42}{section*.77}% 
+\contentsline {subsubsection}{Sequenza Safe}{42}{section*.78}% 
+\contentsline {subsubsection}{Metodo della prevenzione dinamica}{43}{section*.79}% 
+\contentsline {subsubsection}{Algoritmo con RAG}{43}{section*.80}% 
+\contentsline {subsubsection}{Algoritmo del banchiere}{43}{section*.81}% 
+\contentsline {paragraph}{Algoritmo di allocazione}{43}{lstlisting.7.2}% 
+\contentsline {paragraph}{Algoritmo di verifica dello stato}{44}{lstlisting.7.3}% 
+\contentsline {subsection}{\numberline {7.2.3}Rilevamento (detection) e ripristino (recovery)}{44}{subsection.7.2.3}% 
+\contentsline {subsubsection}{Attraverso il RAG}{44}{section*.84}% 
+\contentsline {subsubsection}{Algoritmo di rilevamento}{44}{section*.85}% 
+\contentsline {subsubsection}{Ripristino}{45}{section*.86}% 
+\contentsline {paragraph}{Uccisione dei processi}{45}{section*.87}% 
+\contentsline {paragraph}{Prelazione delle risorse}{45}{section*.88}% 
+\contentsline {subsection}{\numberline {7.2.4}Algoritmo dello struzzo}{45}{subsection.7.2.4}% 
+\contentsline {section}{\numberline {7.3}Conclusioni}{45}{section.7.3}% 
+\contentsline {subsection}{\numberline {7.3.1}Partizionamento in classi}{46}{subsection.7.3.1}% 
+\contentsline {subsection}{\numberline {7.3.2}Algoritmi specifici}{46}{subsection.7.3.2}% 

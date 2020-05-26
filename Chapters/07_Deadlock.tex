@@ -1,0 +1,108 @@
+\chapter{Deadlock}
+In una sequenza di utilizzo dei processi che utilizzano risorse si trovano tre fasi:
+\begin{itemize}
+	\item Richiesta: se non pu\`o essere immediatamente soddisfatta il processo deve attendere.
+	\item Utilizzo.
+	\item Rilascio.
+\end{itemize}
+Un insieme di processi si definisce in deadlock quando ogni processo \`e in attesa di un evento che pu\`o essere causato solo da un processo dello stesso insieme. Un deadlock si pu\`o 
+risolvere attraverso preemption e rollback, con pericolo di starvation. 
+\subsection{Condizioni necessarie}
+Affinch\`e si verifichi un deadlock devono essere vere contemporaneamente:
+\begin{itemize}
+	\item Mutua esclusione: almeno una risorsa deve essere non condivisibile.
+	\item Hold and Wait: deve esistere un processo che detiene una risorsa e che attende di acquisirne un'altra detenuta da un altro. 
+	\item No preemption: le risorse non possono essere rilasciate se non volontariamente dal processo che le usa.
+	\item Attesa circolare: deve esistere un insieme di processi che attendono ciclicamente il liberarsi di una risorsa. 
+\end{itemize}
+\section{Modello astratto: resource allocation graph (RAG)}
+Sia un RAG un grafo $G(V, E)$ tale che i nodi $V$ rappresentati attraverso cerchi sono i processi mentre i nodi rappresentati come rettangoli sono le risorse. Nei rettangoli si trovano
+tanti cerchi quante sono le istanze della corrispondente risorsa. Gli archi $E$ da processi a risorse indicano un processo che richiede una risorsa, mentre da risorse a processi 
+indicano che il processo detiene la risorsa. Se il RAG non contiene cicli non ci sono deadlock, mentre se ne contiene se si ha una sola istanza per risorsa allora si ha deadlock, 
+mentre se ci sono pi\`u istanze dipende dallo schema di allocazione. 
+\section{Gestione dei deadlock}
+\subsection{Prevenzione statica}
+Nella prevenzione statica si tenta di evitare che si possa verificare una delle quattro condizioni. 
+\subsubsection{Mutua esclusione}
+Si noti come la mutua esclusione \`e irrinunciabile per certi tipi di risorsa e pertanto non \`e risolvibile.
+\subsubsection{Hold and Wait}
+Una soluzione consiste nel fatto che un processo alloca all'inizio tutte le risorse che deve utilizzare o pu\`o ottenerne una solo se non ne ha altre. Con queste soluzioni si ottiene
+un basso utilizzo delle risorse con possibilit\`a di starvation in caso di richiesta di molte risorse molto popolari. Si deve inoltre conoscere il numero di risorse richieste. 
+\subsubsection{No preemption}
+Una soluzione consiste nel fatto che un processo che richiede una risorsa non disponibile deve cedere tutte le altre risorse che detiene. In alternativa pu\`o cedere risorse che 
+detiene su richiesta di un altro processo. Si noti come \`e fattibile solo per risorse il cui stato pu\`o essere ristabilito facilmente. 
+\subsubsection{Attesa circolare}
+Si assegna una prioriit\`a, un ordinamento globale ad ogni risorsa in modo che un processo pu\`o richiedere risorse solo in ordine crescente di priorit\`a, pertanto l'attesa circolare
+diventa impossibile. La priorit\`a deve seguire il normale ordine di richiesta. 
+\subsection{Prevenzione dinamica (avoidance)}
+Questo metodo si basa sull'allocazione delle risorse e non viene mai utilizzata poich\`e richiede una conoscenza troppo approfondita delle richieste di risorse. Si noti come le 
+tecniche di prevenzione statica possono portare a un basso utilizzo delle risorse perch\`e mettono vincoli sul modo in cui i processi possono accedere alle risorse. L'obiettivo \`e la
+prevenzione in base alla richieste: un analisi dinamica del grafo delle risorse per evitare situazioni cicliche. Richiede come requisito la conoscenza del caso peggiore: il massimo 
+numero di istanze di una risorsa richieste per processo. 
+\subsubsection{Stato Safe}
+Lo stato di assegnazione delle risorse viene calcolato come il numero di istanze disponibili e allocate e le richieste massime dei processi. Il sistema si trova in uno stato sicuro
+se esiste una sequenza safe ovvero se usando le risorse disponibili pu\`o allocare risorse ad ogni processo in qualche ordine in modo che ciascuno di essi possa terminare la sua
+esecuzione. 
+\subsubsection{Sequenza Safe}
+Una sequenza di processi $(P_1, \dots, P_N)$ \`e safe se per ogni $P_i$ le risorse che $P_i$ pu\`o richiedere possono essere esaudite usando le risorse disponibili e quelle detenute da
+$P_j$, $j < i$, ovvero attendendo che $P_j$ termini. Se non esiste tale sequenza si trova in uno stato unsafe. Si noti come non tutti gli stati unsafe sono deadlock, ma da stato 
+unsafe si pu\`o arrivare ad un deadlock. 
+\subsubsection{Metodo della prevenzione dinamica}
+Si usano algoritmi che lasciano il sistema sempre in uno stato safe. All'inizio il sistema \`e in uno stato safe. Ogni volta che $P$ richiede $R$, $R$ viene assegnata a $P$ se e solo
+se si rimane in uno stato safe. L'utilizzo delle risorse sar\`a sempre minore rispetto al caso in cui non si usano tecniche di prevenzione dinamica. 
+\subsubsection{Algoritmo con RAG}
+Questo algoritmo funziona solo se c'\`e una sola istanza per risorsa. Il RAG viene esteso con archi di rivendicazione: $P_i\rightarrow R_j$ se $P_i$ pu\`o richiedere $R_j$ in futuro. 
+Questi archi vengono indicati con una freccia tratteggiata. All'inizio ogni processo deve rendere noto quali risorse vorrebbe usare durante la sua esecuzione. Una richiesta viene 
+soddisfatta se e solo se l'allocazione della risorsa non crea un ciclo nel RAG. Serve un algoritmo per la rilevazione dei calci di complessit\`a ($O(n^2)$, dove $n$ \`e il numero di 
+processi)
+\subsubsection{Algoritmo del banchiere}
+Pure essendo meno efficiente dell'algoritmo con RAG funziona qualunque sia il numero di istanze. In questo algoritmo il banchiere non deve mai distribuire tutto il denaro che ha in cassa
+in quanto altrimenti non potrebbe pi\`u soddisfare successivi clienti. Ogni processo dichiara la sua massima richiesta e ogni volta che un processo richiede una risorsa si determina se 
+soddisfarla lascia uno stato safe. Tale algoritmo \`e costituito da un algoritmo di allocazione e uno di verifica dello stato. 
+\lstinputlisting[caption={Strutture dati per $n$ processi e $m$ risorse}, language={C}]{Algoritmi/Banchierestrutture.c}
+\paragraph{Algoritmo di allocazione}
+\lstinputlisting[caption={Allocazione per $P_i$}, language={C}]{Algoritmi/BanchiereAllocazione.c}
+\paragraph{Algoritmo di verifica dello stato}
+\lstinputlisting[caption={Verifica dello stato}, language={C}]{Algoritmi/BanchiereVerifica.c}
+Si noti come questo algoritmo abbia complessit\`a $O(m\cdot n^2)$.
+\subsection{Rilevamento (detection) e ripristino (recovery)}
+In questo metodo si permette che si verifichino deadlock e prevede metodi per riportare il sistema al funzionamento normale. Nasce in quanto prevenzione statica e dinamica sono 
+conservativi e riducono eccessivamente l'utilizzo delle risorse. Ci sono due approcci alternativi: rilevamento del ripristino tramite il grafo di attesa calcolato attraverso il RAG
+e l'algoritmo di rilevazione.
+\subsubsection{Attraverso il RAG}
+Funziona solo con una risorsa per tipo e consiste nell'analizzare periodicamente il RAG< verificare se esistono deadlock ed iniziare il ripristino. Non \`e necessaria una conoscenza
+anticipata delle richieste e permette un loro utilizzo migliore ma presenta il costo del recovery. 
+\subsubsection{Algoritmo di rilevamento}
+L'algoritmo di rilevamento si basa sull'esplorazione di ogni possibile sequenza di allocazione per i processi che non hanno ancora terminato. Se la sequenza va a buon fine (\`e safe)
+non avviene deadlock.
+\lstinputlisting[caption={Strutture dati per $n$ processi e $m$ risorse}, language={C}]{Algoritmi/RilevamentoStrutture.c}
+\lstinputlisting[caption={Algoritmo di rilevamento}, language={C}]{Algoritmi/RilevamentoAlgoritmo.c}
+\subsubsection{Ripristino}
+L'algoritmo di rilevamento pu\`o essere chiamato dopo ogni richiesta, ogni $N$ secondi o quando l'utilizzo della CPU scende sotto una soglia $T$ e pu\`o uccidere i processi coinvolti o 
+fare prelazione delle risorse dai processi bloccati nel deadlock. 
+\paragraph{Uccisione dei processi}
+Questo approccio \`e costoso in quanto tutti i processi devono ripartire e perdono il lavoro svolto. Uccidere selettivamente fino alla scomparsa del deadlock \`e costoso in quanto
+invoca l'algoritmo di rilevazione dopo ogni uccisione e si deve decidere accuratamente l'ordine. 
+\paragraph{Prelazione delle risorse}
+Il problema \`e che il processo che subisce la prelazione non pu\`o continuare normalmente e pertanto si deve fare rollback in uno stato safe da cui si riparte (eventualmente ripartendo
+da zero). \`E possibile starvation se tolgo le risorse sempre agli stessi processo. Si deve pertanto considerare il numero di rollback nei fattori di costo. 
+\subsection{Algoritmo dello struzzo}
+In questo metodo non si fa nulla in quanto i deadlock sono rari e gestirli costa troppo. 
+\section{Conclusioni}
+Ognuno degli approcci ha vantaggi e svantaggi, nessuno superiore agli altri. Si pu\`o avere una soluzione combinata che partiziona le risorse in classi usando una strategia di 
+ordinamento con l'algoritmo pi\`u appropriato per la classe.
+\subsection{Partizionamento in classi}
+\begin{enumerate}
+	\item Risorse interne usate dal sistema.
+	\item Memoria.
+	\item Risorse di processo.
+	\item Spazio di swap.
+\end{enumerate}
+\subsection{Algoritmi specifici}
+\begin{enumerate}
+	\item Prevenzione tramite ordinamento delle risorse.
+	\item Prevenzione tramite prelazione: un job pu\`o essere swappato.
+	\item Prevenzione dinamica: richiesta massima di risorse nota a priori.
+	\item Prevenzione tramite preallocazione: richiesta massima nota a priori.
+\end{enumerate}
+\`E sempre possibile ignorare i deadlock in quanto sono eventi rari, la prevenzione \`e costosa come il recovery e gli algoritmi sono spesso sbagliati. 

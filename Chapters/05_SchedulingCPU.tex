@@ -1,0 +1,87 @@
+\chapter{Scheduling CPU}
+Si intende per scheduling l'assegnazione di attivit\`a nel tempo: l'utilizzo della multiprogrammazione impone l'esistenza di una strategia per regolamentare l'ammissione dei processi
+nel sistema e l'ammissione dei processi all'esecuzione. 
+\section{Tipi di scheduling}
+Gli scheduler si dividono in a lungo termine (job scheduler) che seleziona quali processi devono essere portati dalla memoria alla ready queue e gli scheduler a breve termine (CPU 
+scheduler) che seleziona quale processo deve essere eseguito dalla CPU.
+\subsection{Caratteristiche degli scheduler}
+Lo scheduler a breve termine \`e invocato spesso e pertanto deve essere veloce, mentre lo scheduler a lungo termine \`e invocato pi\`u raramente e pu\`o essere pi\`u lento in quanto
+controlla il grado di multiprogrammazione e il mix di processi. Il secondo pu\`o essere I/O bound con molto I/O e molti brevi burst di CPU o CPU-bound, con molti calcoli e pochi lunghi
+burst di CPU. In sistemi con risorse limitate lo scheduler pu\`o essere assente. 
+\subsection{Scheduling a medio termine}
+I sistemi operativi con memoria virtuale prevedono un livello intermedio di scheduling per la momentanea rimozione forzata (swapping) di un processo dalla CPU per ridurre il grado di 
+multiprogrammazione.
+\section{Scheduling della CPU}
+Il CPU scheduler \`e un modulo del sistema operativo che seleziona un processo tra quelli in memoria pronti per l'esecuzione e gli alloca la CPU e data la frequenza di invocazione \`e
+una parte critica del sistema operativo in quanto necessita algoritmi di scheduling.
+\subsection{Dispatcher}
+Il dispatcher \`e un modulo del sistema operativo che passa il controllo della CPU al processo scelto dallo scheduler: fa lo switch del contesto, il passaggio alla modalit\`a user e 
+il salto alla opportuna locazione nel programma per farlo ripartire. Nasce una latenza di dispatch, il tempo necessario al dispatcher per fermare un processo e farne ripartire un altro.
+Deve pertanto essere la pi\`u bassa possibile. 
+\subsection{Modello astratto del sistema}
+Nel sistema si trova un alternanza di burst (sequenza) di CPU e I/O. Nel modello a cicli di burst CPU-I/O l'esecuzione di un processo  consiste dell'alternanza ciclica di un burst di CPU
+e di uno di I/O. I CPU burst sono distribuiti esponenzialmente con molti burst brevi o pochi lunghi. 
+\subsection{Prelazione (preemption)}
+Si intende per prelazione il rilascio forzato della CPU. Quando non \`e presente il processo che detiene la CPU non la rilascia fino al termine del burst, mentre quando \`e presente 
+pu\`o essere forzato a rilasciarla prima del termine. 
+\subsection{Metriche di scheduling}
+Per misurare la qualit\`a dello scheduling si considerano:
+\begin{itemize}
+	\item Utilizzo della CPU, con l'obiettivo di tenerla pi\`u occupata possibile.
+	\item Throughput, il numero di processi completati per unit\`a di tempo.
+	\item Tempo di attesa ($t_w$), la quantit\`a di tempo totale spesa da un processo nella coda di attesa influenzato dall'algoritmo di scheduling.
+	\item Tempo di completamento (turnaround $t_t$), il tempo necessario ad eseguire un particolare processo dal momento della sottomissione al momento del completamento.
+	\item Tempo di risposta ($t_r$), il tempo trascorso da quando una richiesta \`e stata sottoposta al sistema fino alla prima risposta del sistema spesso.
+\end{itemize}
+Per ottimizzare lo scheduling si deve pertanto massimizzare l'utilizzo della CPU e il throughput e minimizzare i tempi di turnaround, attesa e risposta.
+\section{Algoritmi di scheduling}
+\subsection{First-Come, First-Served (FCFS)}
+La coda dei processi \`e una coda FIFO e il primo processo arrivato \`e il primo ad essere servito, ha un'implementazione semplice. Uno svantaggio ovvio \`e il cosiddetto effetto
+convoglio: i processi brevi si accodano a processi lunghi preesistenti e sorgono problemi in contesti interattivi. 
+\subsection{Shortest-Job-First (SJF)}
+Associa ad ogni processo la lunghezza del prossimo burst di CPU e il processo con il burst pi\`u breve viene selezionato per l'esecuzione. Ne esistono due schemi uno non preemptive e uno
+preemptive in cui se arriva un nuovo processo con un burst di CPU pi\`u breve del tempo che rimane da seguire al processo un esecuzione questo viene rimosso dalla CPU per fare spazio
+a quello appena arrivato (algoritmo di shortest-remaining-time-first SRTF). SJF \`e ottimo in quanto permette il minimo tempo medio di attesa. 
+\subsubsection{Calcolo del prossimo burst di CPU}
+Di questo \`e possibile solo una stima utilizzando le lunghezze dei burst precedenti come proiezione di quelli futuri e utilizzando una media esponenziale: sia $t_n$ la lunghezza reale
+dell'n-esimo burst, $\tau_{n+1}$ il valore stimato per il prossimo burst e $\alpha$ un coefficiente tale che $0<\alpha<1$, allora: 
+$$\tau_{n+1} = \alpha\cdot t_n + (1-\alpha)\cdot \tau_n$$
+Se $\alpha = 0$ la storia recente non viene utilizzata e se $\alpha = 1$ conta solo l'ultimo burst reale. Si nota come ogni termine successivo pesa meno del predecessore.
+\subsection{Scheduling a priorit\`a}
+In questo algoritmo viene associata una priorit\`a a ogni processo e la CPU viene allocata al processo con priorit\`a pi\`u alta. Pu\`o essere preemptive o non-preemptive. Si noti
+come SJF \`e uno scheduing a priorit\`a data da $\frac{1}{\text{lunghezza del burst successivo}}$. Il comando \emph{nice} in Linux modifica la priorit\`a. Le politiche di assegnamento
+della priorit\`a possono essere interne al sistema operativo (limiti di tempo, requisiti di memoria, numero di file aperti) o esterne (importanza del processo, motivi economici o 
+politici). Pu\`o nascere il problema di starvation in quanto processi a bassa priorit\`a possono non essere mai eseguiti, risolti con un aumento della priorit\`a con il passare del
+tempo. 
+\subsection{Higher response ratio next (HRRN)}
+\`E un algoritmo a priorit\`a non-preentive: la priorit\`a $$R=\frac{t_{attesa} + t_{burst}}{t_{burst}} = 1 + \frac{t_{attesa}}{t_{burst}}$$ \`e maggiore per valori di $R$ pi\`u alti e
+dipende anche dal tempo di attesa e pertanto va ricalcolata al termine di un processo se nel frattempo ne sono arrivati altri o alt ermine di un processo. Supera il favoritismo di SJF
+verso i job corti favorendo i processi che completano in poco tempo o quelli che hanno atteso molto. 
+\subsection{Round robin (RR)}
+Questo algoritmo basa lo scheduling su time-out: a ogni processo viene assegnato un quanto del processo di CPU tra i $10$ e i $100$ millisecondi e al termine del quanto il processo \`e
+prelazionato e messo nella ready queue, una coda circolare. Se ci sono $n$ processi nella coda e il quanto \`e $q$ ogni processo ottiene $\frac{1}{n}$ del tempo di CPU in blocchi di 
+$q$ unit\`a di tempo alla volta e nessun processo attende pi\`u di $(n-1)1$ unit\`a di tempo. \`E di semplice implementazione (FCFS con prelazione) il quanto va scelto con cura: 
+se troppo grande diventa equivalente a FCFS, se troppo piccolo nasce troppo overhead per il context switch, un valore ragionevole \`e uno tale che l'$80\%$ dei burst siano minori di $q$.
+Il tempo di turnaround \`e maggiore o uguale di SJF e quello di risposta minore o uguale di SJF. 
+\subsection{Code multilivello}
+\`E una classe di algoritmi in cui la ready queue \`e partizionata in pi\`u code e ogni coda ha il suo algoritmo di scheduling. Si rende necessario anche uno scheduling tra code, che
+pu\`o essere a priorit\`a fissa con la possibilit\`a di starvation per le code a priorit\`a bassa o basato su time slice in cui ogni coda ottiene un quanto di tempo di CPU che pu\`o 
+usare per schedulare i suoi processi. 
+\subsection{Code multilivello con feedback}
+Sono code multilivello in cui un processo pu\`o spostarsi da una coda all'altra a seconda delle sue caratteristiche (usato anche per implementare l'aging). Lo scheduler ha come parametri
+il numero delle code, gli algoritmi per ogni coda, criteri per la promozione o degradazione di un processo e i criteri per definire la coda di ingresso di un processo. 
+\subsection{Scheduling fair share}
+Si noti come le politiche precedenti di scheduling sono orientate al processo ma non alle applicazioni (che possono essere composte da pi\`u processi). Fair share tenta di fornire
+equit\`a alle applicazioni le vengono suddivise tra gruppi di processi (le applicazioni). 
+\subsection{Valutazione degli algoritmi}
+\subsubsection{Modello deterministico (analitico)}
+Questa valutazione \`e basata sull'algoritmo e su un preciso carico di lavoro, definisce le prestazioni di ogni algoritmo per tale carico specifico. Vengono utilizzate per illustrare 
+gli algoritmi e richiedono conoscenze troppo specifiche sulla natura dei processi. 
+\subsubsection{Modello a reti di code}
+Non esiste un preciso gruppo di processi per utilizzare il modello deterministico ma \`e possibile determinare le distribuzioni di CPU e I/O burst. Il sistema di calcolo \`e descritto 
+come una rete di server ognuno con la propria coda e si usano formule matematiche che indicano la probabilit\`a che si verifichi un determinato CPU burst e la distribuzione dei 
+tempi di arrivo nel sistema dei processi da cui \`e possibile ricavare utilizzo, throughput medio, tempi di attesa e altri parametri. 
+\subsubsection{Simulazione}
+Si programma un modello del sistema utilizzando dati statistici o reali (precisa ma costosa).
+\subsubsection{Implementazione}
+\`E l'unico modo sicuro per valutare un algoritmo di scheduling: lo si codifica, inserisce nel sistema operativo e si vede come funziona. 

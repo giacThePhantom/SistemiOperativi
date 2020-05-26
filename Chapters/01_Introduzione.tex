@@ -13,7 +13,7 @@ Un sistema di calcolo si pu\`o dividere in $4$ componenti:
 \begin{itemize}
 	\item Dispositivi fisici: sono composti dall'unit\`a centrale di elaborazione (CPU), dalla memoria e dall'I/O.
 	\item Programmi applicativi: definiscono il modo in cui utilizzare le risorse per risolvere i problemi computazionali da parte degli utenti.
-	\item Sistema operativo: Controlla e coordina l'udo dei dispositivi da parte degli utenti.
+	\item Sistema operativo: Controlla e coordina l'uso dei dispositivi da parte degli utenti.
 	\item Utenti.
 \end{itemize}
 \subsection{Punti chiave nel progetto di calcolatori}
@@ -78,7 +78,7 @@ Con la condivisione si rende necessario introdurre delle capacit\`a di protezion
 	\item I/O: programmi diversi non devono usare il dispositivo contemporaneamente, viene realizzata tramite il modo duale di esecuzione: modo user in cui i
 	      job non possono accedere direttamente alle risorse di I/O e modo supervisor o kernel in cui il sistema operativo pu\`o accedere a tali risorse. Tutte le
 	      operazioni di I/O sono privilegiate: le istruzioni di accesso invocano una system call, un interrupt software che cambia la modalit\`a da user a supervisor
-	      e al termine della system call viene ripristinata la modalit\`a supervisor.
+	      e al termine della system call viene ripristinata la modalit\`a utente.
 	\item Memoria: un programma non pu\`o leggere o scrivere ad una zona di memoria che non gli appartiene: realizzata associando dei registri limite ad ogni
 	      processo, che possono essere modificati unicamente dal sistema operativo con istruzioni privilegiate.
 	\item CPU: prima o poi il controllo della CPU deve tornare al sistema operativo, realizzata attraverso un timer legato ad un job, al termine del quale il
