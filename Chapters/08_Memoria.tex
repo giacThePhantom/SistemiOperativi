@@ -87,24 +87,24 @@ $2^U$ viene diviso in due blocchi di dimensione $2^{U-1}$. Questa operazione vie
 un processo rilascia la memoria il suo blocco torna a far parte della lista dei blocchi di dimensione corrispondente. Se si formano $2$ blocchi adiacenti di dimensione $2^k$ \`e 
 possibile compattarli ottenendo un unico blocco libero di dimensione $2^{k+1}$. Il vantaggio \`e che la compattazione richiede solo di scorrere la lista dei blocchi di dimensione $2^k$
 ed \`e veloce, ma nasce la frammentazione interna dovuta solo ai blocchi di dimensione $2^L$. 
-\section{Paginazione}
+\subsection{Paginazione}
 La paginazione nasce per eliminare la frammentazione esterna. Si permette che lo spazio di indirizzamento fisico di un processo sia non-contiguo. Si alloca memoria fisica dove essa \`e
 disponibile. La memoria fisica viene divisa in blocchi di dimensione fissa detti frame e la memoria logica viene divisa in blocchi della stessa dimensione detti pagine. Per eseguire
 un programma avente dimensione $n$ pagine bisogna trovare $n$ frame liberi. Si utilizza una tabella delle pagine (page table) per mantenere traccia di quale frame corrisponde a quale
 pagina. Esiste una tabella delle pagine per ogni processo e viene usata per tradurre un indirizzo logico in un indirizzo fisico. La frammentazione interna nasce solo nell'ultima pagina. 
-\subsection{Traduzione degli indirizzi}
+\subsubsection{Traduzione degli indirizzi}
 L'indirizzo generato dalla CPU viene diviso in due parti: 
 \begin{itemize}
 	\item Numero di pagina (p): usato come indice nella tabella delle pagine che contiene l'indirizzo di base di ogni frame. 
 	\item Offset (d): combinato con l'indirizzo base definisce l'indirizzo fisico che viene inviato alla memoria. Se la dimensione della memoria \`e $2^m$ e quella di una pagina \`e
 		$2^n$ parole per byte i primi $m-n$ bit sono il numero della pagina e i successivi $n$ il numero di offset. 
 \end{itemize}
-\subsubsection{Implementazione della tabella delle pagine}
+\paragraph{Implementazione della tabella delle pagine}
 L'efficienza \`e fondamentale e pertanto la tabella si pu\`o implementare attraverso registro o implementazione in memoria (tabella multilivello o invertita).
-\paragraph{Implementazione tramite registri}
+\subparagraph{Implementazione tramite registri}
 Le entry (righe) della tabella delle pagine sono mantenute nei registri. La soluzione \`e efficiente ma fattibile solo se il numero di entry \`e limitato e allunga i tempi del context
 switch in quanto richiede il salvataggio dei registri. 
-\paragraph{Implementazione in memoria}
+\subparagraph{Implementazione in memoria}
 La tabella risiede in memoria e vengono utilizzati due registri: il page-table base register (PTBR) che punta alla tabella delle pagine e l'opzionale page-table length register (PTLR) 
 che contiene la dimensione della tabella delle pagine. Il context switch \`e pi\`u breve in quanto richiede la modifica solo del PTBR (PTLR), ma ad ogni accesso a dati o istruzioni 
 richiede due accessi in memoria per la tabella delle pagine e il risultante dato/istruzione. Il problema del doppio accesso pu\`o essere risolto tramite una cache molto veloce
@@ -143,4 +143,51 @@ pagina e il secondo \`e l'indirizzo logico della pagina contenuta nel frame corr
 page-number, offset$>$. \`E necessario cercare il valore desiderato e pertanto un aumento del tempo necessario per cercare un riferimento ad una pagina. Per questioni di ricerca si
 deve ridurre il tempo di ricerca a $O(1)$ attraverso una tabella hash e si crea la necessit\`a di un meccanismo per gestire le collisioni quando diversi indirizzi virtuali corrispondono
 allo stesso frame. 
-\section{Segmentazione}
+\subsection{Segmentazione}
+Nella segmentazione la memoria viene gestita nello stesso in cui l'utente la percepisce: un programma \`e una collezione di segmenti, unit\`a logiche come main, procedure, funzioni, 
+variabili, stack, tabella dei simboli e vettori. L'indirizzo logico \`e dato dalla coppia $<$numero di segmento, offset$>$ e la tabella dei segmenti mappa gli indirizzi logici 
+bidimensionali in indirizzi risifici unidimensionali. Ogni entry contiene una base, l'indirizzo fisico di partenza del segmento in memoria e il limite, la lunghezza del segmento. 
+\subsubsection{Tabella dei segmenti}
+La tabella dei segmenti \`e simile alla tabella delle pagine: viene salvata in memoria e il processo possiede il segment-table base register (STBR) che punta alla locazione della
+tabella dei segmenti e il segment-table length register (STLR) che indica il numero di segmenti utilizzati da un programma. Un indirizzo logico $<$s, d$>$ \`e valido se $s<STLR$.
+$STBR+s$ \`e l'indirizzo dell'elemento della tabella dei segmenti da recuperare. Il TLB viene usato per memorizzare le entry maggiormente usate come per la paginazione. 
+\subsubsection{Protezione}
+La segmentazione supporta naturalmente la protezione e la condivisione di porzioni di codice in quanto il segmento \`e un'entit\`a semantica ben definita. Ad ogni segmento sono 
+associati un bit di modalit\`a (read/write/execute) e il bit di validit\`a ($0$ se il segmento non \`e legale). 
+\subsubsection{Condivisione}
+A livello di segmento se si vuole condividere qualcosa basta inserirlo in un segmento. Si rende pertanto possibile condividere parti di un programma come funzioni di libreria.
+\subsubsection{Frammentazione}
+Il sistema operativo deve allocare spazio in memoria per tutti i segmenti di un programma che hanno lunghezza variabile. Periste il problema di allocazione che viene risolto con
+first o best fit. Esiste possibilit\`a di frammentazione esterna per segmenti di dimensione significativa.
+\subsubsection{Confronto con paginazione}
+\begin{multicols}{2}
+	Paginazione:
+	\begin{itemize}
+		\item Vantaggi
+			\begin{itemize}
+				\item Non esiste frammentazione (minima interna).
+				\item L'allocazione dei frame non richiede algoritmi specifici.
+			\end{itemize}
+		\item Svantaggi
+			\begin{itemize}
+				\item Separazione tra vista utente e vista fisica della memoria.
+			\end{itemize}
+	\end{itemize}
+	\columnbreak
+	Segmentazione:
+	\begin{itemize}
+		\item Vantaggi
+			\begin{itemize}
+				\item Consistenza tra vista utente e vista fisica della memoria.
+				\item Associazione di protezione e condivisione segmenti.
+			\end{itemize}
+		\item Svantaggi
+			\begin{itemize}
+				\item Richiesta di allocazione dinamica dei segmenti.
+				\item Potenziale frammentazione esterna.
+			\end{itemize}
+	\end{itemize}
+\end{multicols}
+\subsection{Segmentazione paginata}
+\`E possibile combinare paginazione e segmentazione per migliorarli: i segmenti vengono paginati: ogni segmento viene diviso in pagine e possiede la propria tabella delle pagine. La
+tabella dei segmenti contiene l'indirizzo base delle tabelle delle pagine per ogni segmento. Elimina il problema dell'allocazione dei segmenti e della frammentazione esterna. 

@@ -201,14 +201,20 @@
 \contentsline {paragraph}{Supporto per la rilocazione}{50}{section*.95}% 
 \contentsline {paragraph}{Considerazioni}{50}{section*.96}% 
 \contentsline {subsubsection}{Tecnica del buddy system}{50}{section*.97}% 
-\contentsline {section}{\numberline {8.3}Paginazione}{50}{section.8.3}% 
-\contentsline {subsection}{\numberline {8.3.1}Traduzione degli indirizzi}{50}{subsection.8.3.1}% 
-\contentsline {subsubsection}{Implementazione della tabella delle pagine}{51}{section*.98}% 
-\contentsline {paragraph}{Implementazione tramite registri}{51}{section*.99}% 
-\contentsline {paragraph}{Implementazione in memoria}{51}{section*.100}% 
-\contentsline {subsubsection}{Protezione}{51}{section*.101}% 
-\contentsline {subsubsection}{Pagine condivise}{51}{section*.102}% 
-\contentsline {subsubsection}{Spazio di indirizzamento}{52}{section*.103}% 
-\contentsline {paragraph}{Pagine multilivello}{52}{section*.104}% 
-\contentsline {paragraph}{Tabella delle pagine invertita}{52}{section*.105}% 
-\contentsline {section}{\numberline {8.4}Segmentazione}{52}{section.8.4}% 
+\contentsline {subsection}{\numberline {8.2.2}Paginazione}{50}{subsection.8.2.2}% 
+\contentsline {subsubsection}{Traduzione degli indirizzi}{50}{section*.98}% 
+\contentsline {paragraph}{Implementazione della tabella delle pagine}{50}{section*.99}% 
+\contentsline {subparagraph}{Implementazione tramite registri}{51}{section*.100}% 
+\contentsline {subparagraph}{Implementazione in memoria}{51}{section*.101}% 
+\contentsline {subsubsection}{Protezione}{51}{section*.102}% 
+\contentsline {subsubsection}{Pagine condivise}{51}{section*.103}% 
+\contentsline {subsubsection}{Spazio di indirizzamento}{51}{section*.104}% 
+\contentsline {paragraph}{Pagine multilivello}{52}{section*.105}% 
+\contentsline {paragraph}{Tabella delle pagine invertita}{52}{section*.106}% 
+\contentsline {subsection}{\numberline {8.2.3}Segmentazione}{52}{subsection.8.2.3}% 
+\contentsline {subsubsection}{Tabella dei segmenti}{52}{section*.107}% 
+\contentsline {subsubsection}{Protezione}{52}{section*.108}% 
+\contentsline {subsubsection}{Condivisione}{52}{section*.109}% 
+\contentsline {subsubsection}{Frammentazione}{52}{section*.110}% 
+\contentsline {subsubsection}{Confronto con paginazione}{53}{section*.111}% 
+\contentsline {subsection}{\numberline {8.2.4}Segmentazione paginata}{53}{subsection.8.2.4}% 

@@ -105,6 +105,6 @@
 \BOOKMARK [2][-]{subsection.8.1.5}{Considerazioni}{section.8.1}% 105
 \BOOKMARK [1][-]{section.8.2}{Schemi di gestione della memoria}{chapter.8}% 106
 \BOOKMARK [2][-]{subsection.8.2.1}{Allocazione contigua}{section.8.2}% 107
-\BOOKMARK [1][-]{section.8.3}{Paginazione}{chapter.8}% 108
-\BOOKMARK [2][-]{subsection.8.3.1}{Traduzione degli indirizzi}{section.8.3}% 109
-\BOOKMARK [1][-]{section.8.4}{Segmentazione}{chapter.8}% 110
+\BOOKMARK [2][-]{subsection.8.2.2}{Paginazione}{section.8.2}% 108
+\BOOKMARK [2][-]{subsection.8.2.3}{Segmentazione}{section.8.2}% 109
+\BOOKMARK [2][-]{subsection.8.2.4}{Segmentazione paginata}{section.8.2}% 110
