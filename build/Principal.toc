@@ -183,3 +183,32 @@
 \contentsline {section}{\numberline {7.3}Conclusioni}{45}{section.7.3}% 
 \contentsline {subsection}{\numberline {7.3.1}Partizionamento in classi}{46}{subsection.7.3.1}% 
 \contentsline {subsection}{\numberline {7.3.2}Algoritmi specifici}{46}{subsection.7.3.2}% 
+\contentsline {chapter}{\numberline {8}Gestione della memoria}{47}{chapter.8}% 
+\contentsline {section}{\numberline {8.1}Da programma a processo}{47}{section.8.1}% 
+\contentsline {subsection}{\numberline {8.1.1}Binding}{47}{subsection.8.1.1}% 
+\contentsline {subsection}{\numberline {8.1.2}Collegamento}{48}{subsection.8.1.2}% 
+\contentsline {subsection}{\numberline {8.1.3}Caricamento}{48}{subsection.8.1.3}% 
+\contentsline {subsection}{\numberline {8.1.4}Spazi di indirizzamento}{48}{subsection.8.1.4}% 
+\contentsline {subsubsection}{Memory management unit (MMU)}{48}{section*.89}% 
+\contentsline {subsection}{\numberline {8.1.5}Considerazioni}{48}{subsection.8.1.5}% 
+\contentsline {section}{\numberline {8.2}Schemi di gestione della memoria}{48}{section.8.2}% 
+\contentsline {subsection}{\numberline {8.2.1}Allocazione contigua}{49}{subsection.8.2.1}% 
+\contentsline {subsubsection}{Assegnazione della memoria}{49}{section*.90}% 
+\contentsline {subsubsection}{Supporto per la rilocazione}{49}{section*.91}% 
+\contentsline {subsubsection}{Considerazioni}{49}{section*.92}% 
+\contentsline {subsubsection}{Tecnica delle partizioni variabili}{49}{section*.93}% 
+\contentsline {paragraph}{Assegnazione della memoria}{49}{section*.94}% 
+\contentsline {paragraph}{Supporto per la rilocazione}{50}{section*.95}% 
+\contentsline {paragraph}{Considerazioni}{50}{section*.96}% 
+\contentsline {subsubsection}{Tecnica del buddy system}{50}{section*.97}% 
+\contentsline {section}{\numberline {8.3}Paginazione}{50}{section.8.3}% 
+\contentsline {subsection}{\numberline {8.3.1}Traduzione degli indirizzi}{50}{subsection.8.3.1}% 
+\contentsline {subsubsection}{Implementazione della tabella delle pagine}{51}{section*.98}% 
+\contentsline {paragraph}{Implementazione tramite registri}{51}{section*.99}% 
+\contentsline {paragraph}{Implementazione in memoria}{51}{section*.100}% 
+\contentsline {subsubsection}{Protezione}{51}{section*.101}% 
+\contentsline {subsubsection}{Pagine condivise}{51}{section*.102}% 
+\contentsline {subsubsection}{Spazio di indirizzamento}{52}{section*.103}% 
+\contentsline {paragraph}{Pagine multilivello}{52}{section*.104}% 
+\contentsline {paragraph}{Tabella delle pagine invertita}{52}{section*.105}% 
+\contentsline {section}{\numberline {8.4}Segmentazione}{52}{section.8.4}% 

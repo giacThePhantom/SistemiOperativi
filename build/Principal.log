@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  26 MAY 2020 23:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  27 MAY 2020 12:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -977,7 +977,7 @@ l.81 ...4.1}Kernel separato}{21}{subsection.4.4.1}
 
 (./Chapters/01_Introduzione.tex [3]
 Capitolo 1.
-<Pictures/StackSistemaOperativo.png, id=522, 780.9175pt x 553.06625pt>
+<Pictures/StackSistemaOperativo.png, id=582, 780.9175pt x 553.06625pt>
 File: Pictures/StackSistemaOperativo.png Graphic file (type png)
 <use Pictures/StackSistemaOperativo.png>
 Package pdftex.def Info: Pictures/StackSistemaOperativo.png  used on input line
@@ -1006,7 +1006,7 @@ Capitolo 4.
 [15
 
 ] [16]
-<Pictures/StatiProcesso.png, id=615, 792.9625pt x 323.2075pt>
+<Pictures/StatiProcesso.png, id=675, 792.9625pt x 323.2075pt>
 File: Pictures/StatiProcesso.png Graphic file (type png)
 <use Pictures/StatiProcesso.png>
 Package pdftex.def Info: Pictures/StatiProcesso.png  used on input line 49.
@@ -1076,21 +1076,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  (./Algoritmi/Banchierestrutture.c)
 (./Algoritmi/BanchiereAllocazione.c) [43] (./Algoritmi/BanchiereVerifica.c)
 (./Algoritmi/RilevamentoStrutture.c) [44] (./Algoritmi/RilevamentoAlgoritmo.c)
-[45])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 22.
- [46]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 22.
+[45]) (./Chapters/08_Memoria.tex [46]
+Capitolo 8.
+[47
+
+] [48] [49] [50] [51])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 23.
+ [52]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 23.
  (./build/Principal.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 22.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 22.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 23.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 23.
 Package rerunfilecheck Info: File `Principal.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 25341 strings out of 492615
- 450387 string characters out of 6131390
- 874058 words of memory out of 5000000
- 28178 multiletter control sequences out of 15000+600000
+ 25394 strings out of 492615
+ 451054 string characters out of 6131390
+ 874070 words of memory out of 5000000
+ 28190 multiletter control sequences out of 15000+600000
  551862 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,63p,816b,2244s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1102,19 +1106,20 @@ amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-share/texmf/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/fonts/ty
-pe1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/
-sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/s
-hare/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/typ
-e1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
-frm0700.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/sh
-are/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type
-1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sf
-ti1000.pfb>
-Output written on ./build/Principal.pdf (47 pages, 604868 bytes).
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/t
+exmf/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/fonts/type1/pub
+lic/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx120
+0.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/te
+xmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/publ
+ic/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700
+.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/tex
+mf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.
+pfb>
+Output written on ./build/Principal.pdf (53 pages, 633133 bytes).
 PDF statistics:
- 1499 PDF objects out of 1728 (max. 8388607)
- 1414 compressed objects within 15 object streams
- 708 named destinations out of 1000 (max. 500000)
- 795 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1617 PDF objects out of 1728 (max. 8388607)
+ 1524 compressed objects within 16 object streams
+ 746 named destinations out of 1000 (max. 500000)
+ 891 words of extra memory for PDF output out of 10000 (max. 10000000)
 

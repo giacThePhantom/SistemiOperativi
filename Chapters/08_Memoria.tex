@@ -1,0 +1,146 @@
+\chapter{Gestione della memoria}
+La condivisione della memoria da parte di pi\`u processi \`e essenziale per l'efficienza del sistema. Offre problematiche negli ambiti di allocazione della memoria ai singoli job, per
+la protezione e condivisione dello spazio di indirizzamento e per la gestione della memoria virtuale (swap). Nei sistemi moderni la gestione della memoria \`e inseparabile dal concetto
+di memoria virtuale. Ogni processo deve essere portato in memoria e trasformato in processo per essere eseguito. La CPU preleva le istruzioni da eseguire dalla memoria in base al
+valore del program counter. L'istruzione viene codificata e pu\`o prevedere il prelievo di operandi dalla memoria. Al termine dell'istruzione il risultato pu\`o essere scritto in 
+memoria. Quando il processo termina la sua memoria viene rilasciata. 
+\section{Da programma a processo}
+La trasformazione da programma a processo avviene attraverso varie fasi precedenti all'esecuzione: in ogni fase si ha una diversa semantica degli indirizzi (spazio logico e spazio
+fisico). Gli indirizzi del programma sorgente sono simbolici e trasformati in indirizzi fisici attraverso il compilatore che associa agli indirizzi simbolici indirizzi rilocabili
+e il linker o il loader associano agli indirizzi rilocabili indirizzi assoluti. Si noti come gli indirizzi hanno diverse rappresentazioni nelle varie fasi di costruzione di un programma.
+Il collegamento tra indirizzi simbolici e fisici viene detto binding.
+\subsection{Binding}
+Il binding di dati e istruzioni a indirizzi di memoria pu\`o avvenire in tre momenti distinti:
+\begin{enumerate}
+	\item Tempo di compilazione: statico, se \`e noto a priori in quale parte della memoria risieder\`a il processo \`e possibile generare codice assoluto, ma se la locazione di 
+		partenza cambia sar\`a necessario ricompilare.
+	\item Tempo di caricamento: statico, si rende necessario generare codice rilocabile con indirizzi relativi all'inizio del programma. Se cambia indirizzo di riferimento si deve
+		ricaricare. 
+	\item Tempo di esecuzione: dinamico, il binding viene posticipato se il processo pu\`o essere spostato durante l'esecuzione in posizioni diverse della memoria. Viene richiesto 
+		supporto hardware affinch\`e l'operazione possa essere fatta efficientemente. 
+\end{enumerate}
+\subsection{Collegamento}
+Il collegamento pu\`o essere statico in cui tutti i riferimenti sono definiti prima dell'esecuzione e l'immagine del processo contiene una copia delle librerie usate o dinamico in cui il
+link viene posticipato al tempo di esecuzione e il codice del programma non contiene il codice delle librerie ma solo un riferimento (stub) per poterle recuperare. 
+\subsection{Caricamento}
+Il caricamento pu\`o essere statico in cui tutto il codice viene caricato in memoria a tempo dell'esecuzione o dinamico in cui il caricamento dei moduli viene posticipato in 
+corrispondenza del primo utilizzo (risulta utile per codice con molti casi speciali).
+\subsection{Spazi di indirizzamento}
+Lo spazio di indirizzamento logico \`e legato a uno spazio di indirizzamento fisico: l'indirizzo logico (o virtuale) \`e generato dalla CPU mentre quello fisico viene considerato dalla
+memoria. Nel binding a compile o load-time l'indirizzo fisico e logico coincidono mentre in quello a run-time sono generalmente diversi. 
+\subsubsection{Memory management unit (MMU)}
+La memory management unit \`e un dispositivo hardware che mappa indirizzi virtuali in indirizzi fisici: il valore del registro di rilocazione \`e aggiunto ad ogni indirizzo generato
+da un processo e inviato alla memoria. 
+\subsection{Considerazioni}
+In un sistema multiprogrammato non \`e possibile conoscere in anticipo dove un processo pu\`o essere posizionato in memoria e lo swap impedisce di poter utilizzare indirizzi rilocati
+in modo statico. Pertanto non \`e possibile il binding a tempo di compilazione o di caricamento. Si deve far affidamento alla rilocazione dinamica usata per sistemi complessi come la
+gestione della memoria nel sistema operativo o la rilocazione statica, possibile in sistemi progettati per applicazioni specifiche e con limitata gestione della memoria nel sistema
+operativo. 
+\section{Schemi di gestione della memoria}
+I metodi principali di gestione della memoria sono:
+\begin{itemize}
+	\item Allocazione contigua.
+	\item Paginazione.
+	\item Segmentazione.
+	\item Segmentazione doppia.
+\end{itemize}
+Si noti come tutti prevedono che il programma sia interamente caricato in memoria, mentre soluzioni realistiche usano memoria virtuale. 
+\subsection{Allocazione contigua}
+Nell'allocazione contigua i processi sono allocati in memoria in posizioni contigue all'interno di una partizione. Le partizioni possono essere fisse o variabili. La memoria \`e un 
+insieme di partizioni di dimensioni predefinite e diverse. Nascono problematiche per l'assegnazione di memoria ai job e per il supporto della rilocazione dinamica. L'assegnazione della
+memoria viene fatta dallo scheduling a lungo termine attraverso o una coda di partizione o una coda singola. 
+\subsubsection{Assegnazione della memoria}
+Se si trova una coda per partizione il processo viene assegnato alla partizione pi\`u piccola in grado di contenerlo. Si noti come \`e poco flessibile in quanto possono esserci 
+partizioni vuote e job nelle altre code. Nel caso di una coda unica gestita con politica first come first served l'implementazione \`e facile ma vi \`e un basso utilizzo della memoria. 
+La scansione della coda pu\`o avvenire attraverso best-fit-only in cui la scelta del job avviene scegliendo quello con le dimensioni pi\`u simili alla partizione o attraverso
+first-available-fit in cui viene scelto il primo job che pu\`o stare nella partizione. 	
+\subsubsection{Supporto per la rilocazione}
+La MMU consiste di registri di rilocazione per proteggere lo spazio dei vari processi, attivamente e passivamente. Contiene il valore dell'indirizzo pi\`u basso (registro base o di 
+rilocazione) e il limite superiore dello spazio logico (registro limite). Ogni indirizzo logico deve essere minore del limite.
+\subsubsection{Considerazioni}
+Si noti come questo \`e un approccio relativamente semplice ma il grado di multiprogrammazione \`e limitato dal numero di partizioni e nasce frammentazione che porta a spreco di memoria.
+La frammentazione pu\`o essere interna: nella partizione se la dimensione della partizione \`e pi\`u grande della dimensione del job o esterna se vi sono partizioni non utilizzate
+che non soddisfano le esigenze dei processi in attesa. 
+\subsubsection{Tecnica delle partizioni variabili}
+In questa tecnica lo spazio utente viene diviso in partizioni di dimensioni variabili identiche alla dimensione dei processi per eliminare la frammentazione interna. 
+\paragraph{Assegnazione della memoria}
+La memoria viene vista come un insieme di buche e il sistema operativo mantiene informazioni su partizioni allocate e buche. Quando arriva un processo gli viene allocata memoria usando
+la buca che lo pu\`o contenere. Per soddisfare la richiesta di $n$ celle di memoria data una lista di buche libere si possono utilizzare le strategie:
+\begin{itemize}
+	\item First-fit: alloca la prima buca grande a sufficienza.
+	\item Best-fit: alloca la pi\`u piccola buca grande a sufficienza. Richiede la scansione della lista e fornisce il minimo spreco.
+	\item Worst-fit: alloca la buca pi\`u grande. Richiede la scansione della lista e lascia la buca di dimensioni pi\`u grandi.
+\end{itemize}
+Si noti come first fit \`e tipicamente la migliore. 	
+\paragraph{Supporto per la rilocazione}
+Come per le partizioni fisse i registri di rilocazione vengono usati per proteggere lo spazio dei vari processi attivamente e passivamente. 
+\paragraph{Considerazioni}
+Non fornisce frammentazione interna per costruzione ma la frammentazione esterna causa spreco di memoria in quanto nonostante esista lo spazio disponibile non \`e contiguo. Con first fit
+dati $N$ blocchi allocati $0.5\cdot N$ blocchi vanno persi. La frammentazione si pu\`o ridurre attraverso compattazione: il contenuto della memoria viene spostato in modo da rendere
+contigue tutte le partizioni. \`E possibile solo se la rilocazione \`e dinamica e la modifica del registro base. 
+\subsubsection{Tecnica del buddy system}
+In questa tecnica si deve fare il compromesso tra le partizioni fisse e variabili. La memoria viene vista come una serie di liste di blocchi di dimensione $2^k$ con $L < k < U$, dove
+$2^L$ \`e il pi\`u piccolo blocco allocato e $2^U$ \`e il pi\`u grande blocco allocato. La memoria \`e disponibile sotto forma di blocchi di dimension $2^k$. All'inizio tutta la memoria
+\`e disponibile: a lista di blocchi di dimensione $2^U$ contiene un solo blocco che rappresenta tutta la memoria mentre le altre sono vuote. Quando arriva una richiesta di dimensione $s$
+si cerca un blocco libero con dimensione adatta purch\`e sia pari a una potenza del $2$. Se $2^{U-1} < s < 2^U$ l'intero blocco di dimensione $2^U$ viene allocato. Altrimenti il blocco 
+$2^U$ viene diviso in due blocchi di dimensione $2^{U-1}$. Questa operazione viene ripetuta fino a che \`e viene allocato il processo o si arriva al blocco di dimensione $2^L$. Quando
+un processo rilascia la memoria il suo blocco torna a far parte della lista dei blocchi di dimensione corrispondente. Se si formano $2$ blocchi adiacenti di dimensione $2^k$ \`e 
+possibile compattarli ottenendo un unico blocco libero di dimensione $2^{k+1}$. Il vantaggio \`e che la compattazione richiede solo di scorrere la lista dei blocchi di dimensione $2^k$
+ed \`e veloce, ma nasce la frammentazione interna dovuta solo ai blocchi di dimensione $2^L$. 
+\section{Paginazione}
+La paginazione nasce per eliminare la frammentazione esterna. Si permette che lo spazio di indirizzamento fisico di un processo sia non-contiguo. Si alloca memoria fisica dove essa \`e
+disponibile. La memoria fisica viene divisa in blocchi di dimensione fissa detti frame e la memoria logica viene divisa in blocchi della stessa dimensione detti pagine. Per eseguire
+un programma avente dimensione $n$ pagine bisogna trovare $n$ frame liberi. Si utilizza una tabella delle pagine (page table) per mantenere traccia di quale frame corrisponde a quale
+pagina. Esiste una tabella delle pagine per ogni processo e viene usata per tradurre un indirizzo logico in un indirizzo fisico. La frammentazione interna nasce solo nell'ultima pagina. 
+\subsection{Traduzione degli indirizzi}
+L'indirizzo generato dalla CPU viene diviso in due parti: 
+\begin{itemize}
+	\item Numero di pagina (p): usato come indice nella tabella delle pagine che contiene l'indirizzo di base di ogni frame. 
+	\item Offset (d): combinato con l'indirizzo base definisce l'indirizzo fisico che viene inviato alla memoria. Se la dimensione della memoria \`e $2^m$ e quella di una pagina \`e
+		$2^n$ parole per byte i primi $m-n$ bit sono il numero della pagina e i successivi $n$ il numero di offset. 
+\end{itemize}
+\subsubsection{Implementazione della tabella delle pagine}
+L'efficienza \`e fondamentale e pertanto la tabella si pu\`o implementare attraverso registro o implementazione in memoria (tabella multilivello o invertita).
+\paragraph{Implementazione tramite registri}
+Le entry (righe) della tabella delle pagine sono mantenute nei registri. La soluzione \`e efficiente ma fattibile solo se il numero di entry \`e limitato e allunga i tempi del context
+switch in quanto richiede il salvataggio dei registri. 
+\paragraph{Implementazione in memoria}
+La tabella risiede in memoria e vengono utilizzati due registri: il page-table base register (PTBR) che punta alla tabella delle pagine e l'opzionale page-table length register (PTLR) 
+che contiene la dimensione della tabella delle pagine. Il context switch \`e pi\`u breve in quanto richiede la modifica solo del PTBR (PTLR), ma ad ogni accesso a dati o istruzioni 
+richiede due accessi in memoria per la tabella delle pagine e il risultante dato/istruzione. Il problema del doppio accesso pu\`o essere risolto tramite una cache molto veloce
+detta translation look-aside buffers (TLB). Funzionano confrontando l'elemento fornico con il cambio chiave di tutte le entry contemporaneamente e nella tabella delle pagine la
+chiave d\`a il numero di pagina e il valore il numero di frame. Essendo il TLB molto costoso viene memorizzato solo un piccolo sottoinsieme delle entry della tabella delle pagine. Ad
+ogni context switch il TLB viene ripulito per evitare il mapping di indirizzi errati. Durante un accesso alla memoria se la pagina cercata \`e nel TLB questo restituisce il numero di 
+frame con un singolo accesso (minore del $10\%$ del tempo richiesto in assenza di TLB), altrimenti \`e necessario accedere alla tabella delle pagine in memoria. L'hit ratio $\alpha$ \`e
+la percentuale delle volte in cui una pagina si trova nel TLB. Si rende necessario definire il concetto di tempo di accesso effettivo: 
+$$EAT = (T_{MEM} + T_{TLB})\cdot\alpha + (2\cdot T_{MEM} + T_{TLB})\cdot (1-\alpha)$$
+Dove $T_{TLB}$ \`e il tempo di accesso a TLB e $T_{MEM}$ \`e il tempo di accesso a memoria.
+\subsubsection{Protezione}
+La protezione viene associata associando bit di protezione ad ogni livello come il bit di validit\`a (valid-invalid bit) per ogni entry della tabella delle pagine che risulta utile per
+la memoria virtuale:
+\begin{itemize}
+	\item Valid: la pagina associata \`e nello spazio di indirizzamento logico del processo.
+	\item Invalid: la pagina associata non \`e nello spazio di indirizzamento logico del processo.
+\end{itemize}
+Bit di accesso:
+\begin{itemize}
+	\item Per marcare una pagina modificabile o meno (read-only).
+	\item Per marcare una pagina eseguibile o meno. 
+\end{itemize}
+\subsubsection{Pagine condivise}
+Per il codice condiviso si trova un'unica copia fisica ma pi\`u copie logiche (una per processo), il codice read-only rientrante che non cambia mai durante l'esecuzione pu\`o essere
+condiviso tra processo. I dati in generale saranno diversi da processo a processo con pi\`u copie fisiche e logiche. 
+\subsubsection{Spazio di indirizzamento}
+Nelle architetture moderne lo spazio di indirizzamento virtuale \`e molto maggiore dello spazio fisico. Sono necessari meccanismi per gestire il problema della dimensione della
+tabella delle pagine attraverso la paginazione della tabella delle pagine (tabella multilivello) o la tabella delle pagine invertita. 
+\paragraph{Pagine multilivello}
+Questo metodo \`e equivalente a paginare la tabella delle pagine: solo alcune parti della tabella sono memorizzate in memoria, altre si trovano sul disco. Sono possibili versioni da
+$2$ a $4$ livelli. Ogni livello \`e memorizzato come una tabella separata in memoria, la conversione dell'indirizzo logico in quello fisico pu\`o richiedere anche $4$ accessi a memoria
+e il TLB mantiene le prestazioni a livelli ragionevoli. 
+\paragraph{Tabella delle pagine invertita}
+Si trova una tabella unica nel sistema con un'entry per ogni frame contenente la coppia $<$process-id, page-number$>$ dove il primo \`e l'identificativo del processo che possiede la
+pagina e il secondo \`e l'indirizzo logico della pagina contenuta nel frame corrispondente a quella entry. Ogni indirizzo logico generato dalla CPU \`e una tripla: $<$process-id, 
+page-number, offset$>$. \`E necessario cercare il valore desiderato e pertanto un aumento del tempo necessario per cercare un riferimento ad una pagina. Per questioni di ricerca si
+deve ridurre il tempo di ricerca a $O(1)$ attraverso una tabella hash e si crea la necessit\`a di un meccanismo per gestire le collisioni quando diversi indirizzi virtuali corrispondono
+allo stesso frame. 
+\section{Segmentazione}
