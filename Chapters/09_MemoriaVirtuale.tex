@@ -1,0 +1,123 @@
+\chapter{Memoria virtuale}
+Si noti come negli schemi precedenti per la gestione della memoria l'intero programma deve essere caricato in memoria per essere eseguito, cosa che pu\`o non essere necessaria
+e solo una parte del programma pu\`o essere in memoria: lo spazio degli indirizzi logici pu\`o essere pertanto molto pi\`u grande di quello degli indirizzi fisici e pi\`u processi 
+possono essere mantenuti in memoria. Si deve pertanto avere la possibilit\`a di swappare le pagine da e verso la memoria e non l'intero processo. La memoria virtuale permette la
+separazione della memoria logica dalla memoria fisica in quanto \`e data dalla memoria fisica e dal disco. Pu\`o essere implementata attraverso paginazione su domanda (demand paging) o
+segmentazione su domanda (demand segmentation). 
+\section{Paginazione su domanda}
+In questo metodo una pagina viene caricata in memoria solo quando necessario in modo da ridurre le richieste di I/O quando \`e necessario lo swapping ottenendo una risposta pi\`u 
+rapida e un minore consumo di memoria per permettere a pi\`u processi di accedere alla memoria. \`E fondamentale sapere se una pagina \`e presente o no in memoria. 
+\subsection{Valid/invalid bit e page fault}
+Ad ogni entry della page table \`e associato un bit ($1$, valid, in memoria, $0$, invalid, non in memoria). Inizialmente sono tutti $0$ e se durante la traduzione di un indirizzo
+logico in un indirizzo fisico si ha una entry con tale bit a $0$ si ha un page fault. 
+\subsubsection{Gestione dei page fault}
+Il page fault causa un interrupt al sistema operativo che verifica una tabella associata il processo: se il riferimento \`e invalido fa un \emph{abort}, altrimenti attiva il caricamento
+della pagina. Carica un frame vuoto, fa lo swap della pagina nel frame da disco, modifica le tabelle ponendo nella page table il valid bit a $1$ e nella tabella interna del 
+processo la pagina in memoria. Infine ripristina l'istruzione che ha causato il page fault. Il primo accesso in memoria di un programma risulta sempre in un page fault nel demand 
+paging puro. 
+\subsection{Prestazioni}
+La paginazione su domanda influenza il tempo di accesso effettivo alla memoria (effective access time, EAT). Con un tasso di page fault $p$ tale che $0\le p\le 1$ per cui $p = 0$ nessun
+page fault e $p = 1$ ogni accesso \`e un page fault:
+$$EAT = (1 - p) \cdot t_{mem} + p\cdot t_{page\ fault}$$
+Dove $t_{page\ fault}$ \`e dato da tre componenti: il servizio dell'interrupt, lo swap in (lettura della pagina), costo di riavvio del processo e lo swap out opzionale. 
+\subsection{Rimpiazzamento delle pagine}
+Se non ci sono pagine libere si cercano pagine (frame) in memoria e si fa lo swap su disco di tali pagine. La realizzazione richiede un algoritmo che massimizzi le prestazioni 
+minimizzando il numero di page fault. In caso di assenza di frame liberi nel caso di un page fault il sistema operativo verifica su una tabella associata al processo se si tratta di
+page fault o violazione di accesso. Cerca un frame vuoto e se non c'\`e usa un algoritmo di rimpiazzamento delle pagine per scegliere un frame vittima, fa lo swap della vittima su 
+disco, lo swap della pagina nel frame da disco, modifica le tabelle e ripristina l'istruzione che ha causato il page fault. Si noti come in assenza di frame liberi il tempo di page
+fault si raddoppia. Pertanto si ottimizza utilizzando un bit nella page table detto bit di modifica o dirty bit che vale $1$ se la pagina \`e stata modificata dal momento in cui viene
+ricaricata e solo le pagine che vengono modificate vengono scritte su disco quando diventano vittime. 
+\subsection{Problematiche}
+Le problematiche della paginazione su domanda sono la decisione del rimpiazzamento delle pagine e l'allocazione del numero di frame ad un processo al momento dell'esecuzione. 
+\section{Algoritmi di rimpiazzamento delle pagine}
+L'obiettivo di questi algoritmi \`e di minimizzare il minimo tasso di page fault. Si valuta l'esecuzione di una particolare stringa di riferimenti a memoria detta reference string e
+si calcolano il numero di page fault sulla stringa. \`E sempre necessario sapere il numero di frame disponibili per il processo. Il tasso di page fault \`e inversamente proporzionale
+al numero di frame. 
+\subsection{Algoritmo FIFO (first-in-first-out)}
+In questo algoritmo la prima pagina introdotta \`e la prima ad essere rimossa. L'algoritmo \`e cieco in quanto non viene valutata l'importanza (frequenza di riferimento) della pagina 
+rimossa. Tende ad aumentare il tasso di page fault e soffre dell'anomalia di Belady. 
+\subsubsection{Anomalia di Belady}
+Nell'anomalia di Belady il numero di page fault non pu\`o decrescere all'aumentare del numero di frame usando FIFO, mentre a volte pi\`u frames equivalgono a pi\`u page fault. 
+\subsection{Algoritmo ideale}
+Garantisce il minimo numero di page fault rimpiazzando le pagine che non saranno usate per il periodo di tempo pi\`u lungo. Questa informazione richiede una conoscenza anticipata della
+stringa dei riferimenti e ci si ritrova in una situazione simile a SJF e pertanto l'implementazione \`e impossibile a meno di approssimazioni. Rimane comunque un utile riferimento per
+altri algoritmi. 
+\subsection{Algoritmo least recently used (LRU)}
+Questo algoritmo \`e un'approssimazione dell'algoritmo ottimo e usa il passato recente come previsione del futuro rimpiazzando la pagina che non viene usata da pi\`u tempo. \`E di
+difficile implementazione in quanto non \`e banale ricavare il tempo dell'ultimo utilizzo e pu\`o richiedere notevole hardware addizionale. 
+\subsubsection{Implementazioni}
+\paragraph{Tramite contatore}
+Ad ogni pagina \`e associato un contatore e ogni volta che la pagina viene referenziata il clock di sistema \`e copiato nel contatore. Si rimpiazza la pagina con il valore pi\`u 
+piccolo del contatore. Si noti come tale pagina vada cercata. 
+\paragraph{Tramite stack}
+Viene mantenuto uno stack di numeri di pagina e a ogni riferimento ad una pagina questa viene messa in cima allo stack. L'aggiornamento richiede l'estrazione di un elemento interno allo
+stack. Al fondo dello stack si trova la pagina LRT. Si noti come in questo caso non \`e necessaria alcuna ricerca. 
+\paragraph{Uso del bit di reference}
+Che viene associato ad ogni pagina inizialmente a $0$. Quando la pagina \`e referenziata messo a $1$ dall'hardware. Per il rimpiazzamento si sceglie una pagina che ha il bit a $o$. Si
+nota come \`e approssimato in quanto non viene verificato l'ordine di riferimento delle pagine. 
+\subparagraph{Alternativa}
+Si usano pi\`u bit di reference (registro di scorrimento) per ogni pagina. I bit vengono aggiornati periodicamente e si usano i bit come valori interi per scegliere la LRU, ovvero 
+quella con il valore pi\`u basso di registro di scorrimento. 
+\subsubsection{Approssimazioni}
+\paragraph{Algoritmo LFU (Least Frequently Used)}
+Mantiene un conteggio del numero di riferimenti fatti ad ogni pagina e rimpiazza quella con il conteggio pi\`u basso. 
+\paragraph{Algoritmo MFU (Most Frequently Used)}
+L'opposto di LFU, si basa sul concetto che la pagina con il conteggio pi\`u basso \`e molto probabilmente stata appena caricata e dovr\`a presumibilmente essere usata ancora. 
+\paragraph{Rimpiazzamento second chance (clock)}
+Si basa su una FIFO circolare basata su bit di reference: se il bit \`e a $0$ si rimpiazza, se a $1$ si mette a $0$ e si analizza la pagina successiva. 
+\subparagraph{Variante}
+Si usano pi\`u bit di reference. 
+\section{Allocazione dei frame}
+Data una memoria con $N$ frame e $M$ processi \`e importante scegliere quanti frame allocare ad ogni processo non violando il fatto che ogni processo necessita di un minimo numero di 
+pagine per poter essere eseguito in quanto l'istruzione interrotta da un page fault deve esser fatta ripartire. Pertanto il numero di pagine deve essere uguale al massimo numero di 
+indirizzi specificabile in un'istruzione. I valori tipici vanno da $2$ a $4$ frame. Inoltre lo schema di allocazione pu\`o essere fisso, in cui un processo ha sempre lo stesso numero
+di frame o variabile, in cui il numero di frame allocati pu\`o variare durante l'esecuzione. 
+\subsection{Contesto del rimpiazzamento}
+Nel caso di page fault le vittime possono essere scelte localmente: il processo seleziona vittime solo tra i propri frame o globalmente in cui un processo sceglie in frame dall'insieme
+di tutti i frame di altri processi. Migliora il throughput e pertanto \`e pi\`u utilizzato. 
+\subsection{Allocazione fissa}
+\subsubsection{Allocazione in parti uguali}
+Dati $m$ frame e $n$ processi si alloca ad ogni processo $\frac{m}{n}$ frame. 
+\subsubsection{Allocazione proporzionale}
+Alloca secondo la dimensione del processo, parametro non sempre significativo in quanto la priorit\`a pu\`o essere pi\`u significativa. 
+\subsection{Allocazione variabile}
+Permette di modificare dinamicamente le allocazioni ai vari processi. Le basi della modifica avvengono in base al calcolo del working set o della page fault frequency (PFF). 
+\subsubsection{Calcolo del working set}
+Un criterio per rimodulare l'allocazione dei frame consiste nel calcolare quali sono le richieste effettive di ogni processo in base al modello della localit\`a: un processo passa
+da una localit\`a di indirizzi all'altra durante la sua esecuzione come array, procedure e moduli. Idealmente un processo necessita di un numero di frame pari alla sua localit\`a. 
+\paragraph{Modello del working set}
+Il frame sufficiente a mantenere in memoria il suo working set $WS_i(t, \Delta)$ \`e il numero di pagine referenziate nell'intervallo di tempo $[t-\Delta, t]$ pi\`u recente detto 
+finestra del working set. Se $\Delta$ \`e troppo piccolo \`e poco significativo, se troppo grande copre varie localit\`a e se vale infinito comprende tutto il programma. Il working
+set viene calcolato approssimando tramite timer e bit di reference: si usa un timer che interrompe periodicamente la CPU, all'inizio di ogni periodo i bit di reference vengono posti
+a $0$ e ad ogni interruzione del timer le pagine vengono scansionate e quelle con bit di reference a $1$ si trovano nel working set, quelle con valore $0$ vengono scartate. 
+L'accuratezza aumenta in base al numero di bit e alla frequenza di interruzioni. La richiesta totale di frame \`e $D = \sum_i WSS_i$. Se $D$ \`e maggiore del numero totale di frame
+si verifica il thrashing in cui un processo spende tempo di CPU continuando a swappare pagine da e verso la memoria \`e la conseguenza di un basso numero di frame e di un circolo 
+vizioso.
+\subsubsection{Thrashing}
+Se il numero di frame allocati ad un processo scende sotto un certo minimo il tasso di page fault tende a crescere portando a un abbassamento dell'utilizzo della CPU dovuto al fatto
+dell'attesa per la gestione dei page fault e il sistema operativo tende ad aumentare il grado di multiprogrammazione aggiungendo processi che rubano frame ai vecchi processi aumentando
+il tasso di page fault. A un certo punto il throughput precipita e si deve pertanto stimare con esattezza il numero di frame necessari a un processo per non entrare in thrashing. 
+\subsubsection{Frequenza dei page fault}
+Una soluzione alternativa e pi\`u accurata del working set \`e la frequenza dei page fault: si stabilisce un tasso di page fault accettabile. Se quello effettivo \`e troppo basso il
+processo rilascia dei frame, se \`e troppo alto ne ottiene altri. 
+\section{Conclusioni}
+La selezione della dimensione della pagina deve essere fatta accuratamente in quanto si deve sempre fare un trade-off:
+\begin{multicols}{2}
+	Pagine piccole:
+	\begin{itemize}
+		\item Frammentazione.
+		\item Molte entry nella page table. 
+		\item Costo di lettura e scrittura non ammortizzato.
+		\item Localit\`a.
+	\end{itemize}
+	\columnbreak
+	Pagine grandi:
+	\begin{itemize}
+		\item Frammentazione interna significativa.
+		\item Grande dimensione della page table.
+		\item I/O overhead.
+		\item Grande granularit\`a, si deve anche trasferire ci\`o che non \`e necessario.
+	\end{itemize}
+\end{multicols}
+Naturalmente la struttura dei programmi influisce sul numero di page fault e in alcuni casi esistono frame che non devono essere mai rimpiazzati come frame corrispondenti a pagine del
+kernel e altri corrispondenti a pagine usate per trasferire dati da e verso I/O. Questi subiscono il blocco di frame (frame locking). 

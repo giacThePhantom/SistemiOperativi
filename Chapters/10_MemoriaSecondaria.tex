@@ -1,0 +1,89 @@
+\chapter{Gestione della memoria secondaria}
+\section{Tipologie di supporto}
+\subsection{Nastri magnetici}
+I nastri magnetici sono formati da una sottile striscia di materiale plastico rivestita di un materiale magnetizzabile. Furono usati per memorizzare dati digitali per la prima volta
+nel $1951$. La massima capienza \`e di circa $5TB$ nel $2011$. Sono ad accesso sequenziale e molto pi\`u lenti della memoria principale e dei dischi rigidi in termini di tempo di 
+accesso. Il riposizionamento della testina di lettura richiede decine di secondi. Sono stati rimpiazzati da dischi magnetici e memorie a stato solido e usati solo per backup. 
+\subsection{Dischi magnetici}
+Sono piatti di alluminio o di altro materiale ricoperti di materiale ferromagnetico con una massima capienza di $4TB$ nel $2011$. Il fattore di forma o diametro \`e sempre pi\`u piccolo
+in modo da raggiungere maggiori velocit\`a di rotazione. Parte da $3.5$ pollici per i sistemi desktop e fino a $1$ pollice per i mobili. La lettura e la scrittura avvengono tramite una
+testina sospesa sulla superficie magnetica. Nella scrittura il passaggio di corrente positiva o negativa attraverso la testina magnetizza la superficie, mentre nella lettura il 
+passaggio sopra un'area magnetizzata induce una corrente positiva o negativa nella testina. 
+\subsubsection{Struttura di un disco}
+Da un punto di vista fisico il disco \`e costituito da superfici (platter, i dischi), cilindri (cylinder, le tracce di tutti i dischi con la stessa posizione), tracce (cerchi di settori
+all'interno di un disco) e settori (sottoaree del disco disposte in cerchi concentrici). 
+\paragraph{Settore}
+Il settore \`e l'unita pi\`u piccola di informazione che pu\`o essere letta o scritta su disco. Ha una dimensione variabile tra i $32$ byte e i $4KB$ (tipicamente di $512$ byte). Sono 
+generalmente raggruppati logicamente i cluster per aumentare l'efficienza. La dimensione dei cluster dipende dalla grandezza del disco e dal sistema operativo (da $2KB$ a $32KB$). Un
+file occupa sempre almeno un cluster. Per accedere a un settore si necessita di sapere la superficie, la traccia e il settore stesso. 
+\subsubsection{Tempo di accesso al disco}
+Il tempo di accesso \`e la somma del seek time (tempo necessario a spostare la testina sulla traccia), del latency time (latenza, il tempo necessario a posizionare il settore desiderato 
+sotto la testina che dipende dalla velocit\`a di rotazione) e del transfer time (il tempo necessario al settore per passare sotto la testina). Il seek time va da $3ms$ fino a $15ms$, 
+mediamente $9ms$ per dischi desktop. La latenza, considerando in media mezza rotazione del disco per ogni accesso \`e $0.5\cdot\bigr(\frac{60}{\text{velcit\`a di rotazione}}\bigl)$. Per
+un disco da $7200 rpm$ \`e di $4.16ms$. Il transfer time \`e il rapporto tra la dimensione del blocco e la velocit\`a di trasferimento. Per un disco da $7200rpm$ si ha: disk-to-buffer
+$1030\frac{Mbits}{sec}$ e buffer-to-computer $300\frac{MB}{sec}$. Si noti come il seek time \`e dominante e pertanto dato il grande numero di processi che accedono al disco \`e 
+necessario minimizzare il seek time tramite algoritmi di scheduling per ordinare gli accessi al disco in modo da minimizzare il tempo di accesso totale (riducendo lo spostamento della
+testina) o massimizzare la banda, il numero di byte trasferiti nell'unit\`a di tempo, che misura la velocit\`a effettiva. 
+\subsection{Dispositivi a stato solido}
+Utilizzano chip NVRAM o memorie flash NAND per memorizzare dati in modo non volatile. Usano la stessa interfaccia dei dischi fissi e pertanto possono rimpiazzarli facilmente. Hanno una
+capacit\`a fino a $2TB$. 
+\subsubsection{Performance delle flash memory}
+Hanno letture simili a DRAM negli ordini dei nanosecondi e scritture simili ai dischi magnetici nell'ordine dei millisecondi. Rispetto ai dischi fissi sono meno soggette a danni, ma
+con un limite superiore sul numero di write, pi\`u silenziosi, pi\`u efficienti nel tempo di accesso, non necessitano di essere deframmentate e sono pi\`u costose. 
+\section{Scheduling degli accessi a disco}
+Logicamente il disco pu\`o essere considerato come un vettore unidimensionale di blocchi logici. Un blocco o cluster \`e l'unit\`a minima di trasferimento. Il vettore \`e mappato 
+sequenzialmente sui settori del disco. Il settore $0$ \`e il primo settore della prima traccia del cilindro pi\`u esterno e la numerazione procede gerarchicamente per settore, tracce e
+piatti. 
+\subsection{Disk scheduling}
+Un processo che necessita I/O esegue una system call e il sistema operativo usa la vista logica del disco e una sequenza di accessi sono una sequenza di indici del vettore. Nelle 
+richieste sono anche contenute informazioni come il tipo di accesso (R/W), l'indirizzo di memoria destinazione e la quantit\`a di dati da trasferire. 
+\subsection{Algoritmi di disk scheduling}
+In questi algoritmi bisogna sempre tenere conto del compromesso tra costo ed efficacia. Sono valutati tramite una sequenza di accessi. 
+\subsubsection{First-come-first-served (FCFS)}
+In questo algoritmo le richieste sono processate nell'ordine di arrivo. 
+\subsubsection{Shortest seek time first (SSTF)}
+In questo algoritmo si fa la scelta pi\`u efficiente localmente: si seleziona la richiesta con il minimo spostamento rispetto alla posizione attuale della testina. Simile al SJF con
+possibilit\`a di starvation di alcune richieste. Non \`e ottimo. 
+\subsubsection{SCAN}
+La natura dinamica delle richieste porta all'algoritmo SCAN in cui la testina parte da un'estremit\`a del disco, si sposta verso l'altra estremit\`a servendo tutte le richieste 
+correnti. Arrivato all'altra estremit\`a riparte nella direzione opposta servendo le nuove richieste. Viene detto algoritmo dell'ascensore. 
+\subsubsection{SCAN circolare (CSCAN)}
+Come SCAN, ma quando la testina arriva ad un'estremit\`a riparte immediatamente da $0$ senza servire altre richieste. Il disco viene considerato come lista circolare e il tempo di 
+attesa \`e pi\`u uniforme rispetto a SCAN. Alla fune di una scansione ci saranno pi\`u richieste all'altro estremo. 
+\subsubsection{(C-)LOOK, variante dello SCAN}
+La testina non arriva fino all'estremit\`a del disco. Cambia direzione (LOOK) o riparte dalla prima traccia (C-LOOK) non appena non ci sono pi\`u richieste in quella direzione.
+\subsubsection{N-step SCAN, variante dello SCAN}
+Per evitare che la testina rimanga sempre nella stessa zona la coda delle richieste viene partizionata in pi\`u code di dimensione massima $N$. Quando una coda viene processata per
+il servizio gli accessi in arrivo riempiono altre code. Dopo cue una coda \`e stata riempita non \`e possibile riordinare le richieste. Le code sature vengono servite nello scan 
+successivo. Per $N$ grandi degenera in SCAN, mentre per $N = 1$ degenra in FCFS. FSCAN \`e simile ma con due sole code. 
+\subsubsection{Last-in-last-out (LIFO)}
+In certi casi pu\`o essere utile schedulare gli accessi in base all'ordine inverso di arrivo. \`E utile nel caso di accessi con elevata localit\`a ma offre possibilit\`a di 
+starvation. 
+\subsubsection{Analisi degli algoritmi}
+Nessuno degli algoritmi considerati \`e ottimo in quanto quello ottimo sarebbe poco efficiente. L'analisi \`e influenzata dalla distribuzione di numero e dimensione degli accessi in
+quanto pi\`u l'accesso \`e grande pi\`u il peso relativo del seek time diminuisce e dall'organizzazione delle informazioni su disco (il file system) e l'accesso alla directory 
+essenziale tipicamente lontane dalle estremit\`a del disco. In generale SCAN e C-SCAN sono migliori per sistemi con molti accessi a disco. Il disk-scheduling viene spesso implementato
+come modulo indipendente dal sistema operativo con diverse scelte di algoritmo. 
+\section{Gestione del disco}
+\subsection{Formattazione dei dischi}
+Nella formattazione di basso livello o fisica il disco viene diviso in settori che il controllore pu\`o leggere o scrivere. Per usare un disco come contenitore di file il sistema 
+operativo deve memorizzare le proprie strutture del disco che viene partizionato in uno o pi\`u gruppi di cilindri detti partizioni. Avviene una formattazione logica per creare un 
+file system e il programma di boot per inizializzare il sistema. Il programma di bootstrap memorizzato nella ROM (bootstrap loader) carica il bootstrap dal disco (dai blocchi di root), 
+carica i driver dei dispositivi e lancia l'avvio del sistema operativo. Nella formattazione fisica si suddivide il disco in settori, si identificano e si aggiunge lo spazio per la 
+correzione degli errori (ECC). Nella formattazione logica si inizializza il file system, la lista di spazio occupato e libero e le directory vuote.
+\subsection{Gestione dei blocchi difettosi}
+L'ECC (error correction code) serve a capire in lettura o scrittore se un settore contiene dati corretti o meno. Per la lettura il controllore legge un settore insieme all'ECC e calcola
+l'ECC per i dati appena letti. Se il risultato \`e diverso si trova un errore (bad block). L'errore va segnalato e i bad block si possono gestire offline o online. 
+\subsubsection{Gestine offline dei bad block}
+Durante la formattazione logica si individuano i bad block e si mettono una lista, si rimuovono e si marca l'entry nella FAT. Successivamente si pu\`o eseguire un'utility per isolare i 
+bad block come. Questo algoritmo \`e tipico dei controllori IDE. 
+\subsubsection{Gestione online dei bad block}
+Il controllore mappa il bad block su un blocco buono non usato. Si deve partano disporre di blocchi di scorta riservati (sector sparing). Quando il sistema operativo richiede il bad 
+block il controllore mappa in modo trasparente l'accesso al bad block sul blocco di scorta. Potrebbe inficiare le ottimizzatone fornite dallo scheduling se non si allocassero spare
+block in ogni cilindro. 
+\subsection{Gestione dello spazio di swap}
+Lo spazio di swap viene usato dalla memoria virtuale come estensione della RAM. Si pu\`o ricavare dal file system attraverso comuni primitive di accesso ai file, ma \`e inefficiente in
+quanto esiste un costo addizionale per l'attraversamento delle strutture dati per le directory e i file. Si pu\`o porre in una partizione separata che non contiene informazioni e 
+strutture relative al file system e usa uno speciale gestore detto swap daemon. Lo spazio di swap pu\`o essere allocato quando il processo viene creato e viene assegnato spazio per 
+pagine di istruzioni e di dati. Il kernel usa due mappe di swap per tracciare l'uso dello spazio di swap. Oppure pu\`o essere allocato quando una pagina viene forzata fuori dalla memoria
+fisica. 

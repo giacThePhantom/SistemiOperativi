@@ -108,3 +108,30 @@
 \BOOKMARK [2][-]{subsection.8.2.2}{Paginazione}{section.8.2}% 108
 \BOOKMARK [2][-]{subsection.8.2.3}{Segmentazione}{section.8.2}% 109
 \BOOKMARK [2][-]{subsection.8.2.4}{Segmentazione paginata}{section.8.2}% 110
+\BOOKMARK [0][-]{chapter.9}{Memoria virtuale}{}% 111
+\BOOKMARK [1][-]{section.9.1}{Paginazione su domanda}{chapter.9}% 112
+\BOOKMARK [2][-]{subsection.9.1.1}{Valid/invalid bit e page fault}{section.9.1}% 113
+\BOOKMARK [2][-]{subsection.9.1.2}{Prestazioni}{section.9.1}% 114
+\BOOKMARK [2][-]{subsection.9.1.3}{Rimpiazzamento delle pagine}{section.9.1}% 115
+\BOOKMARK [2][-]{subsection.9.1.4}{Problematiche}{section.9.1}% 116
+\BOOKMARK [1][-]{section.9.2}{Algoritmi di rimpiazzamento delle pagine}{chapter.9}% 117
+\BOOKMARK [2][-]{subsection.9.2.1}{Algoritmo FIFO \(first-in-first-out\)}{section.9.2}% 118
+\BOOKMARK [2][-]{subsection.9.2.2}{Algoritmo ideale}{section.9.2}% 119
+\BOOKMARK [2][-]{subsection.9.2.3}{Algoritmo least recently used \(LRU\)}{section.9.2}% 120
+\BOOKMARK [1][-]{section.9.3}{Allocazione dei frame}{chapter.9}% 121
+\BOOKMARK [2][-]{subsection.9.3.1}{Contesto del rimpiazzamento}{section.9.3}% 122
+\BOOKMARK [2][-]{subsection.9.3.2}{Allocazione fissa}{section.9.3}% 123
+\BOOKMARK [2][-]{subsection.9.3.3}{Allocazione variabile}{section.9.3}% 124
+\BOOKMARK [1][-]{section.9.4}{Conclusioni}{chapter.9}% 125
+\BOOKMARK [0][-]{chapter.10}{Gestione della memoria secondaria}{}% 126
+\BOOKMARK [1][-]{section.10.1}{Tipologie di supporto}{chapter.10}% 127
+\BOOKMARK [2][-]{subsection.10.1.1}{Nastri magnetici}{section.10.1}% 128
+\BOOKMARK [2][-]{subsection.10.1.2}{Dischi magnetici}{section.10.1}% 129
+\BOOKMARK [2][-]{subsection.10.1.3}{Dispositivi a stato solido}{section.10.1}% 130
+\BOOKMARK [1][-]{section.10.2}{Scheduling degli accessi a disco}{chapter.10}% 131
+\BOOKMARK [2][-]{subsection.10.2.1}{Disk scheduling}{section.10.2}% 132
+\BOOKMARK [2][-]{subsection.10.2.2}{Algoritmi di disk scheduling}{section.10.2}% 133
+\BOOKMARK [1][-]{section.10.3}{Gestione del disco}{chapter.10}% 134
+\BOOKMARK [2][-]{subsection.10.3.1}{Formattazione dei dischi}{section.10.3}% 135
+\BOOKMARK [2][-]{subsection.10.3.2}{Gestione dei blocchi difettosi}{section.10.3}% 136
+\BOOKMARK [2][-]{subsection.10.3.3}{Gestione dello spazio di swap}{section.10.3}% 137
