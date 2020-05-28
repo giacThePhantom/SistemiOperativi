@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  28 MAY 2020 19:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  28 MAY 2020 19:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1006,17 +1006,17 @@ eX warning (ext4): destination with the same identifier (name{page.1}) has been
  already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.81 ...4.1}Kernel separato}{19}{subsection.4.4.1}
+l.81 ...4.1}Kernel separato}{22}{subsection.4.4.1}
                                                   % [1
 
-] [2] [3])
+] [2] [3] [4])
 \tf@toc=\write4
 \openout4 = `Principal.toc'.
 
 
-(./Chapters/01_Introduzione.tex [4]
+(./Chapters/01_Introduzione.tex [5]
 Capitolo 1.
-<Pictures/StackSistemaOperativo.png, id=837, 780.9175pt x 553.06625pt>
+<Pictures/StackSistemaOperativo.png, id=917, 780.9175pt x 553.06625pt>
 File: Pictures/StackSistemaOperativo.png Graphic file (type png)
 <use Pictures/StackSistemaOperativo.png>
 Package pdftex.def Info: Pictures/StackSistemaOperativo.png  used on input line
@@ -1029,51 +1029,51 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 19.
 
-[5
+[6
 
-] [6 <./Pictures/StackSIstemaOperativo.png>] [7] [8])
-(./Chapters/02_Componenti.tex [9]
+] [7 <./Pictures/StackSIstemaOperativo.png>] [8] [9])
+(./Chapters/02_Componenti.tex [10]
 Capitolo 2.
-[10
+[11
 
-] [11]) (./Chapters/03_Architettura.tex [12]
+] [12]) (./Chapters/03_Architettura.tex [13]
 Capitolo 3.
-[13
+[14
 
-] [14]) (./Chapters/04_ProcessiThread.tex [15]
+] [15]) (./Chapters/04_ProcessiThread.tex [16]
 Capitolo 4.
-[16
+[17
 
-] [17]
-<Pictures/StatiProcesso.png, id=930, 792.9625pt x 323.2075pt>
+] [18]
+<Pictures/StatiProcesso.png, id=1011, 792.9625pt x 323.2075pt>
 File: Pictures/StatiProcesso.png Graphic file (type png)
 <use Pictures/StatiProcesso.png>
 Package pdftex.def Info: Pictures/StatiProcesso.png  used on input line 49.
 (pdftex.def)             Requested size: 433.62pt x 176.7438pt.
- [18 <./Pictures/StatiProcesso.png>]
+ [19 <./Pictures/StatiProcesso.png>]
 Overfull \hbox (20.25076pt too wide) in paragraph at lines 82--85
 \T1/cmr/m/n/10 stack con-te-nu-ti in un og-get-to di ti-po \T1/cmr/m/it/10 pth-
 read_attr_t \T1/cmr/m/n/10 e la sy-stem call \T1/cmr/m/it/10 int pth-read_attr_
 init(pthread_attr_t
  []
 
-[19] [20]
+[20] [21]
 Overfull \hbox (14.4414pt too wide) in paragraph at lines 135--139
 \T1/cmr/m/n/10 In PO-SIX il pro-ces-so crea pri-ma il seg-men-to di me-mo-ria c
 on-di-vi-sa \T1/cmr/m/it/10 seg-ment id = sh-m-get(IPC_PRIVATE,
  []
 
-[21]) (./Chapters/05_SchedulingCPU.tex [22]
+[22]) (./Chapters/05_SchedulingCPU.tex [23]
 Capitolo 5.
-[23
+[24
 
-] [24] [25]) (./Chapters/06_SincronizzazioneTraProcessi.tex [26]
+] [25] [26]) (./Chapters/06_SincronizzazioneTraProcessi.tex [27]
 Capitolo 6.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 4.
 
-[27
+[28
 
 ] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2018/09/02 1.7 listings language file
@@ -1082,74 +1082,78 @@ File: lstlang1.sty 2018/09/02 1.7 listings language file
 File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
 )
 (./Algoritmi/IPC-algoritmo1.c) (./Algoritmi/IPC-algoritmo2.c)
-(./Algoritmi/IPC-algoritmo3.c [28]) (./Algoritmi/IPC-algoritmo-fornaio.c)
-[29] (./Algoritmi/Test_and_set.c) (./Algoritmi/Swap.c)
-(./Algoritmi/TestSetLimitata.c [30]) (./Algoritmi/SemBinCon.c) [31]
+(./Algoritmi/IPC-algoritmo3.c [29]) (./Algoritmi/IPC-algoritmo-fornaio.c)
+[30] (./Algoritmi/Test_and_set.c) (./Algoritmi/Swap.c)
+(./Algoritmi/TestSetLimitata.c [31]) (./Algoritmi/SemBinCon.c) [32]
 (./Algoritmi/SemBinWBW-P.c) (./Algoritmi/SemBinWBW-V.c)
 (./Algoritmi/SemIntCon.c) (./Algoritmi/SemIntWBW-P.c)
-(./Algoritmi/SemIntWBW-V.c) (./Algoritmi/SemIntWoutBW.c [32])
+(./Algoritmi/SemIntWBW-V.c) (./Algoritmi/SemIntWoutBW.c [33])
 (./Algoritmi/SemIntWoutBW-P.c) (./Algoritmi/SemIntWoutBW-V.c)
-(./Algoritmi/SemBinSezCrit.c [33]) [34] (./Algoritmi/Produttore.c)
-(./Algoritmi/Consumatore.c) (./Algoritmi/Philosopher1.c) [35]
+(./Algoritmi/SemBinSezCrit.c [34]) [35] (./Algoritmi/Produttore.c)
+(./Algoritmi/Consumatore.c) (./Algoritmi/Philosopher1.c) [36]
 (./Algoritmi/Philosopher2.c) (./Algoritmi/Philosopher2-test.c)
 (./Algoritmi/Philosopher2-dropfork.c) (./Algoritmi/Philosopher2-takefork.c)
-[36] (./Algoritmi/Barber.c) (./Algoritmi/Customer.c) (./Algoritmi/Monitor.c)
-[37] (./Algoritmi/MonitorProduttore.c) (./Algoritmi/MonitorConsumatore.c)
-(./Algoritmi/MonitorProducerConsumer.c [38]) (./Algoritmi/MonitorSemBin.c)
-[39] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[37] (./Algoritmi/Barber.c) (./Algoritmi/Customer.c) (./Algoritmi/Monitor.c)
+[38] (./Algoritmi/MonitorProduttore.c) (./Algoritmi/MonitorConsumatore.c)
+(./Algoritmi/MonitorProducerConsumer.c [39]) (./Algoritmi/MonitorSemBin.c)
+[40] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2018/09/02 1.7 listings language file
 )
 (./Algoritmi/BoundedBuffer.java) (./Algoritmi/Deposit.java)
-(./Algoritmi/Remove.java) [40] (./Algoritmi/Scrittore.c) (./Algoritmi/Lettore.c
-)) (./Chapters/07_Deadlock.tex [41]
+(./Algoritmi/Remove.java) [41] (./Algoritmi/Scrittore.c) (./Algoritmi/Lettore.c
+)) (./Chapters/07_Deadlock.tex [42]
 Capitolo 7.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 10.
 
-[42
+[43
 
-] [43] (./Algoritmi/Banchierestrutture.c)
-(./Algoritmi/BanchiereAllocazione.c) [44] (./Algoritmi/BanchiereVerifica.c)
-(./Algoritmi/RilevamentoStrutture.c) [45] (./Algoritmi/RilevamentoAlgoritmo.c)
-[46]) (./Chapters/08_Memoria.tex [47]
+] [44] (./Algoritmi/Banchierestrutture.c)
+(./Algoritmi/BanchiereAllocazione.c) [45] (./Algoritmi/BanchiereVerifica.c)
+(./Algoritmi/RilevamentoStrutture.c) [46] (./Algoritmi/RilevamentoAlgoritmo.c)
+[47]) (./Chapters/08_Memoria.tex [48]
 Capitolo 8.
-[48
+[49
 
-] [49] [50] [51] [52] [53]) (./Chapters/09_MemoriaVirtuale.tex [54]
+] [50] [51] [52] [53] [54]) (./Chapters/09_MemoriaVirtuale.tex [55]
 Capitolo 9.
-[55
+[56
 
-] [56] [57]
+] [57] [58]
 Overfull \hbox (0.15036pt too wide) in paragraph at lines 89--96
  []\T1/cmr/bx/n/10 Modello del wor-king set[] \T1/cmr/m/n/10 Il fra-me suf-fi-c
 ien-te a man-te-ne-re in me-mo-ria il suo wor-king set $\OML/cmm/m/it/10 WS[]\O
 T1/cmr/m/n/10 (\OML/cmm/m/it/10 t; \OT1/cmr/m/n/10 ^^A)$
  []
 
-[58]) (./Chapters/10_MemoriaSecondaria.tex [59]
+[59]) (./Chapters/10_MemoriaSecondaria.tex [60]
 Capitolo 10.
-[60
+[61
 
-] [61] [62]) (./Chapters/11_FileSystem.tex [63]
+] [62] [63]) (./Chapters/11_FileSystem.tex [64]
 Capitolo 11.
-[64
+[65
 
-] [65] [66] [67] [68] [69] [70])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
- [71]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
+] [66] [67] [68] [69] [70] [71]) (./Chapters/12_RAID.tex [72]
+Capitolo 12.
+[73
+
+] [74])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 27.
+ [75]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 27.
  (./build/Principal.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 27.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 27.
 Package rerunfilecheck Info: File `Principal.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 26122 strings out of 492615
- 459781 string characters out of 6131390
- 884012 words of memory out of 5000000
- 28771 multiletter control sequences out of 15000+600000
+ 26160 strings out of 492615
+ 460376 string characters out of 6131390
+ 884022 words of memory out of 5000000
+ 28786 multiletter control sequences out of 15000+600000
  553215 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,63p,816b,2253s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1171,10 +1175,10 @@ super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb><
 /usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fon
 ts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-s
 uper/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on ./build/Principal.pdf (72 pages, 709511 bytes).
+Output written on ./build/Principal.pdf (76 pages, 719479 bytes).
 PDF statistics:
- 2037 PDF objects out of 2073 (max. 8388607)
- 1920 compressed objects within 20 object streams
- 872 named destinations out of 1000 (max. 500000)
- 1291 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2135 PDF objects out of 2487 (max. 8388607)
+ 2013 compressed objects within 21 object streams
+ 892 named destinations out of 1000 (max. 500000)
+ 1411 words of extra memory for PDF output out of 10000 (max. 10000000)
 

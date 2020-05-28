@@ -158,3 +158,18 @@
 \BOOKMARK [1][-]{section.11.5}{Efficienza e prestazioni}{chapter.11}% 158
 \BOOKMARK [2][-]{subsection.11.5.1}{Efficienza}{section.11.5}% 159
 \BOOKMARK [2][-]{subsection.11.5.2}{Prestazioni}{section.11.5}% 160
+\BOOKMARK [0][-]{chapter.12}{Sistemi RAID}{}% 161
+\BOOKMARK [1][-]{section.12.1}{Concetti di base}{chapter.12}% 162
+\BOOKMARK [2][-]{subsection.12.1.1}{Affidabilit\340}{section.12.1}% 163
+\BOOKMARK [2][-]{subsection.12.1.2}{Sezionamento dei dati}{section.12.1}% 164
+\BOOKMARK [2][-]{subsection.12.1.3}{Codici per la correzione di errori}{section.12.1}% 165
+\BOOKMARK [1][-]{section.12.2}{Livelli di RAID}{chapter.12}% 166
+\BOOKMARK [2][-]{subsection.12.2.1}{Livello RAID 0}{section.12.2}% 167
+\BOOKMARK [2][-]{subsection.12.2.2}{Livello RAID 1}{section.12.2}% 168
+\BOOKMARK [2][-]{subsection.12.2.3}{Livello RAID 2}{section.12.2}% 169
+\BOOKMARK [2][-]{subsection.12.2.4}{Livello RAID 3}{section.12.2}% 170
+\BOOKMARK [2][-]{subsection.12.2.5}{Livello RAID 4}{section.12.2}% 171
+\BOOKMARK [2][-]{subsection.12.2.6}{Livello RAID 5}{section.12.2}% 172
+\BOOKMARK [2][-]{subsection.12.2.7}{Livello RAID 6}{section.12.2}% 173
+\BOOKMARK [2][-]{subsection.12.2.8}{Livello RAID 0 + 1}{section.12.2}% 174
+\BOOKMARK [2][-]{subsection.12.2.9}{Livello RAID 1 + 0}{section.12.2}% 175
