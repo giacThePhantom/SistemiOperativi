@@ -327,11 +327,11 @@
 \contentsline {subsection}{\numberline {12.1.3}Codici per la correzione di errori}{74}{subsection.12.1.3}% 
 \contentsline {section}{\numberline {12.2}Livelli di RAID}{74}{section.12.2}% 
 \contentsline {subsection}{\numberline {12.2.1}Livello RAID 0}{74}{subsection.12.2.1}% 
-\contentsline {subsection}{\numberline {12.2.2}Livello RAID 1}{74}{subsection.12.2.2}% 
-\contentsline {subsection}{\numberline {12.2.3}Livello RAID 2}{74}{subsection.12.2.3}% 
-\contentsline {subsection}{\numberline {12.2.4}Livello RAID 3}{74}{subsection.12.2.4}% 
+\contentsline {subsection}{\numberline {12.2.2}Livello RAID 1}{75}{subsection.12.2.2}% 
+\contentsline {subsection}{\numberline {12.2.3}Livello RAID 2}{75}{subsection.12.2.3}% 
+\contentsline {subsection}{\numberline {12.2.4}Livello RAID 3}{75}{subsection.12.2.4}% 
 \contentsline {subsection}{\numberline {12.2.5}Livello RAID 4}{75}{subsection.12.2.5}% 
 \contentsline {subsection}{\numberline {12.2.6}Livello RAID 5}{75}{subsection.12.2.6}% 
 \contentsline {subsection}{\numberline {12.2.7}Livello RAID 6}{75}{subsection.12.2.7}% 
-\contentsline {subsection}{\numberline {12.2.8}Livello RAID 0 + 1}{75}{subsection.12.2.8}% 
-\contentsline {subsection}{\numberline {12.2.9}Livello RAID 1 + 0}{75}{subsection.12.2.9}% 
+\contentsline {subsection}{\numberline {12.2.8}Livello RAID 0 + 1}{76}{subsection.12.2.8}% 
+\contentsline {subsection}{\numberline {12.2.9}Livello RAID 1 + 0}{76}{subsection.12.2.9}% 
