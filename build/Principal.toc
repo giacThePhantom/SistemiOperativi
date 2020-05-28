@@ -277,3 +277,45 @@
 \contentsline {subsubsection}{Gestine offline dei bad block}{63}{section*.142}% 
 \contentsline {subsubsection}{Gestione online dei bad block}{63}{section*.143}% 
 \contentsline {subsection}{\numberline {10.3.3}Gestione dello spazio di swap}{63}{subsection.10.3.3}% 
+\contentsline {chapter}{\numberline {11}File System}{64}{chapter.11}% 
+\contentsline {section}{\numberline {11.1}Interfaccia del file system}{64}{section.11.1}% 
+\contentsline {subsection}{\numberline {11.1.1}Concetto di file}{64}{subsection.11.1.1}% 
+\contentsline {subsection}{\numberline {11.1.2}Attributi di un file}{64}{subsection.11.1.2}% 
+\contentsline {subsection}{\numberline {11.1.3}Operazioni sui file}{64}{subsection.11.1.3}% 
+\contentsline {subsection}{\numberline {11.1.4}Struttura dei file}{65}{subsection.11.1.4}% 
+\contentsline {subsection}{\numberline {11.1.5}Metodi di accesso}{65}{subsection.11.1.5}% 
+\contentsline {subsubsection}{Sequenziale}{65}{section*.144}% 
+\contentsline {subsubsection}{Diretto}{65}{section*.145}% 
+\contentsline {section}{\numberline {11.2}Struttura delle directory}{65}{section.11.2}% 
+\contentsline {subsection}{\numberline {11.2.1}Operazioni sulla directory}{65}{subsection.11.2.1}% 
+\contentsline {subsection}{\numberline {11.2.2}Organizzazione logica}{66}{subsection.11.2.2}% 
+\contentsline {subsubsection}{Directory a un livello}{66}{section*.146}% 
+\contentsline {subsubsection}{Directory a due livelli}{66}{section*.147}% 
+\contentsline {subsubsection}{Directory ad albero}{66}{section*.148}% 
+\contentsline {subsubsection}{Directory a grafo aciclico}{66}{section*.149}% 
+\contentsline {subsubsection}{Directory a grafo generico}{66}{section*.150}% 
+\contentsline {subsection}{\numberline {11.2.3}Mount di file system}{66}{subsection.11.2.3}% 
+\contentsline {subsection}{\numberline {11.2.4}Condivisione di file}{67}{subsection.11.2.4}% 
+\contentsline {subsection}{\numberline {11.2.5}Protezione}{67}{subsection.11.2.5}% 
+\contentsline {section}{\numberline {11.3}Implementazione del file system}{67}{section.11.3}% 
+\contentsline {subsection}{\numberline {11.3.1}Strutture su disco}{67}{subsection.11.3.1}% 
+\contentsline {subsection}{\numberline {11.3.2}Strutture in memoria}{67}{subsection.11.3.2}% 
+\contentsline {subsection}{\numberline {11.3.3}Allocazione dello spazio su disco}{67}{subsection.11.3.3}% 
+\contentsline {subsubsection}{Allocazione contigua}{68}{section*.151}% 
+\contentsline {paragraph}{Variante}{68}{section*.152}% 
+\contentsline {subsubsection}{Allocazione a lista}{68}{section*.153}% 
+\contentsline {paragraph}{Esempio - FAT (file allocation table)}{68}{section*.154}% 
+\contentsline {subsubsection}{Allocazione indicizzata}{68}{section*.155}% 
+\contentsline {paragraph}{Indici multilivello}{69}{section*.156}% 
+\contentsline {paragraph}{Schema concatenato}{69}{section*.157}% 
+\contentsline {subsubsection}{Unix e i-node}{69}{section*.158}% 
+\contentsline {subsection}{\numberline {11.3.4}Implementazione delle directory}{69}{subsection.11.3.4}% 
+\contentsline {section}{\numberline {11.4}Gestione dello spazio libero}{69}{section.11.4}% 
+\contentsline {subsection}{\numberline {11.4.1}Alternative}{70}{subsection.11.4.1}% 
+\contentsline {section}{\numberline {11.5}Efficienza e prestazioni}{70}{section.11.5}% 
+\contentsline {subsection}{\numberline {11.5.1}Efficienza}{70}{subsection.11.5.1}% 
+\contentsline {subsection}{\numberline {11.5.2}Prestazioni}{70}{subsection.11.5.2}% 
+\contentsline {subsubsection}{Dischi virtuali}{70}{section*.159}% 
+\contentsline {subsubsection}{Cache del disco}{70}{section*.160}% 
+\contentsline {subsubsection}{Recupero}{71}{section*.161}% 
+\contentsline {subsubsection}{File system log structured}{71}{section*.162}% 

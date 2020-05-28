@@ -1,0 +1,179 @@
+\chapter{File System}
+Il file system fornisce il meccanismo per la memorizzazione e l'accesso di dati e programmi. Consiste di una collezione di file e della struttura di cartelle (directory)
+\section{Interfaccia del file system}
+\subsection{Concetto di file}
+Il sistema operativo astrae dalle caratteristiche fisiche dei supporti di memorizzazione fornendo una loro visione logica. Si considera un file come uno spazio di indirizzamento logico 
+e contiguo rappresentante un insieme di informazioni correlate identificate da un nome. I File possono essere dati di qualsiasi tipo e programmi. 
+\subsection{Attributi di un file}
+Su disco nella struttura della directory sono salvati per ogni file il nome (unica informazione in formato leggibile), tipo, posizione (puntatore allo spazio fisico sul dispositivo), 
+dimensione, protezione (controllo sui permessi), tempo, data e identificazione dell'utente. 
+\subsection{Operazioni sui file}
+\begin{itemize}
+	\item Creazione: si cerca lo spazio necessario su disco e si crea un nuovo elemento sulla directory per gli attributi.
+	\item Scrittura: una system call che specifica il nome del file e i dati da scrivere, \`e necessario che sia noto il puntatore alla locazione della prossima scrittura.
+	\item Lettura: una system call che specifica il nome del file e dove mettere i dati letti in memoria, \`e necessario conoscere il puntatore alla locazione della prossima
+		lettura, lo stesso della scrittura. 
+	\item Riposizionamento all'interno di file: aggiornamento del puntatore alla posizione corrente.
+	\item Cancellazione: libera lo spazio associato al file e l'elemento corrispondente nella directory. 
+	\item Troncamento: mantiene inalterati gli attributi ma cancella il contenuto del file. 
+	\item Apertura: ricerca il file nella struttura della directory su disco, copia il file in memoria e inserisce un riferimento nella tabella dei file aperti. In sistemi 
+		multi utente si trovano $2$ tabelle: una per ogni processo che contiene i riferimenti per i file aperti relativi a esso e una per tutti i file aperti da tutti i 
+		processi che contiene i dati indipendenti dal processo. 
+	\item Chiusura: copia del file in memoria su disco. 
+\end{itemize}
+\subsection{Struttura dei file}
+I tipi di file possono essere usati per usare la struttura interna del file. In Unix non esiste, si considera un file una sequenza di parole o bytes. Pu\`o essere una struttura a 
+record semplice doe un record \`e una riga di lunghezza fissa o variabile. Pu\`o essere una struttura complessa come accade dei documenti formattati e i formati ricaricabili (load
+module). Le ultime due si possono emulare con la prima usando caratteri di controllo. 
+\subsection{Metodi di accesso}
+\subsubsection{Sequenziale}
+Questo metodo viene usato da editor e compilatori, permettono le operazioni \emph{read next}, \emph{write next}, \emph{reset} (rewind). Non \`e permesso il rewrite in quanto si rischia
+inconsistenza se si scrive qualcosa a met\`a del file in quanto si potrebbe eliminare ci\`o che sta dopo. 
+\subsubsection{Diretto}
+Come accade nel database in cui un file \`e una sequenza numerata di blocchi detti record. Le operazioni permesse sono \emph{read n}, \emph{write n}, \emph{position to n}, \emph{read
+next}, \emph{write next}, \emph{rewrite n}. 
+\section{Struttura delle directory}
+Le directory sono una collezione di nodi contenente informazioni sui file. Si trovano entrambi sul disco e determinano la struttura del file system. Per ogni file contengono il 
+nome, tipo, indirizzo, lunghezza attuale, massima lunghezza, data di ultimo accesso, data di ultima modifica, proprietario e informazioni di protezione. 
+\subsection{Operazioni sulla directory}
+\begin{itemize}
+	\item Aggiungere un file.
+	\item Cancellare un file.
+	\item Visualizzare il contenuto della directory.
+	\item Rinominare un file.
+	\item Cercare un file.
+	\item Attraversare il file system. 
+\end{itemize}
+\subsection{Organizzazione logica}
+Gli obiettivi dell'organizzazione logica delle directory sono l'efficienza (rapido accesso ad un file), nomenclatura conveniente agli utenti in quanto permette stessi nomi per file
+e utenti diversi e nomi diversi per lo stesso file e raggruppamento: i file vengono classificati logicamente per un criterio come il tipo o la protezione. 
+\subsubsection{Directory a un livello}
+In questo metodo si trova una singola directory per tutti gli utenti. Nascono problemi di nomenclatura in quanto \`e difficile ricordare se un nome esiste gi\`a e inventarne sempre di
+nuovi. Nascono inoltre problemi di raggruppamento. 
+\subsubsection{Directory a due livelli}
+In questo metodo si trova una directory separata per ogni utente. Nasce il concetto di percorso (path), \`e possibile usare lo stesso nome di file per utenti diversi e la ricerca \`e
+efficiente. Non esiste comunque raggruppamento e si pone il problema di dove mettere i programmi di sistema condivisi dagli utenti (in Unix si usa \emph{PATH}).
+\subsubsection{Directory ad albero}
+In questo metodo la directory viene implementata come un albero permettendo una ricerca efficiente e la possibilit\`a di raggruppamento. Nasce il concetto di working directory e i
+nomi di percorso possono essere assoluti o relativi. 
+\subsubsection{Directory a grafo aciclico}
+In questo metodo si espande la versione ad albero a grafo aciclico per permettere la condivisione di file. La condivisione avviene in Windows attraverso i collegamenti e in Unix
+attraverso i link. I link possono essere simbolici: contengono il pathname del file reale e se si cancella il file il link rimane pendente o hard: si trova un contatore che mantiene
+il numero di riferimenti decrementato per ogni cancellazione di un riferimento. Il file pu\`o essere cancellato solo se il contatore vale $0$. 
+\subsubsection{Directory a grafo generico}
+Questo metodo nasce come estensione della directory a grafo aciclico e si deve garantire che le ricerche terminino per evitare loop infiniti nell'attraversamento del grafo. Per risolvere
+questo problema si pu\`o permettere di collegare solo file non directory o usare un algoritmo di controllo di esistenza di un ciclo ogni volta che si crea un nuovo collegamento, che 
+pu\`o essere costoso. 
+\subsection{Mount di file system}
+Si possono creare dei file system modulari con la possibilit\`a di attaccare (mount) e staccare (unmount) interi file system a file system precedenti. In generale un file system deve
+essere montato prima di potervi accedere. Ci si riferisce al punto in cui viene montato come al mount point. 
+\subsection{Condivisione di file}
+La condivisione di file \`e importante in sistemi multiutente ed \`e realizzabile tramite uno schema di protezione. Nei sistemi distribuiti i file possono essere condivisi attraverso
+una rete. Il Network File System (NFS) \`e un tipico schema di condivisione di file via rete. 
+\subsection{Protezione}
+Il possessore di un file deve poter controllare cosa \`e possibile fare su un file e da parte di chi. Per farlo si pu\`o implementare una lista di accesso per ogni file o directory
+che lista chi pu\`o fare cosa. Pu\`o essere lunga. Gli utenti si possono raggruppare in tre classi con una perdita di generalit\`a: il proprietario, il gruppo (utenti appartenenti allo
+stesso gruppo del proprietario) e gli altri. Per ogni classe i permessi possono essere di lettura, scrittura o esecuzione. 
+\section{Implementazione del file system}
+Per gestire un file system si usano diverse strutture dati in parte su disco e in parte in memoria. Le caratteristiche, pur avendo una base comune sono fortemente dipendenti dal 
+sistema operativo e dal tipo di file system. 
+\subsection{Strutture su disco}
+\begin{itemize}
+	\item Blocco di boot: contiene le informazioni necessarie per l'avvio del sistema operativo.
+	\item Blocco di controllo delle partizioni: contiene i dettagli riguardanti la partizione come numero e dimensione dei blocchi, la lista dei blocchi liberi, dei descrittori 
+		liberi.
+	\item Strutture di directory che descrivono l'organizzazione dei file.
+	\item Descrittori dei file che contengono vari dettagli sui file e i puntatori ai blocchi dati. 
+\end{itemize}
+\subsection{Strutture in memoria}
+\begin{itemize}
+	\item Tabella delle partizioni: informazioni sulle partizioni montate.
+	\item Strutture di directory: copia in memoria delle directory a cui si \`e fatto accesso di recente.
+	\item Tabella globale dei file aperti con le copie dei descrittori dei file.
+	\item Tabella dei file aperti per ogni processo contenente il puntatore alla tabella globale e le informazioni di accesso. 
+\end{itemize}
+\subsection{Allocazione dello spazio su disco}
+I blocchi su disco possono essere allocati ai file o alle directory in modi diversi con l'obiettivo di minimizzare i tempi di accesso e massimizzare l'utilizzo dello spazio. 
+\subsubsection{Allocazione contigua}
+In questo metodo ogni file occupa un insieme di blocchi contigui su disco. L'entry della directory \`e semplice in quanto contiene l'indirizzo del blocco di partenza e la lunghezza del
+file. Permette un accesso semplice in quanto l'accesso al blocco $b+1$ non richiede lo spostamento della testina rispetto al blocco $b$ a meno che $b$ non sia l'ultimo blocco di un 
+cilindro. Supporta sia l'accesso sequenziale che casuale in quanto per leggere il blocco $i$ di un file che inizia al blocco $b$ basta leggere $b+i$. Presenta per\`o problemi 
+simili a quelli dell'allocazione dinamica: si deve scegliere tra algoritmi best-fit, first-fit o worst-fit e porta a uno spreco di spazio dovuto a frammentazione esterna e richiede
+una compattazione periodica dello spazio. La decisione della dimensione dello spazio da allocare \`e un problema in quanto i file potrebbero crescere dinamicamente. Si pu\`o fare in
+modo che se il file deve crescere e non c'\`e spazio nasce un'errore e una terminazione del programma e si riesegue. In questo modo si tende a sovrastimare lo spazio necessario che
+porta a uno spreco. Un'altra soluzione consiste di trovare un buco pi\`u grande e ricopiare tutto il file in questo, operazione trasparente per l'utente ma che rallenta il sistema. 
+\paragraph{Variante}
+Alcuni file system moderni usano uno schema modificato di allocazione contigua come Linux ext2fs basato sull'extent, una serie di blocchi contigui su disco. Il file system alloca
+extent invece di blocchi singoli che in generale non sono contigui e si prestano pertanto per l'allocazione a lista.
+\subsubsection{Allocazione a lista}
+In questo metodo ogni file si trova su una lista di blocchi che possono essere sparsi ovunque nel disco. La directory contiene puntatori al primo e all'ultimo blocco e ogni blocco
+contiene un puntatore al blocco successivo. Considerando $X$ l'indirizzo logico e $N$ la dimensione del blocco $\frac{X}{N-1}$ \`e il numero del blocco nella lista, mentre
+$X\mod (n - 1)$ \`e l'offset all'interno del blocco. L'allocazione a lista permette una semplice creazione di un nuovo file in quanto basta cercare un blocco libero e creare una
+nuova entry nella directory che punta ad esso. Anche l'estensione del file \`e semplice: si cerca un blocco libero e lo si concatena alla fine del file. Non c'\`e  spreco se non
+si considera lo spazio per il puntatore in quanto si pu\`o usare qualunque blocco e non c'\`e frammentazione esterna. Non permette per\`o accesso casuale in quanto bisogna scorrere 
+tutti i blocchi a partire dal primo e richiede tanti riposizionamenti sparsi che portano a scarsa efficienza. \`E inoltre scarsamente affidabile in quanto la perdita di un puntatore o 
+un errore causa il prelevamento del puntatore sbagliato si devono introdurre metodi di recupero con overhead come le liste doppiamente concatenate e memorizzare il nome del file e il 
+numero di blocco in ogni blocco del file. 
+\paragraph{Esempio - FAT (file allocation table)} Si trova una FAT per ogni partizione che contiene un elemento per ogni blocco del disco usata come lista concatenata che migliora 
+l'accesso causale, che rimane comunque con bassa efficienza. 
+\subsubsection{Allocazione indicizzata}
+In questo metodo ogni file ha un blocco indice (index block) che contiene la tabella degli indirizzi dei blocchi fisici. La directory contiene l'indirizzo del blocco indice. L'accesso
+casuale \`e efficiente e quello dinamico \`e senza frammentazione esterna con overhead del blocco indice per la index table, maggiore di quello richiesto per l'allocazione concatenata. 
+Se $X$ \`e l'indirizzo logico e $N$ la dimensione del blocco $\frac{X}{N}$ \`e l'offset nella index table e $X\mod N$ \`e l'offset all'interno del blocco dati. Si noti come la dimensione
+del blocco limita la dimensione del file, pertanto per i file di grandi dimensioni si usa uno schema a pi\`u livelli.
+\paragraph{Indici multilivello} Una tabella pi\`u esterna contiene puntatori ad ulteriori index table. Sia $X$ l'indirizzo logico e $N$ la dimensione del blocco in parole 
+$\frac{X}{n\cdot N}$ \`e il blocco della index table di primo livello e $X\mod (N\cdot N) = R$, dove $\frac{R}{N}$ \`e l'offset nel blocco della index table di secondo livello e 
+$R\mod N$ \`e l'offset nel blocco dati.
+\paragraph{Schema concatenato} Si trova una lista concatenata di blocchi indice: l'ultimo degli indici id un blocco indice punta a un altro blocco indice e $\frac{X}{N(N-1)}$ \`e il 
+numero del blocco indice all'interno della lista dei blocchi indice e $X\mod(N(N-1)) = R$, dove $\frac{R}{N}$ \`e l'offset nel blocco indice e $R\mod N$ \`e l'offset nel blocco dati. 
+\subsubsection{Unix e i-node}
+Unix usa lo schema combinato in cui ad ogni file \`e associato u i-node (index-node) che contiene gli attributi del file e fa da blocco indice. Gli i-node sono gestiti dal sistema 
+operativo e memorizzati in modo permanente in una porzione riservata al sistema operativo di solito all'inizio del disco. Per memorizzare i blocchi di dati del file ogni i-node contiene:
+\begin{itemize}
+	\item $10$ puntatori diretti ai blocchi di dati di file.
+	\item Un puntatore single indirect che punta ad un blocco indice che contiene puntatori a blocchi di dati di file.
+	\item Un puntatore double indirect che punta ad un blocco indice che contiene puntatori a blocchi indice contenenti puntatori a blocchi di dati di file.
+	\item Un puntatore triple indirect che punta ad un blocco indice che contiene puntatori a blocchi indice che contengono puntatori a blocchi indice che contengono puntatori a
+		blocchi di dati di file. 
+\end{itemize}
+\subsection{Implementazione delle directory}
+Le directory vengono implementate con lo stesso meccanismo usato per memorizzare i file. Non contengono file ma la lista di file e directory che contengono. Questo spazio pu\`o essere
+memorizzato come lista lineare di nomi di file con puntatori ai blocchi dati di facile implementazione ma poco efficiente in quanto lettura, scrittura e rimozione di file richiedono 
+ricerca per trovare il file. Pu\`o essere anche implementato come tabella hash con tempo di ricerca migliore ma che richiede la gestione delle collisioni. 
+\section{Gestione dello spazio libero}
+Per tenere traccia dello spazio libero su disco si mantiene una lista dei blocchi liberi. Per creare un file si cercano blocchi liberi nella lista e per rimuovere un file si aggiungono
+i suoi blocchi a tale lista. 
+\subsection{Alternative}
+\begin{itemize}
+	\item Vettore di bit: si trova un elemento per ogni blocco tale che $Bit[i] = 0$ implica che il blocco $i$ \`e libero e $Bit[i] = 1$ implica che \`e occupato. La mappa di bit
+		richiede spazio extra ed \`e efficiente solo se il vettore \`e mantenibile tutto in memoria. Risulta comunque facile ottenere blocchi contigui. 
+	\item Lista concatenata di blocchi liberi (free list): permette spreco minimo in testa alla lista e lo spazio contiguo non \`e ottenibile.
+	\item Raggruppamento: modifica la lista linkata in modo che il primo blocco libero contiene gli indirizzi di $n-1$ blocchi liberi e l'ultima entry del blocco l'indirizzo del
+		primo blocco del gruppo successivo di blocchi liberi. Fornisce rapidamente un gran numero di blocchi liberi. 
+	\item Conteggio: mantiene il conteggio di quanti blocchi liberi seguono il primo in una zona di blocchi liberi contigui. La lista risulta pi\`u corta se il contatore \`e maggiore
+		di $1$ per ogni gruppo di blocchi liberi. 
+\end{itemize}
+\section{Efficienza e prestazioni}
+\subsection{Efficienza}
+Il disco \`e un collo di bottiglia e l'efficienza dipende da un algoritmo di allocazione dello spazio su disco: in Unix si cerca di tenere i blocchi di un file vicini al suo i-node, 
+viene richiesta la preallocazione i-node distribuiti sulla partizione e dal tipo di dati contenuti nella directory: la data di ultimo accesso di un file richiede che la lettura di un
+file richieda la lettura e scrittura del blocco della directory. 
+\subsection{Prestazioni}
+Il controller del disco possiede una piccola cache che \`e in grado di contenere un'intera traccia ma non basta per garantire prestazioni elevate pertanto si usano dischi virtuali (RAM
+disk) e cache del disco o buffer cache
+\subsubsection{Dischi virtuali}
+Parte della memoria viene gestita come se fosse un disco: il driver di un RAM disk accetta tutte le operazioni standard dei dischi eseguendole in memoria. \`E veloce ma supporta solo
+file temporanei. Viene gestito dall'utente che scrive sul RAM disk invece che sul disco. 
+\subsubsection{Cache del disco}
+\`E una porzione di memoria che memorizza blocchi usati di frequente simile alla cache tra memoria e CPU. Viene gestita dal sistema operativo e sfrutta il principio di localit\`a
+spaziale e temporale. Il trasferimento di dati nella memoria del processo utente non richiede spostamento di byte. Nascono problematiche riguardanti la politica di rimpiazzamento
+attraverso LRU (poco efficiente, meglio rilascio indietro e lettura anticipata), LFU, RANDOM. Se l'operazione \`e una scrittura si pu\`o fare write-back: si scrive solo quando si 
+deve rimuovere il blocco dalla cache (pu\`o generare problemi di affidabilit\`a in caso di crash) o write-through: si scrive sempre, meno efficiente con la cache in sola lettura. 
+\subsubsection{Recupero}
+I problemi di consistenza tra disco e cache possono essere controllati attraverso un controllo di consistenza che confronta i dati nella directory con i dati su disco e sistema le
+inconsistenze o attraverso l'uso di programmi di sistema per fare il backup del disco su memoria di massa come i nastri che permettono il recupero di file persi tramite il restore
+dei dati di backup. 
+\subsubsection{File system log structured}
+Si registra ogni cambiamento del file system come una transazione. Tutte le transazioni sono scritte su log e considerate completate quando viene scritta su esso (anche se il file
+system pu\`o non essere aggiornato). Le transazioni sono scritte in modo asincrono nel file system e quando il file system \`e modificato la transazione viene cancellata dal log. Se
+il sistema va in crash le transazioni non avvenute sono quelle presenti sul log. In questo modo si ottimizza il numero di seek. 
