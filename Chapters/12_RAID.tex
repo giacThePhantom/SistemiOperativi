@@ -25,6 +25,10 @@ errori su un singolo bit. Usando pi\`u bit supplementari si riescono a individua
 \section{Livelli di RAID}
 Il mirroring garantisce alta affidabilit\`a ma \`e costoso, mentre il data striping permette alta capacit\`a di trasferimento dati ma non migliora l'affidabilit\`a. Spesso si usano
 tecniche basate sui bit di parit\`a. L'utilizzo combinato di queste tecniche \`e stato schematizzato in $6$ livelli di RAID. 
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{Pictures/RAID.png}
+	\caption{Livelli di RAID}
+\end{figure}
 \subsection{Livello RAID 0}
 Avviene il sezionamento a livello di blocco senza ridondanza. \`E economico e garantisce alte prestazioni grazie al parallelismo delle operazioni di lettura e scrittura. Non ha 
 ridondanza e l'affidabilit\`a cala all'aumentare del numero di dischi impiegati. 
