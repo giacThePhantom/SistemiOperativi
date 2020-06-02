@@ -1,0 +1,65 @@
+\chapter{Il sistema di I/O}
+Il sottosistema di I/O \`e l'insieme di metodi per controllare i dispositivi di I/O con l'obiettivo di fornire ai processi utente un'interfaccia efficiente e indipendente dai 
+dispositivi. Consiste dell'interazione tra l'hardware di I/O e il software determinato dal sistema operativo. 
+\section{Hardware di I/O}
+Esistono numerosi ed eterogenei dispositivi di I/O per memorizzare (dischi, nastri), trasmissione (modem, schede di rete) e interazione uomo-macchina (tastiera, monitor). Si deve fare
+una distinzione tra dispositivi (non elettronici) e controllo dei dispositivi (elettronici). I concetti comuni per tutti i dispositivi sono:
+\begin{itemize}
+	\item Porta: punto di connessione.
+	\item Bus a daisy chain o condiviso, insieme di fili e relativo protocollo.
+	\item Controllore che agisce su porta, bus o dispositivi. 
+\end{itemize}
+\subsection{Controllore dei dispositivi}
+Il controllore \`e la parte elettronica di un dispositivo, detto anche device controller. Viene connesso tramite bus al resto del sistema. \`E associato ad un indirizzo e contiene 
+registri per comandare il dispositivo:
+\begin{itemize}
+	\item Registro di stato: per capire se il comando \`e stato eseguito, se c'\`e stato un errore o se i dati sono pronti per essere letti.
+	\item Registro di controllo: per inviare comandi al dispositivo.
+	\item Un numero arbitrario di buffer per la conversione dei dati. 
+\end{itemize}
+L'accesso ai registri pu\`o avvenire in vari modi:
+\begin{itemize}
+	\item Dispositivi mappati in memoria (memory-mapped): i registri sono visti nello spazio di indirizzamento della memoria e il loro accesso avviene tramite istruzioni di accesso
+		alla memoria (necessario disabilitare la cache). Permettono di scrivere driver in linguaggio di alto livello e non esiste nessun speciale accorgimento per la protezione
+		in quanto \`e sufficiente allocare lo spazio di indirizzamento fuori dallo spazio utente.
+	\item Dispositivi mappati su I/O (I/O-mapped): l'accesso ai registri avviene tramite istruzioni specifiche e non esiste nessun problema di gestione della cache. 
+	\item Soluzioni ibride come il Pentium in cui i registri sono I/O mapped e i buffer memory mapped. 
+\end{itemize}
+Per esempio per il display l'hardware mappa i registri e la memoria del display nello spazio di indirizzi fisico, si scrive nella mem (frame buffer) i cambi che avvengono nello schermo e
+le descrizioni grafiche nell'area della coda di comandi. Scrivere nel registro comando potrebbe causare all'hardware grafico del display di fare qualcosa. 
+\subsection{Accesso ai dispositivi di I/O}
+\subsubsection{Polling}
+Determina lo stato del dispositivo mediante lettura ripetuta del busy-bit del registro di status: quando \`e $0$ il comando viene scritto nel registro di controllo e il command-ready-bit
+posto a $1$ e l'operazione di I/O viene eseguita. \`E un ciclo di attesa attiva e pertanto c'\`e spreco di CPU. 
+\subsubsection{Interrupt}
+Il dispositivo di I/O avverte la CPU tramite un segnale su una connessione fisica. Le problematiche sono gestite da controllore di interrupt che possono essere mascherabili (ignorabile
+durante l'esecuzione di istruzioni critiche), sono numerati in modo che il valore sia l'indice nel vettore di interrupt che consegna l'interruzione al gestore corrispondente e basato su
+priorit\`a. Gli interrupt multipli sono ordinati e gli interrupt con priorit\`a pi\`u alta prelazionano quelli con priorit\` pi\`u bassa. 
+\subsubsection{DMA - direct memory access}
+Questo metodo nasce per evitare I/O programmato per grandi spostamenti di dati: usare la CPU per controllare il registro di stato del controllore e trasferire pochi byte alla volta \`e 
+uno spreco. Richiede hardware esplicito (DMA controller). \`E basato sull'idea di bypassare la CPU per trasferire dati direttamente tra I/O e memoria. Per effettuare un trasferimento
+la CPU invia al DMAC l'indirizzo di partenza dei blocchi/memoria da trasferire, l'indirizzo di destinazione, il numero di byte da traferire e la direzione del trasferimento. Il DMA
+controller gestisce il trasferimento comunicando con il controllore del dispositivo mentre la CPU effettua altre operazioni e interrompe la CPU al termine del trasferimento. 
+\section{interfaccia di I/O}
+I dispositivi di I/O si differenziano per molti aspetti e pertanto si rende necessaria dell'astrazione, incapsulamento e software layering per nascondere le differenze al kernel del 
+sistema operativo costruendo un'interfaccia comune che d\`a un insieme di funzioni standard. Le differenze sono incapsulate nei device driver. Le interfacce semplificano il lavoro del
+sistema operativo aggiungendo nuovo hardware senza modificare il sistema operativo. 
+\subsection{Dispositivi a blocco e a carattere}
+Nell'interfaccia dei dispositivi a blocchi memorizzano e trasferiscono dati in blocchi, la lettura e scrittura di un blocco \`e indipendente dagli altri, i comandi sono di 
+read, write e seek, \`e tipica nei dischi. Sono a memory-mapped I/O sfrutta block-device driver. Nell'interfaccia dei dispositivi a carattere memorizzano e trasferiscono le stringhe di
+caratteri. Non esiste indirizzamento (seek) e i comandi sono del tipo di get e put. I dispositivi tipici sono terminali, mouse e porte seriali. 
+\section{Software di I/O}
+Gli obiettivi del software di I/O sono l'indipendenza dal dispositivo, la notazione uniforme, gestione degli errori, la gestione di varie opzioni di trasferimento e le prestazione. \`E
+organizzato per livelli di astrazione: 
+\begin{enumerate}
+	\item Gestori degli interrupt: sono astratti il pi\`u possibile dal resto del sistema operativo e bloccano e sbloccano i processi attraverso semafori o segnali.
+	\item Device driver devono tradurre le richieste astratte del livello superiore in richieste device-dependent, contengono tutto il codice device-dependent, condivisi per classi
+		di dispositivi, interagiscono con i controllori dei dispositivi e tipicamente scritti in linguaggio macchina. 
+	\item Software del sistema operativo indipendente dal dispositivo. Ha funzioni speciali come la definizione di interfacce comuni, naming (individuare ud dispositivo e gestire i 
+		nomi), protezione (tutte le primitive di I/O sono privilegiate), buffering, ovvero la memorizzazione dei dati durante un trasferimento per gestire diverse velocit\`a 
+		e diverse dimensioni. Deve definire la dimensione del blocco, allocare e rilasciare i dispositivi e gestire gli errori tipicamente device-dependent. 
+	\item Programmi utente. 
+\end{enumerate}
+Per esempio nello spooling durante la gestione di I/O dedicato pi\`u processi possono voler scrivere su una stampante contemporaneamente, ma le stampe non devono essere interfogliate, 
+pertanto i dati da processare vanno accodati nella spooling directory e lo spooler, un processo di sistema \`e l'unico autorizzato ad accedere alla stampante. Periodicamente stampa i 
+dati nella spooling directory. I programmi utente sono system call per l'accesso ai dispositivi. 

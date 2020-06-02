@@ -173,3 +173,10 @@
 \BOOKMARK [2][-]{subsection.12.2.7}{Livello RAID 6}{section.12.2}% 173
 \BOOKMARK [2][-]{subsection.12.2.8}{Livello RAID 0 + 1}{section.12.2}% 174
 \BOOKMARK [2][-]{subsection.12.2.9}{Livello RAID 1 + 0}{section.12.2}% 175
+\BOOKMARK [0][-]{chapter.13}{Il sistema di I/O}{}% 176
+\BOOKMARK [1][-]{section.13.1}{Hardware di I/O}{chapter.13}% 177
+\BOOKMARK [2][-]{subsection.13.1.1}{Controllore dei dispositivi}{section.13.1}% 178
+\BOOKMARK [2][-]{subsection.13.1.2}{Accesso ai dispositivi di I/O}{section.13.1}% 179
+\BOOKMARK [1][-]{section.13.2}{interfaccia di I/O}{chapter.13}% 180
+\BOOKMARK [2][-]{subsection.13.2.1}{Dispositivi a blocco e a carattere}{section.13.2}% 181
+\BOOKMARK [1][-]{section.13.3}{Software di I/O}{chapter.13}% 182
