@@ -1,0 +1,76 @@
+\chapter{Protezione e sicurezza}
+\subsection{Propriet\`a di sicurezza}
+\begin{itemize}
+	\item Integrit\`a: garantire che il file non sia stato modificato in modo non autorizzato.
+	\item Segretezza e confidenzialit\`a: garantire che il dato possa essere letto solo da chi \`e autorizzato.
+	\item Autenticit\`a: che l'utente sia effettivamente chi dice di essere.
+\end{itemize}
+\section{Primitive di crittografia}
+\subsection{Hash crittografiche}
+Un'hash crittografica \`e una funzione con un output di lunghezza fissa che mappa stringhe di qualsiasi dimensione a stringhe di lunghezza fissa. Le funzioni di hash crittografiche 
+devono essere di facile computazione, deve essere impossibile determinare la preimmagine. In caso di collisione deve essere possibile determinare solo il messaggio reale. Esempi di 
+hash sono SHA-512 e Keccak e vengono utilizzate nella distribuzione di software online per controllarne l'integrit\`a. 
+\subsection{Crittografia a chiave simmetrica}
+Sia \emph{E()} la funzione di crittazione e \emph{D()} la sua inversa funzione di decrittazione. Entrambe oltre al messaggio richiedono la stessa chiave segreta per cifrare e decifrare
+il messaggio. Esistono due tipi di cifrari: a flusso (stream) in cui si usa una chiave molto lunga univoca per il messaggio e \emph{E()} \`e una \emph{XOR} e a blocco, in cui \emph{E()}
+prende in input una chiave di dimensione fissa di $56$, $128$ o $256$ bit. RC4 viene usato in SSL/TLS e nei browser, A5/3 nei GSM e AES \`e il cifrario a blocco standard. Viene 
+utilizzata per cifrare i file systems e il traffico di rete (SSL, IPSEC). 
+\subsection{Crittografia a chiave pubblica (asimmetrica)}
+Viene inventata da Diffie e Hellman nel $1976$. Ogni utente ha due chiavi diverse: una chiave pubblica per la cifratura e una privata (segreta) per la decrittazione. La chiave pubblica
+\`e costruita in modo per cui non si pu\`o derivare da essa la privata ed esiste una corrispondenza unica tra le due. Ogni utente ha una coppia di chiavi: privata e segreta, ogni utente
+conosce tutte le chiavi pubbliche e solo il proprietario conosce la sua chiave segreta. Viene utilizzato oltre al file cifrato una firma del file che determina il proprietario del file. 
+Esempi di algoritmi a chiave pubblica sono RSA e DSA (basata sulle curve ellittiche per smartcard e ambienti embedded). 
+\section{Trusted boot}
+Si rende necessario essere sicuri dell'autenticit\`a del kernel caricato in memoria al momento di avvio per garantire integrit\`a ed autenticit\`a. 
+\subsection{BIOS}
+Il BIOS \`e il Basic Input-Output System. \`E firmware in ROM che fornisce un gruppo di interfacce indipendenti dal sistema operativo per l'hardware:
+\begin{itemize}
+	\item Int10 per servizi video.
+	\item Int13 per servizi di disco.
+	\item Int16 per servizi di tastiera.
+	\item Int18 il caricatore della ROM BIOS.
+	\item Int19 per il caricatore del bootstrap. 
+\end{itemize}
+L'hardware controlla prima di caricare il programma che carica il sistema operativo. L'interfaccia tra il firmware e il sistema operativo viene fornita da UEFI, unified extensible 
+firmware interface. 
+\subsection{Trusted platform module (TPM)}
+Il TPM \`e un chip sicuro integrato sulla scheda madre che fornisce la generazione e memorizzazione sicura delle chiavi crittografiche implementando le primitive. \`E un coprocessore
+trusted separato. 
+\section{Cifratura disco}
+La partizione di sistema operativo cifrata contiene il sistema operativo, lo swap, i file temporanei, il file system e i file di ibernazione. La chiave di cifratura SRK (storage root
+key) \`e memorizzata nella TPM e viene usata per cifrare la chiave di cifratura dell'intero volume (FVEK: full volume encryption key) protetta da un PIN che viene memorizzata cifrata
+sul disco nel volume del sistema operativo. 
+\section{Login - autenticazione degli utenti}
+L'autenticazione si pu\`o basare su quello che l'utente conosce come PIN o password, su quello che ha come USB o smartcard o su quello che l'utente \`e o fa (biometrie fisiologiche o 
+comportamentali). L'autenticazione si svolge in due operazioni: l'identificazione in cui l'utente annuncia chi \`e e l'autenticazione vera e propria dove si verifica che \`e chi dice di
+essere.
+\section{Malware}
+Si dice malware un software malevolo che intenzionalmente ha l'obiettivo di violare una o pi\`u propriet\`a di sicurezza.
+\subsection{Trojan horse}
+Sono programmi che replicano le funzionalit\`a di programmi di uso comune o programmi dall'apparenza innocua ma che contengono codice malevolo. Tipicamente catturano informazioni e le 
+inviano al creatore del programma come informazioni critiche per la sicurezza del sistema, private dell'utente e compromettono o distruggono informazioni importanti per il funzionamento
+del sistema. 
+\subsection{Keylogger}
+Sono programmi che registrano ci\`o che l'utente scrive su tastiera e lo inviano all'utente.
+\subsection{Ransomware}
+Sono programmi che bloccano l'accesso al computer o ai dati e l'utente deve pagare per il loro ripristino. 
+\subsection{Rootkits}
+Sono programmi installati con privilegi di amministratore e inseriscono logica malevola modificando il sistema operativo host per non essere identificabili. Nascondono la loro esistenza
+modificando i normali meccanismi del sistema operativo come le tabelle dei processo, files, registry entries. Possono essere persistenti o caricati ogni volta in memoria come prima 
+operazione al boot e girare in user o kernel mode. Sono installati tipicamente via Trojan o da intrusione fisica. Occorrono diverse contromisure per renderli innocui. 
+\subsection{Virus}
+Si dice virus un software che infetta il programma modificandoli per includere una copia del virus in modo che venga eseguito segretamente quando il programma host \`e eseguito. \`E
+specifico al sistema operativo in quanto sfrutta suoi dettagli e debolezze. Un virus tipico si trova nelle fasi dormiente, in propagazione, causazione e esecuzione. Il meccanismo di 
+infezione permette la replicazione, il trigger \`e l'evento che rende il payload attivo e il payload \`e ci\`o che il virus fa. Quando il programma infetto viene invocato il codice del 
+virus viene invocato e eseguito prima del codice originale. Si pu\`o bloccare l'infezione iniziale o la propagazione. 
+\subsection{Worms}
+Sono programmi replicanti che si propagano lungo la rete usando email, esecuzioni e login remoti, tipicamente attraverso l'esecuzione arbitraria del codice causata da buffer overflow. 
+Ha le stesse fasi di un virus e in quella di propagazione cerca per altri sistemi, si connette ad essi, si copia su di loro, esegue e ripete. Pu\`o nascondersi come sistema di processi.
+\section{Vulnerabilit\`a}
+Il buffer \`e un blocco di memoria che contiene una o pi\`u istanze di qualche dato, tipicamente associato ad un array. Tipicamente hanno dimensioni predefinite. Il buffer overflow 
+accade quando il dato di input ha dimensioni maggiori rispetto alla dimensione del buffer. La vulnerabilit\`a sfrutta il layout in memoria del programma e i registri della CPU. 
+La memoria viene divisa in dati e testo: la parte di dati referenzia informazioni su variabili definite a tempo di compilazione e il testo \`e il codice eseguibile del programma. 
+Lo stack salva informazioni temporanee, \`e LIFO e cresce verso indirizzi pi\`u bassi e salva l'indirizzo di ritorno dove il programma deve andare finita la subroutine. L'heap contiene
+dati allocati a run-time e cresce verso indirizzi di memoria pi\`u alti. Quando chiamate la funzioni sono appese allo stack di memoria creando un nuovo stack frame e i buffer sono 
+aree di memoria che sono allocate per conservare dati di input. Un utente malevolo pu\`o scrivere come input una stringa che sovrascriva l'indirizzo di ritorno in modo che esegua codice
+che salti al proprio codice (shellcode)

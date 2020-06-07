@@ -180,3 +180,22 @@
 \BOOKMARK [1][-]{section.13.2}{interfaccia di I/O}{chapter.13}% 180
 \BOOKMARK [2][-]{subsection.13.2.1}{Dispositivi a blocco e a carattere}{section.13.2}% 181
 \BOOKMARK [1][-]{section.13.3}{Software di I/O}{chapter.13}% 182
+\BOOKMARK [0][-]{chapter.14}{Protezione e sicurezza}{}% 183
+\BOOKMARK [1][-]{subsection.14.0.1}{Propriet\340 di sicurezza}{chapter.14}% 184
+\BOOKMARK [1][-]{section.14.1}{Primitive di crittografia}{chapter.14}% 185
+\BOOKMARK [2][-]{subsection.14.1.1}{Hash crittografiche}{section.14.1}% 186
+\BOOKMARK [2][-]{subsection.14.1.2}{Crittografia a chiave simmetrica}{section.14.1}% 187
+\BOOKMARK [2][-]{subsection.14.1.3}{Crittografia a chiave pubblica \(asimmetrica\)}{section.14.1}% 188
+\BOOKMARK [1][-]{section.14.2}{Trusted boot}{chapter.14}% 189
+\BOOKMARK [2][-]{subsection.14.2.1}{BIOS}{section.14.2}% 190
+\BOOKMARK [2][-]{subsection.14.2.2}{Trusted platform module \(TPM\)}{section.14.2}% 191
+\BOOKMARK [1][-]{section.14.3}{Cifratura disco}{chapter.14}% 192
+\BOOKMARK [1][-]{section.14.4}{Login - autenticazione degli utenti}{chapter.14}% 193
+\BOOKMARK [1][-]{section.14.5}{Malware}{chapter.14}% 194
+\BOOKMARK [2][-]{subsection.14.5.1}{Trojan horse}{section.14.5}% 195
+\BOOKMARK [2][-]{subsection.14.5.2}{Keylogger}{section.14.5}% 196
+\BOOKMARK [2][-]{subsection.14.5.3}{Ransomware}{section.14.5}% 197
+\BOOKMARK [2][-]{subsection.14.5.4}{Rootkits}{section.14.5}% 198
+\BOOKMARK [2][-]{subsection.14.5.5}{Virus}{section.14.5}% 199
+\BOOKMARK [2][-]{subsection.14.5.6}{Worms}{section.14.5}% 200
+\BOOKMARK [1][-]{section.14.6}{Vulnerabilit\340}{chapter.14}% 201

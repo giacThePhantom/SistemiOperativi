@@ -345,3 +345,22 @@
 \contentsline {section}{\numberline {13.2}interfaccia di I/O}{78}{section.13.2}% 
 \contentsline {subsection}{\numberline {13.2.1}Dispositivi a blocco e a carattere}{78}{subsection.13.2.1}% 
 \contentsline {section}{\numberline {13.3}Software di I/O}{79}{section.13.3}% 
+\contentsline {chapter}{\numberline {14}Protezione e sicurezza}{80}{chapter.14}% 
+\contentsline {subsection}{\numberline {14.0.1}Propriet\`a di sicurezza}{80}{subsection.14.0.1}% 
+\contentsline {section}{\numberline {14.1}Primitive di crittografia}{80}{section.14.1}% 
+\contentsline {subsection}{\numberline {14.1.1}Hash crittografiche}{80}{subsection.14.1.1}% 
+\contentsline {subsection}{\numberline {14.1.2}Crittografia a chiave simmetrica}{80}{subsection.14.1.2}% 
+\contentsline {subsection}{\numberline {14.1.3}Crittografia a chiave pubblica (asimmetrica)}{80}{subsection.14.1.3}% 
+\contentsline {section}{\numberline {14.2}Trusted boot}{81}{section.14.2}% 
+\contentsline {subsection}{\numberline {14.2.1}BIOS}{81}{subsection.14.2.1}% 
+\contentsline {subsection}{\numberline {14.2.2}Trusted platform module (TPM)}{81}{subsection.14.2.2}% 
+\contentsline {section}{\numberline {14.3}Cifratura disco}{81}{section.14.3}% 
+\contentsline {section}{\numberline {14.4}Login - autenticazione degli utenti}{81}{section.14.4}% 
+\contentsline {section}{\numberline {14.5}Malware}{82}{section.14.5}% 
+\contentsline {subsection}{\numberline {14.5.1}Trojan horse}{82}{subsection.14.5.1}% 
+\contentsline {subsection}{\numberline {14.5.2}Keylogger}{82}{subsection.14.5.2}% 
+\contentsline {subsection}{\numberline {14.5.3}Ransomware}{82}{subsection.14.5.3}% 
+\contentsline {subsection}{\numberline {14.5.4}Rootkits}{82}{subsection.14.5.4}% 
+\contentsline {subsection}{\numberline {14.5.5}Virus}{82}{subsection.14.5.5}% 
+\contentsline {subsection}{\numberline {14.5.6}Worms}{82}{subsection.14.5.6}% 
+\contentsline {section}{\numberline {14.6}Vulnerabilit\`a}{83}{section.14.6}% 
