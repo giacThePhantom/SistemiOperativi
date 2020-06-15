@@ -125,7 +125,7 @@ del semaforo.
 \section{Problemi classici dei semafori}
 \subsection{Produttore consumatore}
 Il problema del produttore consumatore consiste di due processi con accesso sullo stesso buffer di dimensione limitata. Il produttore scrive nel buffer  mentre il consumatore legge e
-lo svuota. IL problema richiede tre semafori:
+lo svuota. Il problema richiede tre semafori:
 \begin{itemize}
 	\item Mutex, un semaforo binario inizializzato a \emph{TRUE} che garantisce la mutua esclusione per il buffer.
 	\item Empty, un semaforo intero inizializzato a $N$ che blocca $P$ se il buffer \`e pieno.
@@ -231,7 +231,7 @@ definire una sezione critica. Altri metodi di sincronizzazione sono \emph{wait()
 	\lstinputlisting[caption={Remove}, language={Java}]{Algoritmi/Remove.java}
 \end{multicols}
 \section{Conclusioni}
-IL problema della soluzione critica \`e un'astrazione della concorrenza tra processi. Esistono soluzioni con diversi compromessi tra complessit\`a e difficolt\`a di utilizzo. Si 
+Il problema della soluzione critica \`e un'astrazione della concorrenza tra processi. Esistono soluzioni con diversi compromessi tra complessit\`a e difficolt\`a di utilizzo. Si 
 deve prestare attenzione alla gestione del blocco critico di un insieme di processi (deadlock) dipendente dalla sequenza temporale degli accessi.
 \section{Problema degli scrittori e dei lettori}
 C'\`e un area di dati condivisa ed esistono dei lettori che possono solo leggere i dati e scrittori che possono solo scriverli. Pi\`u lettori possono leggere il file contemporaneamente, 

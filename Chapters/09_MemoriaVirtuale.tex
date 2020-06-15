@@ -53,7 +53,7 @@ piccolo del contatore. Si noti come tale pagina vada cercata.
 Viene mantenuto uno stack di numeri di pagina e a ogni riferimento ad una pagina questa viene messa in cima allo stack. L'aggiornamento richiede l'estrazione di un elemento interno allo
 stack. Al fondo dello stack si trova la pagina LRT. Si noti come in questo caso non \`e necessaria alcuna ricerca. 
 \paragraph{Uso del bit di reference}
-Che viene associato ad ogni pagina inizialmente a $0$. Quando la pagina \`e referenziata messo a $1$ dall'hardware. Per il rimpiazzamento si sceglie una pagina che ha il bit a $o$. Si
+Che viene associato ad ogni pagina inizialmente a $0$. Quando la pagina \`e referenziata messo a $1$ dall'hardware. Per il rimpiazzamento si sceglie una pagina che ha il bit a $0$. Si
 nota come \`e approssimato in quanto non viene verificato l'ordine di riferimento delle pagine. 
 \subparagraph{Alternativa}
 Si usano pi\`u bit di reference (registro di scorrimento) per ogni pagina. I bit vengono aggiornati periodicamente e si usano i bit come valori interi per scegliere la LRU, ovvero 

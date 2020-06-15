@@ -14,7 +14,7 @@ Da un punto di vista fisico il disco \`e costituito da superfici (platter, i dis
 all'interno di un disco) e settori (sottoaree del disco disposte in cerchi concentrici). 
 \paragraph{Settore}
 Il settore \`e l'unita pi\`u piccola di informazione che pu\`o essere letta o scritta su disco. Ha una dimensione variabile tra i $32$ byte e i $4KB$ (tipicamente di $512$ byte). Sono 
-generalmente raggruppati logicamente i cluster per aumentare l'efficienza. La dimensione dei cluster dipende dalla grandezza del disco e dal sistema operativo (da $2KB$ a $32KB$). Un
+generalmente raggruppati logicamente in cluster per aumentare l'efficienza. La dimensione dei cluster dipende dalla grandezza del disco e dal sistema operativo (da $2KB$ a $32KB$). Un
 file occupa sempre almeno un cluster. Per accedere a un settore si necessita di sapere la superficie, la traccia e il settore stesso. 
 \subsubsection{Tempo di accesso al disco}
 Il tempo di accesso \`e la somma del seek time (tempo necessario a spostare la testina sulla traccia), del latency time (latenza, il tempo necessario a posizionare il settore desiderato 
@@ -49,13 +49,13 @@ La natura dinamica delle richieste porta all'algoritmo SCAN in cui la testina pa
 correnti. Arrivato all'altra estremit\`a riparte nella direzione opposta servendo le nuove richieste. Viene detto algoritmo dell'ascensore. 
 \subsubsection{SCAN circolare (CSCAN)}
 Come SCAN, ma quando la testina arriva ad un'estremit\`a riparte immediatamente da $0$ senza servire altre richieste. Il disco viene considerato come lista circolare e il tempo di 
-attesa \`e pi\`u uniforme rispetto a SCAN. Alla fune di una scansione ci saranno pi\`u richieste all'altro estremo. 
+attesa \`e pi\`u uniforme rispetto a SCAN. Alla fine di una scansione ci saranno pi\`u richieste all'altro estremo. 
 \subsubsection{(C-)LOOK, variante dello SCAN}
 La testina non arriva fino all'estremit\`a del disco. Cambia direzione (LOOK) o riparte dalla prima traccia (C-LOOK) non appena non ci sono pi\`u richieste in quella direzione.
 \subsubsection{N-step SCAN, variante dello SCAN}
 Per evitare che la testina rimanga sempre nella stessa zona la coda delle richieste viene partizionata in pi\`u code di dimensione massima $N$. Quando una coda viene processata per
-il servizio gli accessi in arrivo riempiono altre code. Dopo cue una coda \`e stata riempita non \`e possibile riordinare le richieste. Le code sature vengono servite nello scan 
-successivo. Per $N$ grandi degenera in SCAN, mentre per $N = 1$ degenra in FCFS. FSCAN \`e simile ma con due sole code. 
+il servizio gli accessi in arrivo riempiono altre code. Dopo che una coda \`e stata riempita non \`e possibile riordinare le richieste. Le code sature vengono servite nello scan 
+successivo. Per $N$ grandi degenera in SCAN, mentre per $N = 1$ degenera in FCFS. FSCAN \`e simile ma con due sole code. 
 \subsubsection{Last-in-last-out (LIFO)}
 In certi casi pu\`o essere utile schedulare gli accessi in base all'ordine inverso di arrivo. \`E utile nel caso di accessi con elevata localit\`a ma offre possibilit\`a di 
 starvation. 
@@ -74,11 +74,11 @@ correzione degli errori (ECC). Nella formattazione logica si inizializza il file
 \subsection{Gestione dei blocchi difettosi}
 L'ECC (error correction code) serve a capire in lettura o scrittore se un settore contiene dati corretti o meno. Per la lettura il controllore legge un settore insieme all'ECC e calcola
 l'ECC per i dati appena letti. Se il risultato \`e diverso si trova un errore (bad block). L'errore va segnalato e i bad block si possono gestire offline o online. 
-\subsubsection{Gestine offline dei bad block}
+\subsubsection{Gestione offline dei bad block}
 Durante la formattazione logica si individuano i bad block e si mettono una lista, si rimuovono e si marca l'entry nella FAT. Successivamente si pu\`o eseguire un'utility per isolare i 
 bad block come. Questo algoritmo \`e tipico dei controllori IDE. 
 \subsubsection{Gestione online dei bad block}
-Il controllore mappa il bad block su un blocco buono non usato. Si deve partano disporre di blocchi di scorta riservati (sector sparing). Quando il sistema operativo richiede il bad 
+Il controllore mappa il bad block su un blocco buono non usato. Si deve pertanto disporre di blocchi di scorta riservati (sector sparing). Quando il sistema operativo richiede il bad 
 block il controllore mappa in modo trasparente l'accesso al bad block sul blocco di scorta. Potrebbe inficiare le ottimizzatone fornite dallo scheduling se non si allocassero spare
 block in ogni cilindro. 
 \subsection{Gestione dello spazio di swap}

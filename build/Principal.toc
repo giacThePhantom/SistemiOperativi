@@ -171,8 +171,8 @@
 \contentsline {subsubsection}{Metodo della prevenzione dinamica}{45}{section*.79}% 
 \contentsline {subsubsection}{Algoritmo con RAG}{45}{section*.80}% 
 \contentsline {subsubsection}{Algoritmo del banchiere}{45}{section*.81}% 
-\contentsline {paragraph}{Algoritmo di allocazione}{45}{lstlisting.7.2}% 
-\contentsline {paragraph}{Algoritmo di verifica dello stato}{46}{lstlisting.7.3}% 
+\contentsline {paragraph}{Algoritmo di allocazione}{45}{section*.82}% 
+\contentsline {paragraph}{Algoritmo di verifica dello stato}{46}{section*.83}% 
 \contentsline {subsection}{\numberline {7.2.3}Rilevamento (detection) e ripristino (recovery)}{46}{subsection.7.2.3}% 
 \contentsline {subsubsection}{Attraverso il RAG}{46}{section*.84}% 
 \contentsline {subsubsection}{Algoritmo di rilevamento}{46}{section*.85}% 
@@ -180,7 +180,7 @@
 \contentsline {paragraph}{Uccisione dei processi}{47}{section*.87}% 
 \contentsline {paragraph}{Prelazione delle risorse}{47}{section*.88}% 
 \contentsline {subsection}{\numberline {7.2.4}Algoritmo dello struzzo}{47}{subsection.7.2.4}% 
-\contentsline {section}{\numberline {7.3}Conclusioni}{47}{section.7.3}% 
+\contentsline {section}{\numberline {7.3}Conclusioni}{48}{section.7.3}% 
 \contentsline {subsection}{\numberline {7.3.1}Partizionamento in classi}{48}{subsection.7.3.1}% 
 \contentsline {subsection}{\numberline {7.3.2}Algoritmi specifici}{48}{subsection.7.3.2}% 
 \contentsline {chapter}{\numberline {8}Gestione della memoria}{49}{chapter.8}% 
@@ -274,7 +274,7 @@
 \contentsline {section}{\numberline {10.3}Gestione del disco}{64}{section.10.3}% 
 \contentsline {subsection}{\numberline {10.3.1}Formattazione dei dischi}{64}{subsection.10.3.1}% 
 \contentsline {subsection}{\numberline {10.3.2}Gestione dei blocchi difettosi}{64}{subsection.10.3.2}% 
-\contentsline {subsubsection}{Gestine offline dei bad block}{64}{section*.142}% 
+\contentsline {subsubsection}{Gestione offline dei bad block}{64}{section*.142}% 
 \contentsline {subsubsection}{Gestione online dei bad block}{64}{section*.143}% 
 \contentsline {subsection}{\numberline {10.3.3}Gestione dello spazio di swap}{64}{subsection.10.3.3}% 
 \contentsline {chapter}{\numberline {11}File System}{65}{chapter.11}% 

@@ -55,12 +55,12 @@ politici). Pu\`o nascere il problema di starvation in quanto processi a bassa pr
 tempo. 
 \subsection{Higher response ratio next (HRRN)}
 \`E un algoritmo a priorit\`a non-preentive: la priorit\`a $$R=\frac{t_{attesa} + t_{burst}}{t_{burst}} = 1 + \frac{t_{attesa}}{t_{burst}}$$ \`e maggiore per valori di $R$ pi\`u alti e
-dipende anche dal tempo di attesa e pertanto va ricalcolata al termine di un processo se nel frattempo ne sono arrivati altri o alt ermine di un processo. Supera il favoritismo di SJF
+dipende anche dal tempo di attesa e pertanto va ricalcolata al termine di un processo se nel frattempo ne sono arrivati altri o al termine di un processo. Supera il favoritismo di SJF
 verso i job corti favorendo i processi che completano in poco tempo o quelli che hanno atteso molto. 
 \subsection{Round robin (RR)}
 Questo algoritmo basa lo scheduling su time-out: a ogni processo viene assegnato un quanto del processo di CPU tra i $10$ e i $100$ millisecondi e al termine del quanto il processo \`e
 prelazionato e messo nella ready queue, una coda circolare. Se ci sono $n$ processi nella coda e il quanto \`e $q$ ogni processo ottiene $\frac{1}{n}$ del tempo di CPU in blocchi di 
-$q$ unit\`a di tempo alla volta e nessun processo attende pi\`u di $(n-1)1$ unit\`a di tempo. \`E di semplice implementazione (FCFS con prelazione) il quanto va scelto con cura: 
+$q$ unit\`a di tempo alla volta e nessun processo attende pi\`u di $(n-1)q$ unit\`a di tempo. \`E di semplice implementazione (FCFS con prelazione) il quanto va scelto con cura: 
 se troppo grande diventa equivalente a FCFS, se troppo piccolo nasce troppo overhead per il context switch, un valore ragionevole \`e uno tale che l'$80\%$ dei burst siano minori di $q$.
 Il tempo di turnaround \`e maggiore o uguale di SJF e quello di risposta minore o uguale di SJF. 
 \subsection{Code multilivello}

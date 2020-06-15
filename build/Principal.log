@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  7 JUN 2020 09:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2020.4.24)  15 JUN 2020 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1110,9 +1110,17 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 [43
 
 ] [44] (./Algoritmi/Banchierestrutture.c)
-(./Algoritmi/BanchiereAllocazione.c) [45] (./Algoritmi/BanchiereVerifica.c)
-(./Algoritmi/RilevamentoStrutture.c) [46] (./Algoritmi/RilevamentoAlgoritmo.c)
-[47]) (./Chapters/08_Memoria.tex [48]
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
+
+ []
+
+(./Algoritmi/BanchiereAllocazione.c [45])
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+
+ []
+
+(./Algoritmi/BanchiereVerifica.c) [46] (./Algoritmi/RilevamentoStrutture.c)
+(./Algoritmi/RilevamentoAlgoritmo.c) [47]) (./Chapters/08_Memoria.tex [48]
 Capitolo 8.
 [49
 
@@ -1175,10 +1183,10 @@ Package rerunfilecheck Info: File `Principal.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 26240 strings out of 492615
- 461571 string characters out of 6131390
+ 26239 strings out of 492615
+ 461564 string characters out of 6131390
  884044 words of memory out of 5000000
- 28817 multiletter control sequences out of 15000+600000
+ 28816 multiletter control sequences out of 15000+600000
  553215 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,63p,816b,2253s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1200,7 +1208,7 @@ super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb><
 /usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fon
 ts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-s
 uper/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on ./build/Principal.pdf (84 pages, 907716 bytes).
+Output written on ./build/Principal.pdf (84 pages, 907696 bytes).
 PDF statistics:
  2316 PDF objects out of 2487 (max. 8388607)
  2184 compressed objects within 22 object streams

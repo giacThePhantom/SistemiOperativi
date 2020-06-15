@@ -3,7 +3,7 @@ Il file system fornisce il meccanismo per la memorizzazione e l'accesso di dati 
 \section{Interfaccia del file system}
 \subsection{Concetto di file}
 Il sistema operativo astrae dalle caratteristiche fisiche dei supporti di memorizzazione fornendo una loro visione logica. Si considera un file come uno spazio di indirizzamento logico 
-e contiguo rappresentante un insieme di informazioni correlate identificate da un nome. I File possono essere dati di qualsiasi tipo e programmi. 
+e contiguo rappresentante un insieme di informazioni correlate identificate da un nome. I file possono essere dati di qualsiasi tipo e programmi. 
 \subsection{Attributi di un file}
 Su disco nella struttura della directory sono salvati per ogni file il nome (unica informazione in formato leggibile), tipo, posizione (puntatore allo spazio fisico sul dispositivo), 
 dimensione, protezione (controllo sui permessi), tempo, data e identificazione dell'utente. 
@@ -23,7 +23,7 @@ dimensione, protezione (controllo sui permessi), tempo, data e identificazione d
 \end{itemize}
 \subsection{Struttura dei file}
 I tipi di file possono essere usati per usare la struttura interna del file. In Unix non esiste, si considera un file una sequenza di parole o bytes. Pu\`o essere una struttura a 
-record semplice doe un record \`e una riga di lunghezza fissa o variabile. Pu\`o essere una struttura complessa come accade dei documenti formattati e i formati ricaricabili (load
+record semplice dove un record \`e una riga di lunghezza fissa o variabile. Pu\`o essere una struttura complessa come accade dei documenti formattati e i formati ricaricabili (load
 module). Le ultime due si possono emulare con la prima usando caratteri di controllo. 
 \subsection{Metodi di accesso}
 \subsubsection{Sequenziale}
@@ -124,7 +124,7 @@ del blocco limita la dimensione del file, pertanto per i file di grandi dimensio
 \paragraph{Indici multilivello} Una tabella pi\`u esterna contiene puntatori ad ulteriori index table. Sia $X$ l'indirizzo logico e $N$ la dimensione del blocco in parole 
 $\frac{X}{n\cdot N}$ \`e il blocco della index table di primo livello e $X\mod (N\cdot N) = R$, dove $\frac{R}{N}$ \`e l'offset nel blocco della index table di secondo livello e 
 $R\mod N$ \`e l'offset nel blocco dati.
-\paragraph{Schema concatenato} Si trova una lista concatenata di blocchi indice: l'ultimo degli indici id un blocco indice punta a un altro blocco indice e $\frac{X}{N(N-1)}$ \`e il 
+\paragraph{Schema concatenato} Si trova una lista concatenata di blocchi indice: l'ultimo degli indici di un blocco indice punta a un altro blocco indice e $\frac{X}{N(N-1)}$ \`e il 
 numero del blocco indice all'interno della lista dei blocchi indice e $X\mod(N(N-1)) = R$, dove $\frac{R}{N}$ \`e l'offset nel blocco indice e $R\mod N$ \`e l'offset nel blocco dati. 
 \subsubsection{Unix e i-node}
 Unix usa lo schema combinato in cui ad ogni file \`e associato u i-node (index-node) che contiene gli attributi del file e fa da blocco indice. Gli i-node sono gestiti dal sistema 

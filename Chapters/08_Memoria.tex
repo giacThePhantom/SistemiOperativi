@@ -80,10 +80,10 @@ dati $N$ blocchi allocati $0.5\cdot N$ blocchi vanno persi. La frammentazione si
 contigue tutte le partizioni. \`E possibile solo se la rilocazione \`e dinamica e la modifica del registro base. 
 \subsubsection{Tecnica del buddy system}
 In questa tecnica si deve fare il compromesso tra le partizioni fisse e variabili. La memoria viene vista come una serie di liste di blocchi di dimensione $2^k$ con $L < k < U$, dove
-$2^L$ \`e il pi\`u piccolo blocco allocato e $2^U$ \`e il pi\`u grande blocco allocato. La memoria \`e disponibile sotto forma di blocchi di dimension $2^k$. All'inizio tutta la memoria
+$2^L$ \`e il pi\`u piccolo blocco allocato e $2^U$ \`e il pi\`u grande blocco allocato. La memoria \`e disponibile sotto forma di blocchi di dimensione $2^k$. All'inizio tutta la memoria
 \`e disponibile: a lista di blocchi di dimensione $2^U$ contiene un solo blocco che rappresenta tutta la memoria mentre le altre sono vuote. Quando arriva una richiesta di dimensione $s$
 si cerca un blocco libero con dimensione adatta purch\`e sia pari a una potenza del $2$. Se $2^{U-1} < s < 2^U$ l'intero blocco di dimensione $2^U$ viene allocato. Altrimenti il blocco 
-$2^U$ viene diviso in due blocchi di dimensione $2^{U-1}$. Questa operazione viene ripetuta fino a che \`e viene allocato il processo o si arriva al blocco di dimensione $2^L$. Quando
+$2^U$ viene diviso in due blocchi di dimensione $2^{U-1}$. Questa operazione viene ripetuta fino a che viene allocato il processo o si arriva al blocco di dimensione $2^L$. Quando
 un processo rilascia la memoria il suo blocco torna a far parte della lista dei blocchi di dimensione corrispondente. Se si formano $2$ blocchi adiacenti di dimensione $2^k$ \`e 
 possibile compattarli ottenendo un unico blocco libero di dimensione $2^{k+1}$. Il vantaggio \`e che la compattazione richiede solo di scorrere la lista dei blocchi di dimensione $2^k$
 ed \`e veloce, ma nasce la frammentazione interna dovuta solo ai blocchi di dimensione $2^L$. 
@@ -108,7 +108,7 @@ switch in quanto richiede il salvataggio dei registri.
 La tabella risiede in memoria e vengono utilizzati due registri: il page-table base register (PTBR) che punta alla tabella delle pagine e l'opzionale page-table length register (PTLR) 
 che contiene la dimensione della tabella delle pagine. Il context switch \`e pi\`u breve in quanto richiede la modifica solo del PTBR (PTLR), ma ad ogni accesso a dati o istruzioni 
 richiede due accessi in memoria per la tabella delle pagine e il risultante dato/istruzione. Il problema del doppio accesso pu\`o essere risolto tramite una cache molto veloce
-detta translation look-aside buffers (TLB). Funzionano confrontando l'elemento fornico con il cambio chiave di tutte le entry contemporaneamente e nella tabella delle pagine la
+detta translation look-aside buffers (TLB). Funzionano confrontando l'elemento fornito con il cambio chiave di tutte le entry contemporaneamente e nella tabella delle pagine la
 chiave d\`a il numero di pagina e il valore il numero di frame. Essendo il TLB molto costoso viene memorizzato solo un piccolo sottoinsieme delle entry della tabella delle pagine. Ad
 ogni context switch il TLB viene ripulito per evitare il mapping di indirizzi errati. Durante un accesso alla memoria se la pagina cercata \`e nel TLB questo restituisce il numero di 
 frame con un singolo accesso (minore del $10\%$ del tempo richiesto in assenza di TLB), altrimenti \`e necessario accedere alla tabella delle pagine in memoria. L'hit ratio $\alpha$ \`e
@@ -129,7 +129,7 @@ Bit di accesso:
 \end{itemize}
 \subsubsection{Pagine condivise}
 Per il codice condiviso si trova un'unica copia fisica ma pi\`u copie logiche (una per processo), il codice read-only rientrante che non cambia mai durante l'esecuzione pu\`o essere
-condiviso tra processo. I dati in generale saranno diversi da processo a processo con pi\`u copie fisiche e logiche. 
+condiviso tra processi. I dati in generale saranno diversi da processo a processo con pi\`u copie fisiche e logiche. 
 \subsubsection{Spazio di indirizzamento}
 Nelle architetture moderne lo spazio di indirizzamento virtuale \`e molto maggiore dello spazio fisico. Sono necessari meccanismi per gestire il problema della dimensione della
 tabella delle pagine attraverso la paginazione della tabella delle pagine (tabella multilivello) o la tabella delle pagine invertita. 
@@ -146,7 +146,7 @@ allo stesso frame.
 \subsection{Segmentazione}
 Nella segmentazione la memoria viene gestita nello stesso in cui l'utente la percepisce: un programma \`e una collezione di segmenti, unit\`a logiche come main, procedure, funzioni, 
 variabili, stack, tabella dei simboli e vettori. L'indirizzo logico \`e dato dalla coppia $<$numero di segmento, offset$>$ e la tabella dei segmenti mappa gli indirizzi logici 
-bidimensionali in indirizzi risifici unidimensionali. Ogni entry contiene una base, l'indirizzo fisico di partenza del segmento in memoria e il limite, la lunghezza del segmento. 
+bidimensionali in indirizzi fisici unidimensionali. Ogni entry contiene una base, l'indirizzo fisico di partenza del segmento in memoria e il limite, la lunghezza del segmento. 
 \subsubsection{Tabella dei segmenti}
 La tabella dei segmenti \`e simile alla tabella delle pagine: viene salvata in memoria e il processo possiede il segment-table base register (STBR) che punta alla locazione della
 tabella dei segmenti e il segment-table length register (STLR) che indica il numero di segmenti utilizzati da un programma. Un indirizzo logico $<$s, d$>$ \`e valido se $s<STLR$.
@@ -157,7 +157,7 @@ associati un bit di modalit\`a (read/write/execute) e il bit di validit\`a ($0$ 
 \subsubsection{Condivisione}
 A livello di segmento se si vuole condividere qualcosa basta inserirlo in un segmento. Si rende pertanto possibile condividere parti di un programma come funzioni di libreria.
 \subsubsection{Frammentazione}
-Il sistema operativo deve allocare spazio in memoria per tutti i segmenti di un programma che hanno lunghezza variabile. Periste il problema di allocazione che viene risolto con
+Il sistema operativo deve allocare spazio in memoria per tutti i segmenti di un programma che hanno lunghezza variabile. Persiste il problema di allocazione che viene risolto con
 first o best fit. Esiste possibilit\`a di frammentazione esterna per segmenti di dimensione significativa.
 \subsubsection{Confronto con paginazione}
 \begin{multicols}{2}
