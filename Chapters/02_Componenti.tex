@@ -1,9 +1,9 @@
 \chapter{Componenti di un sistema operativo}
-Un sistema operativo offre un ambiente on cui eseguire i programmi e fornire servizi che naturalmente variano in base al sistema operativo. Si possono comunque identificare alcune classi di servizi comuni.
+Un sistema operativo offre un ambiente in cui eseguire i programmi e fornire servizi che naturalmente variano in base al sistema operativo. Si possono comunque identificare alcune classi di servizi comuni.
 \section{Servizi di gestione}
 \subsubsection{Gestione dei processi}
 Si intende per processo un programma in esecuzione che necessita di risorse e viene eseguito in modo sequenziale (un'istruzione alla volta). Si differenzia tra processi del sistema operativo e quelli utente. Il 
-sistema operativo \`e responsabile della creazione, distruzione, sospensione, riesumazione e ella fornitura di meccanismi per la sincronizzazione e la comunicazione tra processi e fornisce meccanismi per la sincronizzazione. 
+sistema operativo \`e responsabile della creazione, distruzione, sospensione, riesumazione e della fornitura di meccanismi per la sincronizzazione e la comunicazione tra processi.
 \subsubsection{Gestione della memoria primaria}
 La memoria primaria conserva dati condivisi dalla CPU e dai dispositivi di I/O. Un programma deve essere caricato in memoria prima di poter essere eseguito. Il sistema operativo \`e responsabile della gestione 
 dello spazio di memoria (quali parti e da chi sono usate), ovvero della decisione su quale processo caricare in memoria in base allo spazio disponibile e dell'allocazione e rilascio dello spazio di memoria. 
@@ -25,9 +25,9 @@ strumenti per verificare le politiche di accesso. La sicurezza di un sistema ope
 Si intende per sistema distribuito una collezione di elementi di calcolo che non condividono n\`e la memoria n\`e un clock: le risorse di calcolo vengono connesse tramite una rete. Il sistema operativo \`e 
 responsabile della gestione in rete delle varie componenti.
 \section{Interprete dei comandi (shell)}
-Vi sono due modi fondamentali per gli utenti di comunicare con il sistema operativo: un primo basato su un'interfaccia a riga d comando (o interprete dei comandi) e un secondo bastato su un'interfaccia grafica o GUI. Il primo lascia
+Vi sono due modi fondamentali per gli utenti di comunicare con il sistema operativo: un primo basato su un'interfaccia a riga di comando (o interprete dei comandi) e un secondo bastato su un'interfaccia grafica o GUI. Il primo lascia
 inserire direttamente agli utenti le istruzioni che il sistema deve eseguire. L'interprete dei comandi \`e pi\`u comunemente conosciuto come shell. La funzione principale dell'interprete \`e quella di prelevare ed eseguire il successivo
-comando impartito dall'utente. A questo livello si utano nuovi comandi per la gestione dei file che possono essere implementati internamente all'interprete o attraverso programmi speciali. Nel secondo caso l'interprete non capisce il
+comando impartito dall'utente. A questo livello si usano nuovi comandi per la gestione dei file che possono essere implementati internamente all'interprete o attraverso programmi speciali. Nel secondo caso l'interprete non capisce il
 comando in s\`e ma prende il nome per caricare l'opportuno file in memoria per eseguirlo.
 \subsubsection{Interfaccia grafica}
 L'interfaccia grafica \`e una modalit\`a di comunicazione tra utente e il sistema operativo. \`E pi\`u intuitiva della riga di comando e la GUI \`e l'equivalente del desktop e rimane strettamente legata a mouse, tastiera e schermo.
@@ -43,6 +43,6 @@ stack. Le system calls possono essere implementate in due modi:
 		\`e efficiente.
 	\item L'interprete legge il comando e possiede una tabella che collega tale comando al programma da avviare. 
 \end{itemize}
-Le system calls si differiscono in cotrollo dei processi, gesione dei file, dei dispositivi, delle comunicazioni e della protezione. Un processo inoltre 
+Le system calls si differiscono in controllo dei processi, gestione dei file, dei dispositivi, delle comunicazioni e della protezione. Un processo inoltre 
 deve essere sia in grado di essere chiuso normalmente (\emph{end}) che in modo anomalo (\emph{abort}), con la conseguente generazione di un messaggio di 
 errore e copia dello stato del processo abortito.
