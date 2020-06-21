@@ -3,15 +3,15 @@
 Si dice processo un istanza di un programma in esecuzione, un concetto dinamico eseguito in modo sequenziale. In un sistema multiprogrammato i processi evolvono in modo concorrente a 
 causa delle risorse fisiche e logiche limitate. Il sistema operativo stesso consiste di pi\`u processi. 
 \subsection{Immagine in memoria}
-Il processo consiste di istruzioni (sezione Codice o Testo, la parte statica del codice), dati (sezione Dati, le variabili globali), lo Stack (chiamate a procedure e paremetri e 
+Il processo consiste in istruzioni (sezione Codice o Testo, la parte statica del codice), dati (sezione Dati, le variabili globali), lo Stack (chiamate a procedure e paremetri e 
 variabili locali), lo Heap (la memoria allocata dinamicamente) e gli attributi (id, stato, controllo).
 \subsubsection{Attributi}
-All'interno del sistema operativo ogni processo \`e rappresentato dal processo control block (PCB) che contiene le informazioni riguardanti lo stato del processo, il program counter, 
+All'interno del sistema operativo ogni processo \`e rappresentato dal process control block (PCB) che contiene le informazioni riguardanti lo stato del processo, il program counter, 
 i valori dei registri, le informazioni sulla memoria, informazioni sullo stato dell'I/O, informazioni sull'utilizzo del sistema e informazioni di scheduling come la priori\`a. 
 \subsection{Stati di un processo}
 Durante la sua esecuzione un processo evolve attraverso diversi stati con un diagramma specifico al sistema operativo. Lo schema base contiene un nuovo processo che deve essere 
 ammesso nel sistema, lo stato non in esecuzione che viene messo in esecuzione dall'operazione di dispatch (l'operazione inversa avviene dalla pausa). La stato finito viene ottenuto
-dopo la terminazione. Un processo pu\`o essere messo in pausa a causa di un time out, caso nel quale viene messo direttamente tra i processi pronti o essere in attesa del completamento 
+dopo la terminazione. Un processo pu\`o essere messo in pausa a causa di un time out, caso nel quale viene messo direttamente tra i processi pronti, o essere in attesa del completamento 
 di un altro processo che compie un evento per cui diventa pronto. 
 \subsection{Scheduling}
 Lo scheduling \`e l'operazione di selezione del processo da eseguire nella CPU al fine di garantire la multiprogrammazione (con l'obiettivo di massimizzare l'uso della CPU con pi\`u di
@@ -22,8 +22,13 @@ frequentemente e pu\`o essere lento. Il long-term scheduler controlla il grado d
 \subsubsection{Code di scheduling}
 Ogni processo \`e inserito in una serie di code: la coda dei processi pronti (ready queue) che \`e la coda dei processi pronti per l'esecuzione e la coda di un dispositivo ovvero la
 coda dei processi in attesa che il dispositivo si liberi. All'inizio il processo \`e nella ready queue fino a quando non viene selezionato per essere eseguito (dispatched). Durante
-l'esecuzione pu\`o accadere che il processo necessiti di I/O e venga inserito in una coda di un dispositivo, il processo termina il quanto di tempo, viene rimosso forzatamente dalla
-CPU e reinserito nella ready queue, il processo crea un figlio e ne attende la terminazione, il processo si mette in attesa di un evento. 
+l'esecuzione pu\`o accadere che:
+\begin{itemize}
+	\item il processo necessiti di I/O e venga inserito in una coda di un dispositivo
+	\item il processo termina il quanto di tempo, viene rimosso forzatamente dalla CPU e reinserito nella ready queue
+	\item il processo crea un figlio e ne attende la terminazione
+	\item il processo si mette in attesa di un evento
+\end{itemize}
 \subsection{Operazione di dispatch}
 Durante il dispatch deve avvenire un cambio di contesto: salvataggio del PCB del processo che esce e caricamento del PCB del processo che entra. Dopo questo avviene il passaggio alla
 modalit\`a utente (all'inizio della fase di dispatch il sistema si trova in modalit\`a kernel). Infine avviene il salto all'istruzione da eseguire del processo appena arrivato nella
@@ -41,22 +46,22 @@ attende la terminazione dei figli) o in modalit\`a asincrona (evoluzione paralle
 	\item System call \emph{wait}: per l'esecuzione sincrona tra pare e figlio.
 \end{itemize}
 \subsubsection{Terminazione di un processo}
-Un processo pu\`o terminare in tre casi: quando finisce la sua esecuzione, quando \`e terminato forzatamente dal padre per eccesso nell'uso delle risorse, il compito richiesto al figlio
-non \`e pi\`u necessario e il padre termina e il sistema operativo non permette ai figli di sopravvivere al padre o quando il processo \`e terminato forzatamente dal sistema operativo
-in caso di chiusura da parte dell'utente o a causa di errori. 
+Un processo pu\`o terminare in tre casi: quando finisce la sua esecuzione, quando \`e terminato forzatamente dal padre (per eccesso nell'uso delle risorse, perché il compito richiesto al figlio
+non \`e pi\`u necessario oppure perché il padre termina e il sistema operativo non permette ai figli di sopravvivere al padre) o quando il processo \`e terminato forzatamente dal sistema operativo
+(in caso di chiusura da parte dell'utente o a causa di errori). 
 \subsection{Stati di un processo}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{Pictures/StatiProcesso.png}
 	\caption{Stack del sistema operativo}
 \end{figure}
 \section{Threads}
-Si noti come un processo unisce i concetti del possesso delle risorse e utilizzo della CPU, caratteristiche indipendenti e possono essere considerate separatamente: si considera il 
+Si noti come un processo unisce i concetti del possesso delle risorse e utilizzo della CPU, caratteristiche indipendenti che possono essere considerate separatamente: si considera il 
 thread come l'unit\`a minima di utilizzo della CPU e il processo come unit\`a minima di possesso delle risorse. Ad un processo sono dunque associati spazio di indirizzamento e risorse
 del sistema, mentre a un singolo thread lo stato di esecuzione, contatore del programma, insieme di registri e lo stack. Le thread condividono tra di loro lo spazio di indirizzamento e
 risorse e stato del processo.
 \subsection{Multi-threading}
 Il multithreading rappresenta la capacit\`a di un sistema operativo di supportare pi\`u thread per un singolo processo e ha come conseguenza la separazione tra flusso di esecuzione e 
-spazio di indirizzamento: i processi con thread multipli hanno pi\u`u flussi associati ad un singolo spazio di indirizzamento. 
+spazio di indirizzamento: i processi con thread multipli hanno pi\`u flussi associati ad un singolo spazio di indirizzamento. 
 \subsection{Vantaggi dei thread}
 I thread permettono di ridurre il tempo di risposta in quanto il blocco di un thread permette comunque ad altri thread di continuare la propria esecuzione. Oltre a quello permettono
 di condividere delle risorse in quanto thread di uno stesso processo condividono la memoria senza dover introdurre tecniche esplicite di condivisione (necessario per i processi) e 
@@ -68,9 +73,8 @@ Un thread possiede gli stessi stati di un processo: pronto, in esecuzione e in a
 I thread possono essere implementati a user-level (one to many), a kernel-level (one to one) o ibrida (m to n).
 \subsubsection{Thread user-level}
 La gestione viene affidata alle applicazioni, il kernel ignora l'esistenza dei thread e le funzionalit\`a sono disponibili tramite una libreria di programmazione. I vantaggi di questa 
-implementazione riguardano la non necessit\`a di passare in kernel-mode per utilizzare i thread prevenendo due mode switch aumentando l'efficienza, il meccanismo di scheduling pu\`o 
-variare in base alle necessit\`a applicative e possono essere eseguiti su qualsiasi sistema operativo senza modificare il kernel. Come svantaggi presentano il fatto che il blocco di 
-un thread blocca l'intero processo (superabile con accorgimenti specifici) e non \`e possibile sfruttare il multiprocessore: lo scheduling di un thread \`e presente sempre sullo stesso
+implementazione riguardano la non necessit\`a di passare in kernel-mode per utilizzare i thread prevenendo due mode switch aumentando l'efficienza, la possibilità di variare il meccanismo di scheduling in base alle necessit\`a applicative e quella di essere eseguiti su qualsiasi sistema operativo senza modificare il kernel. Come svantaggi presentano il fatto che il blocco di 
+un thread blocca l'intero processo (superabile con accorgimenti specifici) e che non \`e possibile sfruttare il multiprocessore: lo scheduling di un thread \`e presente sempre sullo stesso
 processore: un solo thread \`e in esecuzione per ogni processo.
 \subsubsection{Thread kernel-level}
 La gestione viene affidata al kernel e le applicazioni usano i thread tramite system call. I vantaggi sono lo scheduling a livello thread in quanto il blocco di un thread non blocca
@@ -88,8 +92,8 @@ un nuovo thread. La creazione vera e propria avviene tramite la system call \emp
 	\item Un puntatore alla routine che contiene il codice che deve essere eseguito dal thread.
 	\item Un puntatore all'argomento che si vuole passare alla routine stessa.
 \end{itemize}
-\subsubsection{terminazione di un thread}
-Un thread termina quando finisce il codice della routine specificata all'atto della creazinoe del thread stesso o quando nel codice della routine si chiama la system call di terminazione
+\subsubsection{Terminazione di un thread}
+Un thread termina quando finisce il codice della routine specificata all'atto della creazione del thread stesso o quando nel codice della routine si chiama la system call di terminazione
 \emph{void pthread\_exit(void *value\_ptr);}. Quando termina il thread restituisce il valore di return specificato nella routine o se chiama la system call il valore passato a quella
 come argomento. 
 \subsubsection{Sincronizzazione fra thread}
@@ -115,7 +119,7 @@ devono stabilire un canale di comunicazione e scambiarsi messaggi attraverso sen
 logica. 
 \subsubsection{Comunicazioni dirette}
 Nella comunicazione i processi devono nominarsi esplicitamente e pu\`o essere simmetrica: \emph{send(P1, message)} e \emph{receive(P2, message)} dove P1 e P2 sono gli id rispettivamente
-di destinatario e mittente o pu\`o essere asimmetrica: \emph{send(P1, message)} e \emph{receive(id, message)} dove in id viene salvato il nome del processo che ha eseguito la send. SSi
+di destinatario e mittente o pu\`o essere asimmetrica: \emph{send(P1, message)} e \emph{receive(id, message)} dove in id viene salvato il nome del processo che ha eseguito la send. Si
 nota come se un processo cambia nome si devono ricodificare tutti i messaggi di send e receive.
 \subsubsection{Comunicazioni indirette}
 I messaggi sono spediti e ricevuti da mailboxes o porte tali che ogni mailbox ha un unico id e i processi possono comunicare solo se condividono una mailbox. Le operazioni permettono
