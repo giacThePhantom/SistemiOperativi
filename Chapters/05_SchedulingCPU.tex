@@ -6,8 +6,8 @@ Gli scheduler si dividono in a lungo termine (job scheduler) che seleziona quali
 scheduler) che seleziona quale processo deve essere eseguito dalla CPU.
 \subsection{Caratteristiche degli scheduler}
 Lo scheduler a breve termine \`e invocato spesso e pertanto deve essere veloce, mentre lo scheduler a lungo termine \`e invocato pi\`u raramente e pu\`o essere pi\`u lento in quanto
-controlla il grado di multiprogrammazione e il mix di processi. Il secondo pu\`o essere I/O bound con molto I/O e molti brevi burst di CPU o CPU-bound, con molti calcoli e pochi lunghi
-burst di CPU. In sistemi con risorse limitate lo scheduler pu\`o essere assente. 
+controlla il grado di multiprogrammazione e il mix di processi. Il secondo pu\`o essere I/O bound, cioè con lunghi tempi di I/O e molti brevi burst di CPU, o CPU-bound, con molti calcoli e pochi lunghi
+burst di CPU. In sistemi con risorse limitate lo scheduler a lungo termine pu\`o essere assente. 
 \subsection{Scheduling a medio termine}
 I sistemi operativi con memoria virtuale prevedono un livello intermedio di scheduling per la momentanea rimozione forzata (swapping) di un processo dalla CPU per ridurre il grado di 
 multiprogrammazione.
@@ -31,7 +31,7 @@ Per misurare la qualit\`a dello scheduling si considerano:
 	\item Throughput, il numero di processi completati per unit\`a di tempo.
 	\item Tempo di attesa ($t_w$), la quantit\`a di tempo totale spesa da un processo nella coda di attesa influenzato dall'algoritmo di scheduling.
 	\item Tempo di completamento (turnaround $t_t$), il tempo necessario ad eseguire un particolare processo dal momento della sottomissione al momento del completamento.
-	\item Tempo di risposta ($t_r$), il tempo trascorso da quando una richiesta \`e stata sottoposta al sistema fino alla prima risposta del sistema spesso.
+	\item Tempo di risposta ($t_r$), il tempo trascorso da quando una richiesta \`e stata sottoposta al sistema fino alla prima risposta del sistema stesso.
 \end{itemize}
 Per ottimizzare lo scheduling si deve pertanto massimizzare l'utilizzo della CPU e il throughput e minimizzare i tempi di turnaround, attesa e risposta.
 \section{Algoritmi di scheduling}
