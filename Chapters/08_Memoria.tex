@@ -1,7 +1,7 @@
 \chapter{Gestione della memoria}
 La condivisione della memoria da parte di pi\`u processi \`e essenziale per l'efficienza del sistema. Offre problematiche negli ambiti di allocazione della memoria ai singoli job, per
 la protezione e condivisione dello spazio di indirizzamento e per la gestione della memoria virtuale (swap). Nei sistemi moderni la gestione della memoria \`e inseparabile dal concetto
-di memoria virtuale. Ogni processo deve essere portato in memoria e trasformato in processo per essere eseguito. La CPU preleva le istruzioni da eseguire dalla memoria in base al
+di memoria virtuale. Ogni programma deve essere portato in memoria e trasformato in processo per essere eseguito. La CPU preleva le istruzioni da eseguire dalla memoria in base al
 valore del program counter. L'istruzione viene codificata e pu\`o prevedere il prelievo di operandi dalla memoria. Al termine dell'istruzione il risultato pu\`o essere scritto in 
 memoria. Quando il processo termina la sua memoria viene rilasciata. 
 \section{Da programma a processo}
@@ -20,7 +20,7 @@ Il binding di dati e istruzioni a indirizzi di memoria pu\`o avvenire in tre mom
 		supporto hardware affinch\`e l'operazione possa essere fatta efficientemente. 
 \end{enumerate}
 \subsection{Collegamento}
-Il collegamento pu\`o essere statico in cui tutti i riferimenti sono definiti prima dell'esecuzione e l'immagine del processo contiene una copia delle librerie usate o dinamico in cui il
+Il collegamento pu\`o essere statico, in cui tutti i riferimenti sono definiti prima dell'esecuzione e l'immagine del processo contiene una copia delle librerie usate, o dinamico, in cui il
 link viene posticipato al tempo di esecuzione e il codice del programma non contiene il codice delle librerie ma solo un riferimento (stub) per poterle recuperare. 
 \subsection{Caricamento}
 Il caricamento pu\`o essere statico in cui tutto il codice viene caricato in memoria a tempo dell'esecuzione o dinamico in cui il caricamento dei moduli viene posticipato in 
@@ -81,7 +81,7 @@ contigue tutte le partizioni. \`E possibile solo se la rilocazione \`e dinamica 
 \subsubsection{Tecnica del buddy system}
 In questa tecnica si deve fare il compromesso tra le partizioni fisse e variabili. La memoria viene vista come una serie di liste di blocchi di dimensione $2^k$ con $L < k < U$, dove
 $2^L$ \`e il pi\`u piccolo blocco allocato e $2^U$ \`e il pi\`u grande blocco allocato. La memoria \`e disponibile sotto forma di blocchi di dimensione $2^k$. All'inizio tutta la memoria
-\`e disponibile: a lista di blocchi di dimensione $2^U$ contiene un solo blocco che rappresenta tutta la memoria mentre le altre sono vuote. Quando arriva una richiesta di dimensione $s$
+\`e disponibile: la lista di blocchi di dimensione $2^U$ contiene un solo blocco che rappresenta tutta la memoria mentre le altre sono vuote. Quando arriva una richiesta di dimensione $s$
 si cerca un blocco libero con dimensione adatta purch\`e sia pari a una potenza del $2$. Se $2^{U-1} < s < 2^U$ l'intero blocco di dimensione $2^U$ viene allocato. Altrimenti il blocco 
 $2^U$ viene diviso in due blocchi di dimensione $2^{U-1}$. Questa operazione viene ripetuta fino a che viene allocato il processo o si arriva al blocco di dimensione $2^L$. Quando
 un processo rilascia la memoria il suo blocco torna a far parte della lista dei blocchi di dimensione corrispondente. Se si formano $2$ blocchi adiacenti di dimensione $2^k$ \`e 
@@ -144,7 +144,7 @@ page-number, offset$>$. \`E necessario cercare il valore desiderato e pertanto u
 deve ridurre il tempo di ricerca a $O(1)$ attraverso una tabella hash e si crea la necessit\`a di un meccanismo per gestire le collisioni quando diversi indirizzi virtuali corrispondono
 allo stesso frame. 
 \subsection{Segmentazione}
-Nella segmentazione la memoria viene gestita nello stesso in cui l'utente la percepisce: un programma \`e una collezione di segmenti, unit\`a logiche come main, procedure, funzioni, 
+Nella segmentazione la memoria viene gestita nello stesso modo in cui l'utente la percepisce: un programma \`e una collezione di segmenti, unit\`a logiche come main, procedure, funzioni, 
 variabili, stack, tabella dei simboli e vettori. L'indirizzo logico \`e dato dalla coppia $<$numero di segmento, offset$>$ e la tabella dei segmenti mappa gli indirizzi logici 
 bidimensionali in indirizzi fisici unidimensionali. Ogni entry contiene una base, l'indirizzo fisico di partenza del segmento in memoria e il limite, la lunghezza del segmento. 
 \subsubsection{Tabella dei segmenti}
