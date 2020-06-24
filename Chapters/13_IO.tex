@@ -45,21 +45,20 @@ I dispositivi di I/O si differenziano per molti aspetti e pertanto si rende nece
 sistema operativo costruendo un'interfaccia comune che d\`a un insieme di funzioni standard. Le differenze sono incapsulate nei device driver. Le interfacce semplificano il lavoro del
 sistema operativo aggiungendo nuovo hardware senza modificare il sistema operativo. 
 \subsection{Dispositivi a blocco e a carattere}
-Nell'interfaccia dei dispositivi a blocchi memorizzano e trasferiscono dati in blocchi, la lettura e scrittura di un blocco \`e indipendente dagli altri, i comandi sono di 
-read, write e seek, \`e tipica nei dischi. Sono a memory-mapped I/O sfrutta block-device driver. Nell'interfaccia dei dispositivi a carattere memorizzano e trasferiscono le stringhe di
-caratteri. Non esiste indirizzamento (seek) e i comandi sono del tipo di get e put. I dispositivi tipici sono terminali, mouse e porte seriali. 
+Nell'interfaccia dei dispositivi a blocchi i device memorizzano e trasferiscono dati in blocchi, la lettura e scrittura di un blocco \`e indipendente dagli altri, i comandi sono di 
+read, write e seek, l'interfaccia \`e tipica nei dischi e il memory-mapped I/O sfrutta il block-device driver. Nell'interfaccia dei dispositivi a carattere i dispositivi memorizzano e trasferiscono le stringhe di
+caratteri, non esiste indirizzamento (seek) e i comandi sono del tipo di get e put. I dispositivi tipici sono terminali, mouse e porte seriali. 
 \section{Software di I/O}
 Gli obiettivi del software di I/O sono l'indipendenza dal dispositivo, la notazione uniforme, gestione degli errori, la gestione di varie opzioni di trasferimento e le prestazione. \`E
 organizzato per livelli di astrazione: 
 \begin{enumerate}
 	\item Gestori degli interrupt: sono astratti il pi\`u possibile dal resto del sistema operativo e bloccano e sbloccano i processi attraverso semafori o segnali.
-	\item Device driver devono tradurre le richieste astratte del livello superiore in richieste device-dependent, contengono tutto il codice device-dependent, condivisi per classi
-		di dispositivi, interagiscono con i controllori dei dispositivi e tipicamente scritti in linguaggio macchina. 
-	\item Software del sistema operativo indipendente dal dispositivo. Ha funzioni speciali come la definizione di interfacce comuni, naming (individuare un dispositivo e gestire i 
+	\item Device driver: devono tradurre le richieste astratte del livello superiore in richieste device-dependent, contengono tutto il codice device-dependent, condivisi per classi
+		di dispositivi, interagiscono con i controllori dei dispositivi e sono tipicamente scritti in linguaggio macchina. 
+	\item Software del sistema operativo: indipendente dal dispositivo. Ha funzioni speciali come la definizione di interfacce comuni, naming (individuare un dispositivo e gestire i 
 		nomi), protezione (tutte le primitive di I/O sono privilegiate), buffering, ovvero la memorizzazione dei dati durante un trasferimento per gestire diverse velocit\`a 
 		e diverse dimensioni. Deve definire la dimensione del blocco, allocare e rilasciare i dispositivi e gestire gli errori tipicamente device-dependent. 
-	\item Programmi utente. 
+	\item Programmi utente: sono system call per l'accesso ai dispositivi.
+	\item Spooling: la gestione di I/O dedicato, non condivisibile. Ad esempio pi\`u processi possono voler scrivere su una stampante contemporaneamente, ma le stampe non devono essere interfogliate, 
+pertanto i dati da processare vanno accodati nella spooling directory e lo spooler, un processo di sistema \`e l'unico autorizzato ad accedere alla stampante. Periodicamente stampa i dati nella spooling directory.
 \end{enumerate}
-Per esempio nello spooling durante la gestione di I/O dedicato pi\`u processi possono voler scrivere su una stampante contemporaneamente, ma le stampe non devono essere interfogliate, 
-pertanto i dati da processare vanno accodati nella spooling directory e lo spooler, un processo di sistema \`e l'unico autorizzato ad accedere alla stampante. Periodicamente stampa i 
-dati nella spooling directory. I programmi utente sono system call per l'accesso ai dispositivi. 
