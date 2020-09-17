@@ -1,4 +1,4 @@
-# SistemiOperativi
+# Sistemi Operativi
 Appunti delle lezioni del corso di sistemi operativi tenuto dal professor Crispo. Università di Trento, 2019/2020
 
 ## Struttura dei file
