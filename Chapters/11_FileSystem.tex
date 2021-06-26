@@ -22,8 +22,8 @@ dimensione, protezione (controllo sui permessi), tempo, data e identificazione d
 	\item Chiusura: copia del file in memoria su disco. 
 \end{itemize}
 \subsection{Struttura dei file}
-I tipi di file possono essere usati per usare la struttura interna del file. In Unix non esiste, si considera un file una sequenza di parole o bytes. Pu\`o essere una struttura a 
-record semplice dove un record \`e una riga di lunghezza fissa o variabile. Pu\`o essere una struttura complessa come accade dei documenti formattati e i formati ricaricabili (load
+I tipi di file possono essere usati per indicare la struttura interna del file. In Unix non esiste, si considera un file come una sequenza di parole o bytes. Pu\`o essere una struttura a 
+record semplice dove un record \`e una riga di lunghezza fissa o variabile. Pu\`o essere una struttura complessa come accade per i documenti formattati e i formati ricaricabili (load
 module). Le ultime due si possono emulare con la prima usando caratteri di controllo. 
 \subsection{Metodi di accesso}
 \subsubsection{Sequenziale}
@@ -127,7 +127,7 @@ $R\mod N$ \`e l'offset nel blocco dati.
 \paragraph{Schema concatenato} Si trova una lista concatenata di blocchi indice: l'ultimo degli indici di un blocco indice punta a un altro blocco indice e $\frac{X}{N(N-1)}$ \`e il 
 numero del blocco indice all'interno della lista dei blocchi indice e $X\mod(N(N-1)) = R$, dove $\frac{R}{N}$ \`e l'offset nel blocco indice e $R\mod N$ \`e l'offset nel blocco dati. 
 \subsubsection{Unix e i-node}
-Unix usa lo schema combinato in cui ad ogni file \`e associato u i-node (index-node) che contiene gli attributi del file e fa da blocco indice. Gli i-node sono gestiti dal sistema 
+Unix usa lo schema combinato in cui ad ogni file \`e associato un i-node (index-node) che contiene gli attributi del file e fa da blocco indice. Gli i-node sono gestiti dal sistema 
 operativo e memorizzati in modo permanente in una porzione riservata al sistema operativo di solito all'inizio del disco. Per memorizzare i blocchi di dati del file ogni i-node contiene:
 \begin{itemize}
 	\item $10$ puntatori diretti ai blocchi di dati di file.
@@ -155,8 +155,8 @@ i suoi blocchi a tale lista.
 \end{itemize}
 \section{Efficienza e prestazioni}
 \subsection{Efficienza}
-Il disco \`e un collo di bottiglia e l'efficienza dipende da un algoritmo di allocazione dello spazio su disco: in Unix si cerca di tenere i blocchi di un file vicini al suo i-node, 
-viene richiesta la preallocazione i-node distribuiti sulla partizione e dal tipo di dati contenuti nella directory: la data di ultimo accesso di un file richiede che la lettura di un
+Il disco \`e un collo di bottiglia e l'efficienza dipende da: 1) un algoritmo di allocazione dello spazio su disco: in Unix si cerca di tenere i blocchi di un file vicini al suo i-node, 
+viene richiesta la preallocazione degli i-node distribuiti sulla partizione; 2) dal tipo di dati contenuti nella directory: ad esempio la data di ultimo accesso di un file richiede che la lettura di un
 file richieda la lettura e scrittura del blocco della directory. 
 \subsection{Prestazioni}
 Il controller del disco possiede una piccola cache che \`e in grado di contenere un'intera traccia ma non basta per garantire prestazioni elevate pertanto si usano dischi virtuali (RAM
