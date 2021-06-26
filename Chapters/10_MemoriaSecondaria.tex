@@ -72,11 +72,11 @@ file system e il programma di boot per inizializzare il sistema. Il programma di
 carica i driver dei dispositivi e lancia l'avvio del sistema operativo. Nella formattazione fisica si suddivide il disco in settori, si identificano e si aggiunge lo spazio per la 
 correzione degli errori (ECC). Nella formattazione logica si inizializza il file system, la lista di spazio occupato e libero e le directory vuote.
 \subsection{Gestione dei blocchi difettosi}
-L'ECC (error correction code) serve a capire in lettura o scrittore se un settore contiene dati corretti o meno. Per la lettura il controllore legge un settore insieme all'ECC e calcola
+L'ECC (error correction code) serve a capire in lettura o scrittura se un settore contiene dati corretti o meno. Per la lettura il controllore legge un settore insieme all'ECC e calcola
 l'ECC per i dati appena letti. Se il risultato \`e diverso si trova un errore (bad block). L'errore va segnalato e i bad block si possono gestire offline o online. 
 \subsubsection{Gestione offline dei bad block}
-Durante la formattazione logica si individuano i bad block e si mettono una lista, si rimuovono e si marca l'entry nella FAT. Successivamente si pu\`o eseguire un'utility per isolare i 
-bad block come. Questo algoritmo \`e tipico dei controllori IDE. 
+Durante la formattazione logica si individuano i bad block e si mettono in una lista, si rimuovono e si marca l'entry nella FAT. Successivamente si pu\`o eseguire un'utility per isolare i 
+bad block. Questo algoritmo \`e tipico dei controllori IDE. 
 \subsubsection{Gestione online dei bad block}
 Il controllore mappa il bad block su un blocco buono non usato. Si deve pertanto disporre di blocchi di scorta riservati (sector sparing). Quando il sistema operativo richiede il bad 
 block il controllore mappa in modo trasparente l'accesso al bad block sul blocco di scorta. Potrebbe inficiare le ottimizzatone fornite dallo scheduling se non si allocassero spare
